@@ -5,7 +5,7 @@
 ## Workflow
 
 Begin by downloading the repository on your system.  
-`git clone https://github.com/QuarterShotofEspresso/Titan.git`
+`git clone https://github.com/CS-UCR/senior-design-project-lettuce-cryptography.git`
 > Note: You need only do this once.
 
 Before making contributions, if your contribution will consist of many tasks and/or be completed in stages, feel free to create a project board for yourself.
