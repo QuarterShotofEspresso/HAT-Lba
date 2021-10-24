@@ -1,69 +1,36 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=462966&assignment_repo_type=GroupAssignmentRepo)
-# CS178A-B-Template
+# Welcome to Lettuce Cryptography
 
-## Table of Contents
-- [Overview](#overview)
-- [Usage](#usage)
-- [How To Run](#how-to-run)
-- [Diagrams](#diagrams)
-- [Dependencies](#dependencies)
+## Objective
 
-## Overview
-<Include project description?
+## Workflow
 
-## Team
-<a href="https://github.com/msalloum" target="_blank"><img src="https://avatars3.githubusercontent.com/u/1790819?s=400&v=4" align="left" height="30px">Mariam Salloum </a>
+Begin by downloading the repository on your system.  
+`git clone https://github.com/QuarterShotofEspresso/Titan.git`
+> Note: You need only do this once.
 
-## Usage
-Demo: <Link to youtube video>
+Before making contributions, if your contribution will consist of many tasks and/or be completed in stages, feel free to create a project board for yourself.
+The project boards are located under the 'Projects' tab.
 
-<Screenshot of application>
+To make contributions to the project, make a separate branch.  
+`git checkout -b <USERNAME>/<TASK>` eg: `git checkout -b QuarterShotofEspresso/ReadMeModifications`
 
-## How To Run
-In the project directory, you can run:
+After committing your changes, push them to github.  
+`git push origin <USERNAME>/<TASK>`
 
-### `npm start`
+Once the modifications are completed they need to be merged with the main branch.
+> Note: Notify everyone before running the following commands.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`git checkout main`  
+`git merge <USERNAME>/<TASK>`  
+`git push origin main`  
+> Note: Resolve merge conflicts if they appear.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+If you have created a project (under the projects tab), move the task to the correct column.
+If the project is now completed, please close it to avoid clutter.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Diagrams
-
-Sequence Diagram
-
-Frontend Structure
-
-
-Overall System Diagram
-
-## Dependencies
-Install Node Package Manager (npm). [Helpful Documentation](https://www.npmjs.com/get-npm)
-
+Whenever the remote main branch is updated, everyone's local main branch must be updated.  
+`git checkout main`  
+`git pull --rebase origin main`  
+`git checkout <USERNAME>/<TASK>`  
+`git pull --rebase origin main`  
+> Note: Resolve merge conflicts if they appear.
