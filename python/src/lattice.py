@@ -10,23 +10,25 @@ class Lattice:
     # INTERFACE METHODS
     # accept dim, target/random
     def __init__(self):
-        
+        self.pri_basis
+        self.pri_dimension
+
 
     def __repr__(self):
-
+        return "Lattice of dim: {}".format(self.pri_dimension)
 
 
     # HELPER METHODS
     @classmethod
-    def generateBasis(self):
+    def genApprOrthogBasis(self):
         
 
 
     # USER METHODS
-    def babai(self):
+    def babai(self, target):
         
 
-    def hadamard_ratio(self):
+    def hadamard(self):
 
 
-
+    def solve_system():
