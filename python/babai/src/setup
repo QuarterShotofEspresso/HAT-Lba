@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# create a virtual python environment
+python3 -m venv venv_lattice
