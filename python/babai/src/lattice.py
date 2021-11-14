@@ -9,18 +9,17 @@ class Lattice:
     # ==================== META & INST METHODS ======================
     # accept dim, target/random
     def __init__(self, dimension, entry_range):
-        self.bas_mat = 0
+        self.B = None
         self.dim = dimension
-        self.ran = entry_range
         print(self)
 
 
     # Print details of class
     def __repr__(self):
-        return "Lattice of dim: {}\nEntries in [0, {}]\n".format(self.dim, self.ran)
+        return "Lattice of dim: {}\n".format(self.dim)
 
 
-    # ==================== HELPER METHODS ======================
+    # ==================== STATIC METHODS ======================
     # PROJECT: project vector u onto vector v
     # RETURN: a vector (numpy ndarray)
     @staticmethod
@@ -35,7 +34,7 @@ class Lattice:
     # RETURN: returns a matrix of size (dim x dim). Columns
     # of the matrix are linearly independent from each other.
     @staticmethod
-    def gen_liv(dim, entry_range, relational_entry_range):
+    def gen_liv(dim, entry_range = 999, relational_entry_range = 10):
         bas_mat = np.round(np.random.rand(dim, dim) * entry_range)
         ran_idx = int(np.round(np.random.rand(1, 1) * (dim - 1))[0])
         nbr_idx = (ran_idx + 1) % dim
@@ -47,38 +46,40 @@ class Lattice:
             ran_val_two = ran_val_two * 2
         return bas_mat
     
-
-    # GRAM_SCHMIDT: use the gram-schmidt method to create
-    # a given basis
-    # RETURN: boolean (python True/False)
+    
     @staticmethod
-    #def gram_schmidt(dim, vary_cap):
-    def gram_schmidt(matrix):
-        dim = matrix.shape[0]
-#        orth_matrix = zeros(dim, dim)
-        for i in range(1, dim):
-            for j in range(0, i):
-#                pdb.set_trace()
-                #vary = np.round(np.random.rand(1,1) * vary_cap)[0]
-                #matrix[:,i] = matrix[:,i] - (vary * project(matrix[:,i], matrix[:,j]))
-                matrix[:,i] = matrix[:,i] - (Lattice.project(matrix[:,j], matrix[:,i]))
+    def gen_vecs(dim, entry_range = 999):
+        matrix = np.round(np.random.rand(dim, dim) * entry_range)
         return matrix
 
 
-    # ===================== USER METHODS =======================
-    # GEN_ORTH_B
+    # GRAM_SCHMIDT: use the gram-schmidt method to create
+    # a given basis
+    # PARAMETERS: 
+    #   @matrix: input matrix
+    #   @vary: max percent variation from fully orthogonal (hr = 1) list of vectors
+    # RETURN: Nothing
     @staticmethod
-    def gen_orth_basis(dim):
-        basis_matrix = gen_liv(dim) # create dim linearly independent vectors
-        bas_mat_orth = gram_schmidt(basis_matrix, dim) # orthogonalize the matrix
-        bas_mat_appr = vary(bas_mat_orth, vary_cap) # make the basis almost orthogonal
-        return
+    def gram_schmidt(matrix, vary = 0):
+        dim = matrix.shape[0]
+        for i in range(1, dim):
+            for j in range(0, i):
+                vary_factor = np.round(np.random.rand(1,1))[0] + 0.5
+                if vary_factor < (1.0 - vary):
+                    vary_factor = 1.0 - vary
+                elif vary_factor > (1.0 + vary):
+                    vary_factor = 1.0 + vary
+                matrix[:,i] = matrix[:,i] - (vary_factor * Lattice.project(matrix[:,j], matrix[:,i]))
+        return np.round(matrix)
 
 
-    # babai: solve the CVP using babai's algorithm and target
+    # BABAI: solve the CVP using babai's algorithm and target
     # vector w and basis basis
-    def babai(self, w):
-        return np.round(self.linear_solve())
+    # RETURN: closest vector on the lattice
+    @staticmethod
+    def st_babai(matrix, w):
+        closest_vector = np.linalg.solve(matrix, target)
+        return np.round(closest_vector)
 
 
     # HADAMARD: compute the hadamard ratio using of the basis
@@ -91,11 +92,28 @@ class Lattice:
             det = -det
         vol = 1.0
         for i in range(0, dim):
-            vol = vol * np.linalg.norm(matrix[:,i])
-#        pdb.set_trace()
-        return (det/vol)**(1.0/float(dim))
+            norm = np.linalg.norm(matrix[:,i])
+            vol = vol * norm 
+            if norm == 0:
+                print(matrix[:,i])
+        ratio = det/vol
+        hadamard_ratio = ratio**(1.0/dim)
+        return hadamard_ratio
 
 
-    # linear_solve: solve the linear system of equations
-    def linear_solve(self):
-        return np.linalg.inv(self.bas_mat)
+    # ===================== CLASS METHODS =======================
+    # GEN_INT_LATTICE: generate an integer lattice given the dimension
+    def gen_int_lattice(self, entry_range = 999, vary = 0):
+        matrix = Lattice.gen_vecs(self.dim, entry_range) # create dim linearly independent vectors
+        orth_matrix = Lattice.gram_schmidt(matrix, vary) # orthogonalize the matrix
+        self.B = orth_matrix
+        return
+
+
+    # BABAI: solve the CVP using the matrix created in the class
+    # RETURN: vector: closest to target vector w.
+    def babai(self, w):
+        return Lattice.st_babai(self.B, w)
+
+
+
