@@ -77,9 +77,9 @@ class Lattice:
     # vector w and basis basis
     # RETURN: closest vector on the lattice
     @staticmethod
-    def st_babai(matrix, w):
-        closest_vector = np.linalg.solve(matrix, target)
-        return np.round(closest_vector)
+    def st_babai(A, w):
+        t = np.linalg.solve(A, w)
+        return np.round(t)
 
 
     # HADAMARD: compute the hadamard ratio using of the basis
