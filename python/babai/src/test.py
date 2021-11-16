@@ -3,10 +3,8 @@
 import numpy as np
 from lattice import Lattice
 
-#tm = Lattice.gen_liv(3, 10, 5)
 tm = Lattice.gen_vecs(2, 10)
-#tm = Lattice.gen_vecs(5)
-#print(tm)
+print(tm)
 print(Lattice.hadamard(tm))
 tmo = Lattice.gram_schmidt(tm, 0)
 #print(tmo)
