@@ -16,6 +16,10 @@ int mod_div(struct rational*);
 // interface: (rational left of the op, rational right of the op, rational store)
 void rat_add_rat(struct rational* l, struct rational* r, struct rational* s);
 
+// rat_sub_rat: subtract two rational numbers
+//interface: (rational left of the op, rational right of the op, rational store
+void rat_sub_rat(struct rational* l, struct rational *r, struct rational* s);
+
 // rat_div_rat: multiplies two rational structures
 // interface: (rational left of the op, rational right of the op, rational store)
 void rat_mul_rat(struct rational* l, struct rational* r, struct rational* s);
