@@ -5,34 +5,40 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-struct matrix;
-
 struct matrix {
 
-    struct matrix *self;
-
-    int col; // total number of columns
-    int row; // total number of rows
-
-    struct matrix* (*newMatrix)(int);
-    bool (*delMatrix)(struct matrix *);
-    struct matrix* (*newVector)(int);
-    bool (*delVector)(struct matrix *);
+    int column_size;
+    int total_columns;
+    
+    int **entry;
 
 };
 
+// NEWMATRIX: allocates and initalizes all entries
+// of a square matrix to 0.
+// RETURN: pointer to a square matrix
+struct matrix* new_matrix(int dim);
 
-// NEWMATRIX: 
-struct matrix* new_matrix(int col, int row);
 
-
+// DEL_MATRIX: given a matrix, deallocate all memory
+// RETURN: a bool indicating if it was sucesffuly deallocated
 bool del_matrix(struct matrix *);
 
 
-struct matrix* new_vector(int row);
+// DOT: compute the dot product of a matrix
+int dot(struct matrix *, struct matrix *);
 
 
-bool del_vector(struct matrix *);
+// PROJECT: given two vectors project one onto the other
+// RETURN: the projected vector
+struct matrix * project(struct matrix *, struct matrix *);
 
+
+// GRAM_SCHMIDT: orthogonalize a matrix using the gram_schmidt algorithm
+struct matrix * gram_schmidt(struct matrix *);
+
+
+// HADAMARD: compute the hadamard ratio of a given matrix
+float hadamard(struct matrix *);
 
 #endif
