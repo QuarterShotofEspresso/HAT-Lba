@@ -14,10 +14,11 @@ struct matrix {
 
 };
 
+
 // NEWMATRIX: allocates and initalizes all entries
 // of a square matrix to a random integer.
 // RETURN: pointer to a matrix of size col_size x tot_cols
-struct matrix* new_matrix(int col_size, int tot_cols, int entry_range);
+struct matrix * new_matrix(int col_size, int tot_cols, int entry_range);
 
 
 // DEL_MATRIX: given a matrix, deallocate all memory
