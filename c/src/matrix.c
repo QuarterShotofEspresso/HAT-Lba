@@ -30,6 +30,17 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 }
 
 
+
+void del_matrix(struct matrix *A) {
+
+    free(A->entry);
+    free(A);
+
+    return;
+}
+
+
+
 // READY FOR TESTING
 int dot(struct matrix *u, struct matrix *v) {
     

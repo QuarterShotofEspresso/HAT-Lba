@@ -4,6 +4,8 @@
 // minimum requirements required for Babai's Algorithm
 // which uses integer inputs and integer outputs.
 
+// TODO: test adding function pointers to rational struct and pointer to self
+
 struct rational {
     int num;
     int den;
