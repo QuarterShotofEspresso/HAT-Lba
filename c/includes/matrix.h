@@ -7,42 +7,48 @@
 
 struct matrix {
 
-    int column_size;
-    int total_columns;
+    int rows;
+    int cols;
     
-    int **entry;
+    float *entry[];
 
 };
 
-
-// NEWMATRIX: allocates and initalizes all entries
+// NEW_MATRIX: allocates and initalizes all entries
 // of a square matrix to a random integer.
-// RETURN: pointer to a matrix of size col_size x tot_cols
-struct matrix * new_matrix(int col_size, int tot_cols, int entry_range);
+// RETURN: pointer to a matrix of size col_size x row_size
+struct matrix * new_matrix(int col_size, int row_size, int entry_range);
+
+
+// NEW_MATRIX_AS_BASIS: create a matrix of size dim x dim with entries
+// randomly assigned between 0 and entry_range. The matrix's columns
+// will represent the basis vectors of the space Z^dim
+// RETURN: a matrix of dimension size x size
+struct matrix * new_matrix_as_basis(int size, int entry_range);
 
 
 // DEL_MATRIX: given a matrix, deallocate all memory
 // RETURN: a bool indicating if it was sucesffuly deallocated
-bool del_matrix(struct matrix *);
+void del_matrix(struct matrix *A);
 
 
-// DOT: compute the dot product of a matrix
-int dot(struct matrix *, struct matrix *);
+// DOT: compute the dot product of two vectors
+int dot(struct matrix *u, struct matrix *v);
 
 
-// PROJECT: given two vectors project one onto the other
-// RETURN: the projected vector
-struct matrix * project(struct matrix *, struct matrix *);
+// PROJECT: project vector u onto vector v. Return the 
+// projected vector through vector r.
+void project(struct matrix *u, struct matrix *v, struct matrix *r);
 
 
-// GRAM_SCHMIDT: orthogonalize a matrix using the gram_schmidt algorithm
-struct matrix * gram_schmidt(struct matrix *);
+// GRAM_SCHMIDT: orthogonalize a matrix A using the gram_schmidt algorithm
+void gram_schmidt(struct matrix *A);
 
 
-// LUP_SOLVE: using lup decomposition solve Ax = b
-// where A is a square matrix, and x and b are vectors
-// RETURN: the vector x
-struct matrix * lup_solve(struct matrix *A, struct matrix *b);
+// LUP_SOLVE: using lup decomposition solve for x in Ax = b
+// where A is a square matrix, and x and b are vectors.
+// The result is stored in the matrix x.
+void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x);
 
 
 // LUP_DET: given matrix A, compute its determinant using lup decomposition
@@ -52,20 +58,15 @@ int lup_det(struct matrix *A);
 
 // HADAMARD: compute the hadamard ratio of a given matrix
 // RETURN: the hadamard ratio as a float.
-float hadamard(struct matrix *);
-
-
-// NEW_MATRIX_AS_BASIS: create a matrix of size dim x dim with entries
-// randomly assigned between 0 and entry_range. The matrix's columns
-// will represent the basis vectors of the space Z^dim
-// RETURN: a matrix of size dim x dim
-struct matrix * new_matrix_as_basis(int dim, int entry_range);
+float hadamard(struct matrix *A);
 
 
 // BABAI: given a target vector w and a lattice defined by the
 // cols of matrix A, find the closest vector on the lattice to w
+// by solving Ax = w. Quite similar to Ax = b except babai will 
+// round the resulting vector t.
 // RETURN: the vector on the lattice closest to vector w
-struct matrix * babai(struct matrix *A, struct matrix *w);
+void babai(struct matrix *A, struct matrix *w, struct matrix *x);
 
 
 #endif
