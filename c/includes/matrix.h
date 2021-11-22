@@ -10,7 +10,7 @@ struct matrix {
     int row_size;
     int col_size;
     
-    float *entry[];
+    int **entry;
 
 };
 

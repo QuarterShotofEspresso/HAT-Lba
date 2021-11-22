@@ -7,7 +7,7 @@
 
 
 // ROUND: round a floating point, x, to closest int.
-int round(float x);
+int qsoe_round(float x);
 
 
 #endif

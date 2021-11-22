@@ -1,6 +1,6 @@
 #include "qsoe_float_helper.h"
 
-int round(float x) {
+int qsoe_round(float x) {
 
     float x_dec = x - (int)x;
 
