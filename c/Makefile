@@ -1,13 +1,24 @@
-includes=includes/
+# Author: Ratnodeep Bandyopadhyay
+# Copyright Nov 21 2021. All rights reserved.
+CC = gcc
 
+IDIR=includes
+BDIR=builds
+ODIR=objects
+TDIR=test
 
-DEPS = rational.h
-OBJS = rational.o
+FLAGS = -I$(IDIR)/
 
-ODIR = build
+DEPS = $(IDIR)/matrix.h
 
-%.o: %.c $(DEPS)
-	gcc -c -o $@ $< -I$(includes)
+#%.o: %.c $(DEPS)
+#	$(CC) -c -o $@ $< $(FLAGS)
 
-out: $(OBJS)
-	gcc -o $@ $^ -I$(includes)
+#out: $(OBJS)
+#	$(CC) -o $@ $^ $(FLAGS)
+
+$(BDIR)/%: $(ODIR)/%.o $(DEPS)
+	$(CC) -o $@ $< $(FLAGS)
+
+$(ODIR)/%.o: $(TDIR)/%.c $(DEPS)
+	$(CC) -c -o $@ $< $(FLAGS)

@@ -7,8 +7,8 @@
 
 struct matrix {
 
-    int rows;
-    int cols;
+    int row_size;
+    int col_size;
     
     float *entry[];
 
