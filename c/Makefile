@@ -4,21 +4,26 @@ CC = gcc
 
 IDIR=includes
 BDIR=builds
-ODIR=objects
+#ODIR=objects
 TDIR=test
+SDIR=src
 
 FLAGS = -I$(IDIR)/
 
-DEPS = $(IDIR)/matrix.h
+IDEPS = $(IDIR)/matrix.h
+SDEPS = $(SDIR)/matrix.c
 
-#%.o: %.c $(DEPS)
-#	$(CC) -c -o $@ $< $(FLAGS)
 
-#out: $(OBJS)
-#	$(CC) -o $@ $^ $(FLAGS)
+# Manual Example
+# gcc -o builds/new_del_matrix test/new_del_matrix.c src/matrix.c src/qsoe_float_helper.c -Iincludes
+# gcc -o builds/new_del_matrix test/new_del_matrix.c src/matrix.c -Iincludes
 
-$(BDIR)/%: $(ODIR)/%.o $(DEPS)
-	$(CC) -o $@ $< $(FLAGS)
+# build test program
+# Use: make <filename_of_test>
+# Example: make test_malloc
+%: $(TDIR)/%.c $(SDEPS) $(IDEPS)
+	$(CC) -o $(BDIR)/$@ $< $(SDEPS) $(FLAGS)
 
-$(ODIR)/%.o: $(TDIR)/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(FLAGS)
+clean:
+	rm -rf builds/*
+

@@ -4,7 +4,7 @@
 #include "matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include "qsoe_float_helper.h"
+//#include "qsoe_float_helper.h"
 
 
 // READY FOR TESTING
@@ -19,7 +19,9 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 		for(int i = 0; i < A->row_size; ++i) {
 			A->entry[i] = (int*)calloc(col_size, sizeof(int));
 		}
-    } else {
+    }
+
+    else {
         for(int i = 0; i < A->row_size; ++i) {
             A->entry[i] = (int*)malloc(col_size * sizeof(int));
             for(int j = 0; j < col_size; ++j) {
@@ -35,10 +37,8 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 
 void del_matrix(struct matrix *A) {
 
-    for(int i = 0; i < A->row_size; ++i) {
-        printf("Freed column %d @ %p\n", i, A->entry[i]);
+    for(int i = 0; i < A->row_size; ++i)
         free(A->entry[i]);
-    }
     free(A->entry);
     free(A);
 
@@ -93,7 +93,8 @@ void babai(struct matrix *A, struct matrix *w, struct matrix *x) {
     lup_solve(A, w, x);
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) { 
-            x->entry[i][j] = qsoe_round(x->entry[i][j]);
+            //x->entry[i][j] = qsoe_round(x->entry[i][j]);
+            x->entry[i][j] = x->entry[i][j];
         }
     }
 
