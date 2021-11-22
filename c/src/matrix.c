@@ -50,13 +50,6 @@ void del_matrix(struct matrix *A) {
 // READY FOR TESTING
 int dot(struct matrix *u, struct matrix *v) {
     
-    // catch: dim u != dim v
-    //if(u->col_size != v->col_size || u->row_size != col->size) {
-    //    fprintf(stderr, "dot: dimension mismatch: u(%d, %d) v(%d, %d)\n", 
-    //        u->col_size, u->row_size, v->col_size, v->row_size);
-    //    return -1;
-    //}
-
     int dot_prod = 0;
     for(int i = 0; i < u->col_size; ++i) {
         dot_prod = dot_prod + (u->entry[0][i] * v->entry[0][i]);
@@ -82,10 +75,7 @@ void gram_schmidt(struct matrix *A) {
 }
 
 
-void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x) {
-
-	return;
-}
+void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x) { }
 
 
 void babai(struct matrix *A, struct matrix *w, struct matrix *x) {

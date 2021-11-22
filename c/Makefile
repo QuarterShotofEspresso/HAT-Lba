@@ -24,6 +24,9 @@ SDEPS = $(SDIR)/matrix.c
 %: $(TDIR)/%.c $(SDEPS) $(IDEPS)
 	$(CC) -o $(BDIR)/$@ $< $(SDEPS) $(FLAGS)
 
+
+.PHONY: clean
+
 clean:
 	rm -rf builds/*
 
