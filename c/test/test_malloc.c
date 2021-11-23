@@ -4,9 +4,11 @@
 #include "matrix.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "time.h"
 
 int main(int argc, char *argv[]) {
 
+    srand(time(NULL));
 
     int col_size = atoi(argv[1]);
     int row_size = atoi(argv[2]);
@@ -21,7 +23,7 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < tm->col_size; ++i) {
         for(int j = 0; j < tm->row_size; ++j) {
-            printf("%d, ", tm->entry[j][i]);
+            printf("%f, ", tm->entry[j][i]);
         }
         printf("\n");
     }

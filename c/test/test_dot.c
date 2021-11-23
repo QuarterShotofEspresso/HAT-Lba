@@ -1,8 +1,11 @@
 #include "matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "time.h"
 
 int main(int argc, char *argv[]) {
+
+    srand(time(NULL));
 
     int col_size = atoi(argv[1]);
     int row_size = atoi(argv[2]);
@@ -13,14 +16,14 @@ int main(int argc, char *argv[]) {
     
     for(int i = 0; i < col_size; ++i) {
         for(int j = 0; j < row_size; ++j) {
-            printf("u(%d)  v(%d), ", u->entry[j][i], v->entry[j][i]);
+            printf("u(%f)  v(%f), ", u->entry[j][i], v->entry[j][i]);
         }
         printf("\n");
     }
 
-    int prod = dot(u, v);
+    float prod = dot(u, v);
 
-    printf("u.v = %d\n", prod);
+    printf("u.v = %f\n", prod);
 
     del_matrix(u);
     del_matrix(v);

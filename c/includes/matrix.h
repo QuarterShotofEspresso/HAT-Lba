@@ -10,7 +10,8 @@ struct matrix {
     int row_size;
     int col_size;
     
-    int **entry;
+    //int **entry;
+    float **entry;
 
 };
 
@@ -38,7 +39,7 @@ int dot(struct matrix *u, struct matrix *v);
 
 // PROJECT: project vector u onto vector v. Return the 
 // projected vector through vector r.
-void project(struct matrix *u, struct matrix *v, struct matrix *r);
+void project(float *u, float *v, float *r);
 
 
 // GRAM_SCHMIDT: orthogonalize a matrix A using the gram_schmidt algorithm

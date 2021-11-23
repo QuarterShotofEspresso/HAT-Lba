@@ -4,28 +4,31 @@
 #include "matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "math.h"
 //#include "qsoe_float_helper.h"
 
 
-// READY FOR TESTING
 struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
     
     struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
     A->row_size = row_size;
     A->col_size = col_size;
-    A->entry = (int**)malloc(row_size * sizeof(int*));
+    //A->entry = (int**)malloc(row_size * sizeof(int*));
+    A->entry = (float**)malloc(row_size * sizeof(float*));
 
     if(entry_range == 1) {
 		for(int i = 0; i < A->row_size; ++i) {
-			A->entry[i] = (int*)calloc(col_size, sizeof(int));
+			//A->entry[i] = (int*)calloc(col_size, sizeof(int));
+			A->entry[i] = (float*)calloc(col_size, sizeof(float));
 		}
     }
 
     else {
         for(int i = 0; i < A->row_size; ++i) {
-            A->entry[i] = (int*)malloc(col_size * sizeof(int));
+            //A->entry[i] = (int*)malloc(col_size * sizeof(int));
+            A->entry[i] = (float*)malloc(col_size * sizeof(float));
             for(int j = 0; j < col_size; ++j) {
-                A->entry[i][j] = rand() % entry_range;
+                A->entry[i][j] = (float)(rand() % entry_range);
             }
         }
     }
@@ -33,6 +36,8 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
     return A;
 }
 
+
+struct matrix * new_matrix_as_basis(int size, int entry_range) { return NULL; }
 
 
 void del_matrix(struct matrix *A) {
@@ -47,10 +52,10 @@ void del_matrix(struct matrix *A) {
 
 
 
-// READY FOR TESTING
 int dot(struct matrix *u, struct matrix *v) {
     
-    int dot_prod = 0;
+    //int dot_prod = 0;
+    float dot_prod = 0;
     for(int i = 0; i < u->col_size; ++i) {
         dot_prod = dot_prod + (u->entry[0][i] * v->entry[0][i]);
     }
@@ -59,19 +64,25 @@ int dot(struct matrix *u, struct matrix *v) {
 }
 
 
-//READY FOR TESTING
+void project(float *u, float *v, float *r) { }
+
+
 void gram_schmidt(struct matrix *A) {
 
-    //for(int i = 0; i < dim; ++i) {
-    //    for(int j = 0; j < dim; ++j) {
-    //        //vary_shift = (rand() % vary) - (vary / 2); 
-    //        for(int k = 0; k < A->col_size; ++k) {
-    //            A->entry[k][i] = A->entry[k][i] - project(A->entry[k][j], A->[k][i]);
-    //        }
-    //    }
-    //}
+    struct matrix *r = new_matrix(A->col_size, 1, 1);
 
-    //return;
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < i; ++j) {
+            project(A->entry[j], A->entry[i], r->entry[0]);
+            for(int k = 0; k < A->col_size; ++k) {
+                A->entry[i][k] = A->entry[i][k] - r->entry[0][k];
+            }
+        }
+    }
+
+    del_matrix(r);
+
+    return;
 }
 
 
@@ -83,8 +94,7 @@ void babai(struct matrix *A, struct matrix *w, struct matrix *x) {
     lup_solve(A, w, x);
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) { 
-            //x->entry[i][j] = qsoe_round(x->entry[i][j]);
-            x->entry[i][j] = x->entry[i][j];
+            x->entry[i][j] = round(x->entry[i][j]);
         }
     }
 
