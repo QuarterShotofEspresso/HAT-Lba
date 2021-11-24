@@ -101,6 +101,27 @@ class Lattice:
         return hadamard_ratio
 
 
+    # MXP_HADAMARD: compute the hadamard ratio given a matrix
+    # RETURN: floating point
+    @staticmethod
+    def mxp_hadamard(matrix):
+        
+        # offload the following work to MXP
+        dim = matrix.shape[0]
+        det = np.linalg.det(matrix)
+        det_sq = det * det
+        
+        vol_sq = 1;
+        for i in range(0, dim):
+            vol_sq = vol_sq * np.dot(matrix[:,i],matrix[:,i])
+
+        print("det_sq = {}".format(det_sq))
+        print("vol_sq = {}".format(vol_sq))
+
+        # return det_sq and vol_sq to the CPU and perform the following calc
+        return (det_sq/vol_sq)**(1.0/(2 * dim))
+
+
     # ===================== CLASS METHODS =======================
     # GEN_INT_LATTICE: generate an integer lattice given the dimension
     def gen_int_lattice(self, entry_range = 999, vary = 0):
