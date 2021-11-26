@@ -15,6 +15,9 @@ struct matrix {
 
 };
 
+// TODO: print_matrix()
+// TODO: replace new_matrix_as_basis with copy_matrix()
+
 // NEW_MATRIX: allocates and initalizes all entries
 // of a square matrix to a random integer.
 // RETURN: pointer to a matrix of size col_size x row_size
@@ -46,20 +49,23 @@ void project(float *u, float *v, float *r, int col_size);
 void gram_schmidt(struct matrix *A);
 
 
+void lu_decomp(struct matrix *U, struct matrix *L);
+
+
 // LUP_SOLVE: using lup decomposition solve for x in Ax = b
 // where A is a square matrix, and x and b are vectors.
 // The result is stored in the matrix x.
-void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x);
+void lu_solve(struct matrix *L, struct matrix *U, struct matrix *b, struct matrix *x);
 
 
 // LUP_DET: given matrix A, compute its determinant using lup decomposition
 // RETURN: the determinant
-float lup_det(struct matrix *A);
+float lu_det(struct matrix *U);
 
 
 // HADAMARD: compute the hadamard ratio of a given matrix
 // RETURN: the hadamard ratio as a float.
-float hadamard(struct matrix *A);
+float hadamard(struct matrix *A, float det_A);
 
 
 // BABAI: given a target vector w and a lattice defined by the

@@ -81,7 +81,6 @@ void project(float *u, float *v, float *r, int col_size) {
 
 void gram_schmidt(struct matrix *A) {
 
-    //struct matrix *r = new_matrix(A->col_size, 1, 1);
     float *r = (float*)malloc(A->col_size * sizeof(float));
 
     for(int i = 0; i < A->row_size; ++i) {
@@ -93,23 +92,51 @@ void gram_schmidt(struct matrix *A) {
         }
     }
 
-    //del_matrix(r);
     free(r);
 
     return;
 }
 
 
-void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x) { }
+void lu_decomp(struct matrix *U, struct matrix *L) {
 
+    // convert L into identity matrix
+    for(int i = 0; i < L->col_size; ++i) {
+        L->entry[i][i] = 1;
+    }
 
-float lup_det(struct matrix *A) { return 0; }
-
-
-float hadamard(struct matrix *A) {
     
-    float det = lup_det(A);
-    float det_sq = det * det;
+
+
+}
+
+
+void lu_solve(struct matrix *L, struct matrix *U, struct matrix *b, struct matrix *x) {
+
+    
+
+}
+
+
+float lu_det(struct matrix *U) {
+
+    float det = 1;
+    for(int i = 0; i < U->col_size; ++i) {
+        det = det * U->entry[i][i];
+    }
+
+    return det;
+}
+
+
+float hadamard(struct matrix *A, float det_A) {
+   
+    // maybe make another param struct matrix *L
+    // if the user decides to pass in NULL then decompose
+    // matrix A using lu_det. Otherwise compute lu_solve
+
+    //float det = lu_det(U);
+    float det_sq = det_A * det_A;
     
     float vol_sq = 1;
     for (int i = 0; i < A->col_size; i++)
@@ -120,9 +147,10 @@ float hadamard(struct matrix *A) {
     return ratio;
 }
 
+
 void babai(struct matrix *A, struct matrix *w, struct matrix *x) {
 
-    lup_solve(A, w, x);
+    lu_solve(A, w, x);
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) { 
 //            x->entry[i][j] = round(x->entry[i][j]);
