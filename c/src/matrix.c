@@ -56,8 +56,6 @@ void del_matrix(struct matrix *A) {
 }
 
 
-
-//float dot(struct matrix *u, struct matrix *v, int col_size) {
 float dot(float *u, float *v, int col_size) {
     
     float dot_prod = 0;
@@ -68,7 +66,7 @@ float dot(float *u, float *v, int col_size) {
 }
 
 
-void project(float *u, float *v, float *r, int col_size) { // assuming we are changing dot(struct matrix, struct matrix) to dot(float, float, int)
+void project(float *u, float *v, float *r, int col_size) {
     
     float dot_uv = dot(u, v, col_size);
     float dot_uu = dot(u, u, col_size);
@@ -103,7 +101,9 @@ void gram_schmidt(struct matrix *A) {
 
 void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x) { }
 
+
 float lup_det(struct matrix *A) { return 0; }
+
 
 float hadamard(struct matrix *A) {
     

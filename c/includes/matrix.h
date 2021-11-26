@@ -63,9 +63,9 @@ float hadamard(struct matrix *A);
 
 
 // BABAI: given a target vector w and a lattice defined by the
-// cols of matrix A, find the closest vector on the lattice to w
+// col space of matrix A, find the closest vector on the lattice to w
 // by solving Ax = w. Quite similar to Ax = b except babai will 
-// round the resulting vector t.
+// round the resulting vector x.
 // RETURN: the vector on the lattice closest to vector w
 void babai(struct matrix *A, struct matrix *w, struct matrix *x);
 
