@@ -38,6 +38,7 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 
 
 struct matrix * new_matrix_as_basis(int size, int entry_range) {
+    
     struct matrix *A = new_matrix(size, size, entry_range);
     gram_schmidt(A);
 
