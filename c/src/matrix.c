@@ -57,7 +57,8 @@ void del_matrix(struct matrix *A) {
 
 
 
-float dot(struct matrix *u, struct matrix *v, int col_size) {
+//float dot(struct matrix *u, struct matrix *v, int col_size) {
+float dot(float *u, float *v, int col_size) {
     
     float dot_prod = 0;
     for(int i = 0; i < col_size; ++i)
@@ -81,24 +82,28 @@ void project(float *u, float *v, float *r, int col_size) { // assuming we are ch
 
 void gram_schmidt(struct matrix *A) {
 
-    struct matrix *r = new_matrix(A->col_size, 1, 1);
+    //struct matrix *r = new_matrix(A->col_size, 1, 1);
+    float *r = (float*)malloc(A->col_size * sizeof(float));
 
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < i; ++j) {
-            project(A->entry[j], A->entry[i], r->entry[0]);
+            project(A->entry[j], A->entry[i], r, A->col_size);
             for(int k = 0; k < A->col_size; ++k) {
-                A->entry[i][k] = A->entry[i][k] - r->entry[0][k];
+                A->entry[i][k] = A->entry[i][k] - r[k];
             }
         }
     }
 
-    del_matrix(r);
+    //del_matrix(r);
+    free(r);
 
     return;
 }
 
 
 void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x) { }
+
+float lup_det(struct matrix *A) { return 0; }
 
 float hadamard(struct matrix *A) {
     

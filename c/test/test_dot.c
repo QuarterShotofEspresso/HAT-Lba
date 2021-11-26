@@ -7,26 +7,29 @@ int main(int argc, char *argv[]) {
 
     srand(time(NULL));
 
+    // parse command line args
     int col_size = atoi(argv[1]);
-    int row_size = atoi(argv[2]);
-    int range = atoi(argv[3]);
+    int range = atoi(argv[2]);
 
-    struct matrix *u = new_matrix(col_size, row_size, range);
-    struct matrix *v = new_matrix(col_size, row_size, range);
-    
+    // declare and malloc vectors
+    float *u = (float*)malloc(col_size * sizeof(float));
+    float *v = (float*)malloc(col_size * sizeof(float));
+
+    // print and assign vectors
     for(int i = 0; i < col_size; ++i) {
-        for(int j = 0; j < row_size; ++j) {
-            printf("u(%f)  v(%f), ", u->entry[j][i], v->entry[j][i]);
-        }
+        u[i] = rand() % range;
+        v[i] = rand() % range;
+        printf("u(%f)  v(%f), ", u[i], v[i]);
         printf("\n");
     }
 
-    float prod = dot(u, v);
-
+    // write and print result
+    float prod = dot(u, v, col_size);
     printf("u.v = %f\n", prod);
 
-    del_matrix(u);
-    del_matrix(v);
+    // deallocate memory
+    free(u);
+    free(v);
 
     return 0;
 }

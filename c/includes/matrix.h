@@ -34,12 +34,12 @@ void del_matrix(struct matrix *A);
 
 
 // DOT: compute the dot product of two vectors
-float dot(struct matrix *u, struct matrix *v);
+float dot(float *u, float *v, int col_size);
 
 
 // PROJECT: project vector u onto vector v. Return the 
 // projected vector through vector r.
-void project(float *u, float *v, float *r);
+void project(float *u, float *v, float *r, int col_size);
 
 
 // GRAM_SCHMIDT: orthogonalize a matrix A using the gram_schmidt algorithm
