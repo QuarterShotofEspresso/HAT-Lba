@@ -34,7 +34,7 @@ void del_matrix(struct matrix *A);
 
 
 // DOT: compute the dot product of two vectors
-int dot(struct matrix *u, struct matrix *v);
+float dot(struct matrix *u, struct matrix *v);
 
 
 // PROJECT: project vector u onto vector v. Return the 
@@ -54,7 +54,7 @@ void lup_solve(struct matrix *A, struct matrix *b, struct matrix *x);
 
 // LUP_DET: given matrix A, compute its determinant using lup decomposition
 // RETURN: the determinant
-int lup_det(struct matrix *A);
+float lup_det(struct matrix *A);
 
 
 // HADAMARD: compute the hadamard ratio of a given matrix
