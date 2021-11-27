@@ -17,10 +17,10 @@ int main(int argc, char *argv[]) {
 
     float *w = (float *)malloc(size * sizeof(float));
     float *x = (float *)malloc(size * sizeof(float));
-   
-    // print contents of A
+  
+    // orthogonalize A
     gram_schmidt(A);
-
+    // print contents of A
     printf("A:\n");
     for(int i = 0; i < A->col_size; ++i) {
         for(int j = 0; j < A->row_size; ++j) {
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
         // decompose and test lu_solve
         lu_decomp(A, L);
-        lu_solve(L, A, w, x);
+        babai(L, A, w, x);
 
         // print results
         printf("x:\n");

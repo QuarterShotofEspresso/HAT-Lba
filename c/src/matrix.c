@@ -92,6 +92,12 @@ void gram_schmidt(struct matrix *A) {
         }
     }
 
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < A->col_size; ++j) {
+            A->entry[i][j] = round(A->entry[i][j]);
+        }
+    }
+
     free(r);
 
     return;
@@ -185,9 +191,7 @@ void babai(struct matrix *L, struct matrix *U, float *w, float *x) {
 
     lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {
-        for(int j = 0; j < U->col_size; ++j) { 
-            x->entry[i][j] = round(x->entry[i][j]);
-        }
+        x[i] = round(x[i]);
     }
 
     return; 
