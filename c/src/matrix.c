@@ -105,7 +105,6 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
         L->entry[i][i] = 1;
     }
 
-
     float factor = 0;
     // sq_dim describes the dimensions of a square matrix: sq_dim = cols = rows
     int sq_dim = U->col_size;
@@ -128,9 +127,26 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
 }
 
 
-void lu_solve(struct matrix *L, struct matrix *U, struct matrix *b, struct matrix *x) {
+void lu_solve(struct matrix *L, struct matrix *U, float *b, float *x) {
 
-    
+    float *y = (float*)malloc(L->col_size * sizeof(float));
+    float tmp = 0;
+
+    for(int i = 0; i < L->col_size; ++i) {
+        tmp = 0;
+        for(int j = 0; j < i - 1; ++j)
+            tmp = L->entry[j][i] * y[j];
+        y[i] = (b[i] - tmp) / L->entry[i][i];
+    }
+
+    for(int i = U->col_size - 1; i >= 0; --i) {
+        tmp = 0;
+        for(int j = U->col_size - 1; j > i; --j)
+            tmp = U->entry[j][i] * x[j];
+        x[i] = (y[i] - tmp) / U->entry[i][i];
+    }
+
+    free(y);
 
 }
 

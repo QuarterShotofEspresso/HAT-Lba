@@ -55,7 +55,7 @@ void lu_decomp(struct matrix *U, struct matrix *L);
 // LUP_SOLVE: using lup decomposition solve for x in Ax = b
 // where A is a square matrix, and x and b are vectors.
 // The result is stored in the matrix x.
-void lu_solve(struct matrix *L, struct matrix *U, struct matrix *b, struct matrix *x);
+void lu_solve(struct matrix *L, struct matrix *U, float *b, float *x);
 
 
 // LUP_DET: given matrix A, compute its determinant using lup decomposition
@@ -73,7 +73,7 @@ float hadamard(struct matrix *A, float det_A);
 // by solving Ax = w. Quite similar to Ax = b except babai will 
 // round the resulting vector x.
 // RETURN: the vector on the lattice closest to vector w
-void babai(struct matrix *L, struct matrix *U, struct matrix *w, struct matrix *x);
+void babai(struct matrix *L, struct matrix *U, float *w, float *x);
 
 
 #endif
