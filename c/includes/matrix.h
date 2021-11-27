@@ -49,6 +49,10 @@ void project(float *u, float *v, float *r, int col_size);
 void gram_schmidt(struct matrix *A);
 
 
+// LU_DECOMP: decomposes a matrix passed into U
+// as two seperate matrices U and L. These are the upper and lower
+// triangular matrices derived from the matrix passed into U.
+// Returns two matrices: U & L.
 void lu_decomp(struct matrix *U, struct matrix *L);
 
 
