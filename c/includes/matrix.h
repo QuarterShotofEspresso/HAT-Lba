@@ -73,7 +73,7 @@ float hadamard(struct matrix *A, float det_A);
 // by solving Ax = w. Quite similar to Ax = b except babai will 
 // round the resulting vector x.
 // RETURN: the vector on the lattice closest to vector w
-void babai(struct matrix *A, struct matrix *w, struct matrix *x);
+void babai(struct matrix *L, struct matrix *U, struct matrix *w, struct matrix *x);
 
 
 #endif

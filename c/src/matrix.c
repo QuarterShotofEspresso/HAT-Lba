@@ -105,9 +105,26 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
         L->entry[i][i] = 1;
     }
 
-    
 
+    float factor = 0;
+    // sq_dim describes the dimensions of a square matrix: sq_dim = cols = rows
+    int sq_dim = U->col_size;
+    // select top row in forming upper triangular matrix
+    // the interator i is used as both a row and column iterator
+    for(int i = 0; i < sq_dim - 1; ++i) {
+        // select all rows below the target row
+        for(int j = i + 1; j < U->col_size; ++j) {
+            // calculate factor 
+            factor = U->entry[i][j]/U->entry[i][i];
+            L->entry[i][j] = factor;
+            // update all elements in a row
+            for(int k = 0; k < U->row_size; ++k) {
+                U->entry[k][j] = U->entry[k][j] - (factor * U->entry[k][i]);
+            }
+        }
+    }
 
+    return;
 }
 
 
@@ -148,11 +165,11 @@ float hadamard(struct matrix *A, float det_A) {
 }
 
 
-void babai(struct matrix *A, struct matrix *w, struct matrix *x) {
+void babai(struct matrix *L, struct matrix *U, struct matrix *w, struct matrix *x) {
 
-    lu_solve(A, w, x);
-    for(int i = 0; i < A->row_size; ++i) {
-        for(int j = 0; j < A->col_size; ++j) { 
+    lu_solve(L, U, w, x);
+    for(int i = 0; i < U->row_size; ++i) {
+        for(int j = 0; j < U->col_size; ++j) { 
 //            x->entry[i][j] = round(x->entry[i][j]);
         }
     }
