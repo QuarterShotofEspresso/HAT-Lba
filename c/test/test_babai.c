@@ -22,14 +22,8 @@ int main(int argc, char *argv[]) {
     gram_schmidt(A);
     // print contents of A
     printf("A:\n");
-    for(int i = 0; i < A->col_size; ++i) {
-        for(int j = 0; j < A->row_size; ++j) {
-            printf("%f, ", A->entry[j][i]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-   
+    print_matrix(A);
+
     char ans;
     printf("Quit? ");
     scanf("%c", &ans);

@@ -36,6 +36,10 @@ struct matrix * new_matrix_as_basis(int size, int entry_range);
 void del_matrix(struct matrix *A);
 
 
+// PRINT_MATRIX: prints the contents of matrix A
+void print_matrix(struct matrix *A);
+
+
 // DOT: compute the dot product of two vectors
 float dot(float *u, float *v, int col_size);
 

@@ -19,17 +19,12 @@ int main(int argc, char *argv[]) {
     float *x = (float *)malloc(size * sizeof(float));
    
     // print contents of A
+    printf("A before ortho:\n");
+    print_matrix(A);
     gram_schmidt(A);
+    printf("A after ortho:\n");
+    print_matrix(A);
 
-    printf("A:\n");
-    for(int i = 0; i < A->col_size; ++i) {
-        for(int j = 0; j < A->row_size; ++j) {
-            printf("%f, ", A->entry[j][i]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-   
     char ans;
     printf("Quit? ");
     scanf("%c", &ans);
@@ -40,8 +35,15 @@ int main(int argc, char *argv[]) {
             scanf("%f", &w[i]);
         }
 
+        for(int i = 0; i < size; ++i)
+            printf("w[%d] = %f\n", i, w[i]);
+
         // decompose and test lu_solve
         lu_decomp(A, L);
+        printf("U:\n");
+        print_matrix(A);
+        printf("L:\n");
+        print_matrix(L);
         lu_solve(L, A, w, x);
 
         // print results
