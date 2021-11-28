@@ -28,5 +28,5 @@ SDEPS = $(SDIR)/matrix.c
 .PHONY: clean
 
 clean:
-	rm -rf builds/*
+	rm -rf builds/test_*
 
