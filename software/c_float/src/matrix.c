@@ -46,6 +46,19 @@ struct matrix * new_matrix_as_basis(int size, int entry_range) {
 }
 
 
+struct matrix * copy_matrix(struct matrix *A) {
+
+    struct matrix *C = new_matrix(A->col_size, A->row_size, 1);
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < A->col_size; ++j) {
+            C->entry[i][j] = A->entry[i][j];
+        }
+    }
+
+    return C;
+}
+
+
 void del_matrix(struct matrix *A) {
 
     for(int i = 0; i < A->row_size; ++i)
