@@ -31,6 +31,12 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range);
 struct matrix * new_matrix_as_basis(int size, int entry_range);
 
 
+// COPY_MATRIX: create a new matrix copying the entries of the 
+// matrix A
+// RETURN: a pointer to the new the matrix copy
+struct matrix * copy_matrix(struct matrix *A);
+
+
 // DEL_MATRIX: given a matrix, deallocate all memory
 // RETURN: a bool indicating if it was sucesffuly deallocated
 void del_matrix(struct matrix *A);
