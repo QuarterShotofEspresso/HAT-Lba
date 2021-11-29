@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     char ans;
     printf("Quit? ");
     scanf("%c", &ans);
-    if(ans == 'n') {
+    while(ans == 'n') {
         // enter contents of w
         for(int i = 0; i < size; ++i) {
             printf("w[%d]: ", i);
@@ -42,6 +42,11 @@ int main(int argc, char *argv[]) {
         printf("x:\n");
         for(int i = 0; i < size; ++i)
             printf("%f,\n", x[i]);
+       
+        // repeat ask
+        fflush(stdin);
+        printf("Quit? ");
+        scanf("%c", &ans);
     }
 
     // deallocate memory
