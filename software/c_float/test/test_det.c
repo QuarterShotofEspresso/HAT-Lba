@@ -23,7 +23,6 @@ int main(int argc, char *argv[]) {
     // print contents of A
     printf("A:\n");
     print_matrix(A);
-    lu_decomp(A, L);
 
     char ans;
     printf("Quit? ");
@@ -36,6 +35,7 @@ int main(int argc, char *argv[]) {
         }
 
         // decompose and test lu_solve
+        lu_decomp(A, L);
         babai(L, A, w, x);
 
         // print results
