@@ -5,7 +5,8 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
-//#include "qsoe_float_helper.h"
+#include "config.h"
+#include "fixed_approximation.h"
 
 
 struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
@@ -14,21 +15,21 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
     A->row_size = row_size;
     A->col_size = col_size;
     //A->entry = (int**)malloc(row_size * sizeof(int*));
-    A->entry = (float**)malloc(row_size * sizeof(float*));
+    A->entry = (DATA_TYPE**)malloc(row_size * sizeof(DATA_TYPE*));
 
     if(entry_range == 1) {
 		for(int i = 0; i < A->row_size; ++i) {
 			//A->entry[i] = (int*)calloc(col_size, sizeof(int));
-			A->entry[i] = (float*)calloc(col_size, sizeof(float));
+			A->entry[i] = (DATA_TYPE*)calloc(col_size, sizeof(DATA_TYPE));
 		}
     }
 
     else {
         for(int i = 0; i < A->row_size; ++i) {
             //A->entry[i] = (int*)malloc(col_size * sizeof(int));
-            A->entry[i] = (float*)malloc(col_size * sizeof(float));
+            A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
             for(int j = 0; j < col_size; ++j) {
-                A->entry[i][j] = (float)(rand() % entry_range);
+                A->entry[i][j] = mtfp((DATA_TYPE)(rand() % entry_range));
             }
         }
     }
@@ -84,23 +85,23 @@ void print_matrix(struct matrix *A) {
 }
 
 
-float dot(float *u, float *v, int col_size) {
+DATA_TYPE dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
     
-    float dot_prod = 0;
+    DATA_TYPE dot_prod = 0;
     for(int i = 0; i < col_size; ++i)
-        dot_prod = dot_prod + (u[i] * v[i]);
+        dot_prod = mtfp(dot_prod + mtfp(u[i] * v[i]));
 
     return dot_prod;
 }
 
 
-void project(float *u, float *v, float *r, int col_size) {
+void project(DATA_TYPE *u, DATA_TYPE *v, DATA_TYPE *r, int col_size) {
     
-    float dot_uv = dot(u, v, col_size);
-    float dot_uu = dot(u, u, col_size);
+    DATA_TYPE dot_uv = dot(u, v, col_size);
+    DATA_TYPE dot_uu = dot(u, u, col_size);
 
     for(int i = 0; i < col_size; ++i)
-        r[i] = (dot_uv / dot_uu) * u[i];
+        r[i] = mtfp(mtfp(dot_uv / dot_uu) * u[i]);
 
     return;
 }
@@ -108,20 +109,20 @@ void project(float *u, float *v, float *r, int col_size) {
 
 void gram_schmidt(struct matrix *A) {
 
-    float *r = (float*)malloc(A->col_size * sizeof(float));
+    DATA_TYPE *r = (DATA_TYPE*)malloc(A->col_size * sizeof(DATA_TYPE));
 
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < i; ++j) {
             project(A->entry[j], A->entry[i], r, A->col_size);
             for(int k = 0; k < A->col_size; ++k) {
-                A->entry[i][k] = A->entry[i][k] - r[k];
+                A->entry[i][k] = mtfp(A->entry[i][k] - r[k]);
             }
         }
     }
 
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) {
-            A->entry[i][j] = round(A->entry[i][j]);
+            A->entry[i][j] = mtfp(round(A->entry[i][j]));
         }
     }
 
@@ -138,7 +139,7 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
         L->entry[i][i] = 1;
     }
 
-    float factor = 0;
+    DATA_TYPE factor = 0;
     // sq_dim describes the dimensions of a square matrix: sq_dim = cols = rows
     int sq_dim = U->col_size;
     // select top row in forming upper triangular matrix
@@ -160,10 +161,10 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
 }
 
 
-void lu_solve(struct matrix *L, struct matrix *U, float *b, float *x) {
+void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE *b, DATA_TYPE *x) {
 
-    float *y = (float*)malloc(L->col_size * sizeof(float));
-    float tmp = 0;
+    DATA_TYPE *y = (DATA_TYPE*)malloc(L->col_size * sizeof(DATA_TYPE));
+    DATA_TYPE tmp = 0;
 
     for(int i = 0; i < L->col_size; ++i) {
         tmp = 0;
@@ -185,9 +186,9 @@ void lu_solve(struct matrix *L, struct matrix *U, float *b, float *x) {
 }
 
 
-float lu_det(struct matrix *U) {
+DATA_TYPE lu_det(struct matrix *U) {
 
-    float det = 1;
+    DATA_TYPE det = 1;
     for(int i = 0; i < U->col_size; ++i) {
         det = det * U->entry[i][i];
     }
@@ -196,26 +197,26 @@ float lu_det(struct matrix *U) {
 }
 
 
-float hadamard(struct matrix *A, float det_A) {
+DATA_TYPE hadamard(struct matrix *A, DATA_TYPE det_A) {
    
     // maybe make another param struct matrix *L
     // if the user decides to pass in NULL then decompose
     // matrix A using lu_det. Otherwise compute lu_solve
 
-    //float det = lu_det(U);
-    float det_sq = det_A * det_A;
+    //DATA_TYPE det = lu_det(U);
+    DATA_TYPE det_sq = det_A * det_A;
     
-    float vol_sq = 1;
+    DATA_TYPE vol_sq = 1;
     for (int i = 0; i < A->col_size; i++)
         vol_sq = vol_sq * dot(A->entry[i], A->entry[i], A->col_size);
 
-    float ratio = pow(det_sq/vol_sq, 1/(2.0 * A->col_size));
+    DATA_TYPE ratio = pow(det_sq/vol_sq, 1/(2.0 * A->col_size));
 
     return ratio;
 }
 
 
-void babai(struct matrix *L, struct matrix *U, float *w, float *x) {
+void babai(struct matrix *L, struct matrix *U, DATA_TYPE *w, DATA_TYPE *x) {
 
     lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {

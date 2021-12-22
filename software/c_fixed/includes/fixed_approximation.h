@@ -1,18 +1,19 @@
 #ifndef FIXED_APPROXIMATION_H
 #define FIXED_APPROXIMATION_H
 
+#include "config.h"
 
 // print_fpa_meta
 void init_fpa_meta();
 
 
 // map_to_fixed_precision
-//double map_to_fixed_precision(struct fixed_format *ff, double input);
-double mtfp(double input);
+//DATA_TYPE map_to_fixed_precision(struct fixed_format *ff, DATA_TYPE input);
+DATA_TYPE mtfp(DATA_TYPE input);
 
 
 // log_overflow
-void log_overflow(double trigger, int lower_bound);
+void log_overflow(DATA_TYPE trigger, int lower_bound);
 
 
 #endif // FIXED_APPROXIMATION_H

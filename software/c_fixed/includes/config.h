@@ -5,4 +5,7 @@
 #ifndef LATTICE_CONFIG_H
 #define LATTICE_CONFIG_H
 
+#define DATA_TYPE double
+
+
 #endif //LATTICE_CONFIG_H

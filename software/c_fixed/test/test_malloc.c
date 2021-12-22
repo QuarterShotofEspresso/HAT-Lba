@@ -5,10 +5,14 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"
+//#include "config.h"
+#include "fixed_approximation.h"
 
 int main(int argc, char *argv[]) {
 
     srand(time(NULL));
+
+    init_fpa_meta();
 
     int col_size = atoi(argv[1]);
     int row_size = atoi(argv[2]);

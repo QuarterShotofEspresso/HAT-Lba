@@ -1,14 +1,15 @@
 #include "fixed_approximation.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "config.h"
 
 int main(int argc, char *argv[]) {
 
     int interval = atoi(argv[2]);
     int end_at = atoi(argv[1]) * interval;
 
-    double t = 0.0;
-    double inc_by = 1.0/interval;
+    DATA_TYPE t = 0.0;
+    DATA_TYPE inc_by = 1.0/interval;
 
     init_fpa_meta();
 

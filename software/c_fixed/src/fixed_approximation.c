@@ -1,3 +1,4 @@
+#include "config.h"
 #include "fixed_approximation.h"
 #include "math.h"
 #include <stdio.h>
@@ -7,8 +8,8 @@ static const int int_width = 20;
 static const int rat_width = 20;
 
 // using bit shifts
-static double upper_bound = 0.0;
-static double lower_bound = 0.0;
+static DATA_TYPE upper_bound = 0.0;
+static DATA_TYPE lower_bound = 0.0;
 
 
 void init_fpa_meta() {
@@ -26,9 +27,9 @@ void init_fpa_meta() {
 
 
 // deres function uses floating point trimmed to
-double mtfp(double input) {
+DATA_TYPE mtfp(DATA_TYPE input) {
 
-    double interm = floor(input * pow(2, rat_width))/pow(2, rat_width);
+    DATA_TYPE interm = floor(input * pow(2, rat_width))/pow(2, rat_width);
 
     //printf("interm: %d\n", interm);
 
@@ -44,7 +45,7 @@ double mtfp(double input) {
 }
 
 
-void log_overflow(double trigger, int lower_breached) {
+void log_overflow(DATA_TYPE trigger, int lower_breached) {
     
     if(lower_breached) {
         fprintf(stderr, "ERR: Lower bound overflow: %f !< %f\n", trigger, lower_bound);
