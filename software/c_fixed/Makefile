@@ -10,8 +10,8 @@ SDIR=src
 
 FLAGS = -I$(IDIR)/
 
-IDEPS = $(IDIR)/matrix.h
-SDEPS = $(SDIR)/matrix.c
+IDEPS = $(IDIR)/matrix.h $(IDIR)/fixed_approximation.h
+SDEPS = $(SDIR)/matrix.c $(SDIR)/fixed_approximation.c
 
 
 # Manual Example
