@@ -2,10 +2,13 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
+#include "fixed_approximation.h"
 
 int main(int argc, char *argv[]) {
 
     srand(time(NULL));
+
+    init_fpa_meta();
 
     int size = atoi(argv[1]);
     int range = atoi(argv[2]);
