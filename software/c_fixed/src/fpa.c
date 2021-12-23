@@ -1,5 +1,5 @@
 #include "config.h"
-#include "fixed_approximation.h"
+#include "fpa.h"
 #include "math.h"
 #include <stdio.h>
 

@@ -9,10 +9,10 @@ include_directories(software/c_rational/includes)
 
 add_executable(lattice
         software/c_fixed/includes/config.h
-        software/c_fixed/includes/fixed_approximation.h
-        software/c_fixed/includes/matrix.h
-        software/c_fixed/src/fixed_approximation.c
-        software/c_fixed/src/matrix.c
+        software/c_fixed/includes/fpa.h
+        software/c_fixed/includes/fpa_matrix.h
+        software/c_fixed/src/fpa.c
+        software/c_fixed/src/fpa_matrix.c
         software/c_fixed/test/test_babai.c
         software/c_fixed/test/test_basis.c
         software/c_fixed/test/test_decomp.c
@@ -22,7 +22,6 @@ add_executable(lattice
         software/c_fixed/test/test_gram_schmidt.c
         software/c_fixed/test/test_malloc.c
         software/c_fixed/test/test_project.c
-        software/c_fixed/test/test_rational.c
         software/c_fixed/test/test_solve.c
         software/c_float/includes/matrix.h
         software/c_float/src/matrix.c
@@ -34,7 +33,6 @@ add_executable(lattice
         software/c_float/test/test_gram_schmidt.c
         software/c_float/test/test_malloc.c
         software/c_float/test/test_project.c
-        software/c_float/test/test_rational.c
         software/c_float/test/test_solve.c
         software/c_rational/includes/matrix.h
         software/c_rational/includes/rational.h

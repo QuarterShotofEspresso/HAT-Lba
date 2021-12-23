@@ -12,8 +12,8 @@ int main(int argc, char *argv[]) {
     int range = atoi(argv[2]);
 
     // allocate memory for matrices and vectors
-    struct matrix *A = new_matrix(size, size, range);    
-    struct matrix *L = new_matrix(size, size, 1);    
+    struct matrix *A = new_matrix(size, size, range);
+    struct matrix *L = new_matrix(size, size, 1);
 
     float *w = (float *)malloc(size * sizeof(float));
     float *x = (float *)malloc(size * sizeof(float));

@@ -1,8 +1,8 @@
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
-#include "fixed_approximation.h"
+#include "fpa.h"
 
 int main(int argc, char *argv[]) {
 
@@ -15,18 +15,18 @@ int main(int argc, char *argv[]) {
     int range = atoi(argv[2]);
 
     // allocate memory for matrices and vectors
-    struct matrix *A = new_matrix(size, size, range);    
-    struct matrix *L = new_matrix(size, size, 1);    
+    struct fpa_matrix *A = fpa_new_matrix(size, size, range);
+    struct fpa_matrix *L = fpa_new_matrix(size, size, 1);
 
     DATA_TYPE *w = (DATA_TYPE *)malloc(size * sizeof(DATA_TYPE));
     DATA_TYPE *x = (DATA_TYPE *)malloc(size * sizeof(DATA_TYPE));
   
     // orthogonalize A
-    gram_schmidt(A);
+    fpa_gram_schmidt(A);
     // print contents of A
     printf("A:\n");
-    print_matrix(A);
-    lu_decomp(A, L);
+    print_fpa_matrix(A);
+    fpa_lu_decomp(A, L);
 
     char ans;
     printf("Quit? ");
@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
             scanf("%lf", &w[i]);
         }
 
-        // decompose and test lu_solve
-        babai(L, A, w, x);
+        // decompose and test fpa_lu_solve
+        fpa_babai(L, A, w, x);
 
         // print results
         printf("x:\n");
@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
     }
 
     // deallocate memory
-    del_matrix(A);
-    del_matrix(L);
+    del_fpa_matrix(A);
+    del_fpa_matrix(L);
     free(w);
     free(x);
 

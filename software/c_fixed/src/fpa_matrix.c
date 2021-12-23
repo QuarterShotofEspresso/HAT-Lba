@@ -1,17 +1,17 @@
 // Authors: Ratnodeep Bandyopadhyay
 // Copyright 11/20/21. All rights reserved.
 
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
 #include "config.h"
-#include "fixed_approximation.h"
+#include "fpa.h"
 
 
-struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
+struct fpa_matrix * fpa_new_matrix(int col_size, int row_size, int entry_range) {
     
-    struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
+    struct fpa_matrix *A = (struct fpa_matrix *)malloc(sizeof(struct fpa_matrix));
     A->row_size = row_size;
     A->col_size = col_size;
     //A->entry = (int**)malloc(row_size * sizeof(int*));
@@ -38,18 +38,18 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 }
 
 
-struct matrix * new_matrix_as_basis(int size, int entry_range) {
-    
-    struct matrix *A = new_matrix(size, size, entry_range);
-    gram_schmidt(A);
+struct fpa_matrix * new_matrix_as_basis(int size, int entry_range) {
 
-    return A; 
+    struct fpa_matrix *A = fpa_new_matrix(size, size, entry_range);
+    fpa_gram_schmidt(A);
+
+    return A;
 }
 
 
-struct matrix * copy_matrix(struct matrix *A) {
+struct fpa_matrix * fpa_copy_matrix(struct fpa_matrix *A) {
 
-    struct matrix *C = new_matrix(A->col_size, A->row_size, 1);
+    struct fpa_matrix *C = fpa_new_matrix(A->col_size, A->row_size, 1);
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) {
             C->entry[i][j] = A->entry[i][j];
@@ -60,7 +60,7 @@ struct matrix * copy_matrix(struct matrix *A) {
 }
 
 
-void del_matrix(struct matrix *A) {
+void del_fpa_matrix(struct fpa_matrix *A) {
 
     for(int i = 0; i < A->row_size; ++i)
         free(A->entry[i]);
@@ -71,7 +71,7 @@ void del_matrix(struct matrix *A) {
 }
 
 
-void print_matrix(struct matrix *A) {
+void print_fpa_matrix(struct fpa_matrix *A) {
 
     for(int i = 0; i < A->col_size; ++i) {
         for(int j = 0; j < A->row_size; ++j) {
@@ -85,7 +85,7 @@ void print_matrix(struct matrix *A) {
 }
 
 
-DATA_TYPE dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
+DATA_TYPE fpa_dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
     
     DATA_TYPE dot_prod = 0;
     for(int i = 0; i < col_size; ++i)
@@ -95,10 +95,10 @@ DATA_TYPE dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
 }
 
 
-void project(DATA_TYPE *u, DATA_TYPE *v, DATA_TYPE *r, int col_size) {
+void fpa_project(DATA_TYPE *u, DATA_TYPE *v, DATA_TYPE *r, int col_size) {
     
-    DATA_TYPE dot_uv = dot(u, v, col_size);
-    DATA_TYPE dot_uu = dot(u, u, col_size);
+    DATA_TYPE dot_uv = fpa_dot(u, v, col_size);
+    DATA_TYPE dot_uu = fpa_dot(u, u, col_size);
 
     for(int i = 0; i < col_size; ++i)
         r[i] = mtfp(mtfp(dot_uv / dot_uu) * u[i]);
@@ -107,13 +107,13 @@ void project(DATA_TYPE *u, DATA_TYPE *v, DATA_TYPE *r, int col_size) {
 }
 
 
-void gram_schmidt(struct matrix *A) {
+void fpa_gram_schmidt(struct fpa_matrix *A) {
 
     DATA_TYPE *r = (DATA_TYPE*)malloc(A->col_size * sizeof(DATA_TYPE));
 
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < i; ++j) {
-            project(A->entry[j], A->entry[i], r, A->col_size);
+            fpa_project(A->entry[j], A->entry[i], r, A->col_size);
             for(int k = 0; k < A->col_size; ++k) {
                 A->entry[i][k] = mtfp(A->entry[i][k] - r[k]);
             }
@@ -132,17 +132,17 @@ void gram_schmidt(struct matrix *A) {
 }
 
 
-void lu_decomp(struct matrix *U, struct matrix *L) {
+void fpa_lu_decomp(struct fpa_matrix *U, struct fpa_matrix *L) {
 
-    // convert L into identity matrix
+    // convert L into identity fpa_matrix
     for(int i = 0; i < L->col_size; ++i) {
         L->entry[i][i] = 1;
     }
 
     DATA_TYPE factor = 0;
-    // sq_dim describes the dimensions of a square matrix: sq_dim = cols = rows
+    // sq_dim describes the dimensions of a square fpa_matrix: sq_dim = cols = rows
     int sq_dim = U->col_size;
-    // select top row in forming upper triangular matrix
+    // select top row in forming upper triangular fpa_matrix
     // the interator i is used as both a row and column iterator
     for(int i = 0; i < sq_dim - 1; ++i) {
         // select all rows below the target row
@@ -161,7 +161,7 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
 }
 
 
-void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE *b, DATA_TYPE *x) {
+void fpa_lu_solve(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *b, DATA_TYPE *x) {
 
     DATA_TYPE *y = (DATA_TYPE*)malloc(L->col_size * sizeof(DATA_TYPE));
     DATA_TYPE tmp;
@@ -186,7 +186,7 @@ void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE *b, DATA_TYPE *x) {
 }
 
 
-DATA_TYPE lu_det(struct matrix *U) {
+DATA_TYPE fpa_lu_det(struct fpa_matrix *U) {
 
     DATA_TYPE det = 1.0;
     for(int i = 0; i < U->col_size; ++i) {
@@ -197,18 +197,18 @@ DATA_TYPE lu_det(struct matrix *U) {
 }
 
 
-DATA_TYPE hadamard(struct matrix *A, DATA_TYPE det_A) {
+DATA_TYPE fpa_hadamard(struct fpa_matrix *A, DATA_TYPE det_A) {
    
-    // maybe make another param struct matrix *L
+    // maybe make another param struct fpa_matrix *L
     // if the user decides to pass in NULL then decompose
-    // matrix A using lu_det. Otherwise compute lu_solve
+    // fpa_matrix A using fpa_lu_det. Otherwise compute fpa_lu_solve
 
-    //DATA_TYPE det = lu_det(U);
+    //DATA_TYPE det = fpa_lu_det(U);
     DATA_TYPE det_sq = det_A * det_A;
     
     DATA_TYPE vol_sq = 1;
     for (int i = 0; i < A->col_size; i++)
-        vol_sq = vol_sq * dot(A->entry[i], A->entry[i], A->col_size);
+        vol_sq = vol_sq * fpa_dot(A->entry[i], A->entry[i], A->col_size);
 
     DATA_TYPE ratio = pow(det_sq/vol_sq, 1/(2.0 * A->col_size));
 
@@ -216,9 +216,9 @@ DATA_TYPE hadamard(struct matrix *A, DATA_TYPE det_A) {
 }
 
 
-void babai(struct matrix *L, struct matrix *U, DATA_TYPE *w, DATA_TYPE *x) {
+void fpa_babai(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *w, DATA_TYPE *x) {
 
-    lu_solve(L, U, w, x);
+    fpa_lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {
         x[i] = round(x[i]);
     }

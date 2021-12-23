@@ -1,16 +1,16 @@
 // Authors: Ratnodeep Bandyopadhyay
 // Copyright 11/20/21. All rights reserved.
 
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "math.h"
 //#include "qsoe_float_helper.h"
 
 
-struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
+struct fpa_matrix * fpa_new_matrix(int col_size, int row_size, int entry_range) {
     
-    struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
+    struct fpa_matrix *A = (struct fpa_matrix *)malloc(sizeof(struct fpa_matrix));
     A->row_size = row_size;
     A->col_size = col_size;
     //A->entry = (int**)malloc(row_size * sizeof(int*));
@@ -37,18 +37,18 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 }
 
 
-struct matrix * new_matrix_as_basis(int size, int entry_range) {
+struct fpa_matrix * new_matrix_as_basis(int size, int entry_range) {
     
-    struct matrix *A = new_matrix(size, size, entry_range);
+    struct fpa_matrix *A = fpa_new_matrix(size, size, entry_range);
     gram_schmidt(A);
 
     return A; 
 }
 
 
-struct matrix * copy_matrix(struct matrix *A) {
+struct fpa_matrix * fpa_copy_matrix(struct fpa_matrix *A) {
 
-    struct matrix *C = new_matrix(A->col_size, A->row_size, 1);
+    struct fpa_matrix *C = fpa_new_matrix(A->col_size, A->row_size, 1);
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) {
             C->entry[i][j] = A->entry[i][j];
@@ -59,7 +59,7 @@ struct matrix * copy_matrix(struct matrix *A) {
 }
 
 
-void del_matrix(struct matrix *A) {
+void del_fpa_matrix(struct fpa_matrix *A) {
 
     for(int i = 0; i < A->row_size; ++i)
         free(A->entry[i]);
@@ -70,7 +70,7 @@ void del_matrix(struct matrix *A) {
 }
 
 
-void print_matrix(struct matrix *A) {
+void print_fpa_matrix(struct fpa_matrix *A) {
 
     for(int i = 0; i < A->col_size; ++i) {
         for(int j = 0; j < A->row_size; ++j) {
@@ -106,7 +106,7 @@ void project(float *u, float *v, float *r, int col_size) {
 }
 
 
-void gram_schmidt(struct matrix *A) {
+void fpa_gram_schmidt(struct fpa_matrix *A) {
 
     float *r = (float*)malloc(A->col_size * sizeof(float));
 
@@ -131,17 +131,17 @@ void gram_schmidt(struct matrix *A) {
 }
 
 
-void lu_decomp(struct matrix *U, struct matrix *L) {
+void fpa_lu_decomp(struct fpa_matrix *U, struct fpa_matrix *L) {
 
-    // convert L into identity matrix
+    // convert L into identity fpa_matrix
     for(int i = 0; i < L->col_size; ++i) {
         L->entry[i][i] = 1;
     }
 
     float factor = 0;
-    // sq_dim describes the dimensions of a square matrix: sq_dim = cols = rows
+    // sq_dim describes the dimensions of a square fpa_matrix: sq_dim = cols = rows
     int sq_dim = U->col_size;
-    // select top row in forming upper triangular matrix
+    // select top row in forming upper triangular fpa_matrix
     // the interator i is used as both a row and column iterator
     for(int i = 0; i < sq_dim - 1; ++i) {
         // select all rows below the target row
@@ -160,7 +160,7 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
 }
 
 
-void lu_solve(struct matrix *L, struct matrix *U, float *b, float *x) {
+void lu_solve(struct fpa_matrix *L, struct fpa_matrix *U, float *b, float *x) {
 
     float *y = (float*)malloc(L->col_size * sizeof(float));
     float tmp = 0;
@@ -185,7 +185,7 @@ void lu_solve(struct matrix *L, struct matrix *U, float *b, float *x) {
 }
 
 
-float lu_det(struct matrix *U) {
+float fpa_lu_det(struct fpa_matrix *U) {
 
     float det = 1;
     for(int i = 0; i < U->col_size; ++i) {
@@ -196,11 +196,11 @@ float lu_det(struct matrix *U) {
 }
 
 
-float hadamard(struct matrix *A, float det_A) {
+float hadamard(struct fpa_matrix *A, float det_A) {
    
-    // maybe make another param struct matrix *L
+    // maybe make another param struct fpa_matrix *L
     // if the user decides to pass in NULL then decompose
-    // matrix A using lu_det. Otherwise compute lu_solve
+    // fpa_matrix A using lu_det. Otherwise compute lu_solve
 
     //float det = lu_det(U);
     float det_sq = det_A * det_A;
@@ -215,7 +215,7 @@ float hadamard(struct matrix *A, float det_A) {
 }
 
 
-void babai(struct matrix *L, struct matrix *U, float *w, float *x) {
+void babai(struct fpa_matrix *L, struct fpa_matrix *U, float *w, float *x) {
 
     lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {

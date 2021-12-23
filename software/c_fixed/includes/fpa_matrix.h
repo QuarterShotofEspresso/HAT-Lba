@@ -5,13 +5,15 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include "config.h"
+
 struct fpa_matrix {
 
     int row_size;
     int col_size;
     
     //int **entry;
-    float **entry;
+    DATA_TYPE **entry;
 
 };
 
@@ -47,15 +49,15 @@ void print_fpa_matrix(struct fpa_matrix *A);
 
 
 // DOT: compute the fpa_dot product of two vectors
-float dot(float *u, float *v, int col_size);
+DATA_TYPE fpa_dot(DATA_TYPE *u, DATA_TYPE *v, int col_size);
 
 
 // PROJECT: fpa_project vector u onto vector v. Return the
 // projected vector through vector r.
-void project(float *u, float *v, float *r, int col_size);
+void fpa_project(DATA_TYPE *u, DATA_TYPE *v, DATA_TYPE *r, int col_size);
 
 
-// GRAM_SCHMIDT: orthogonalize a fpa_matrix A using the gram_schmidt algorithm
+// GRAM_SCHMIDT: orthogonalize a fpa_matrix A using the fpa_gram_schmidt algorithm
 void fpa_gram_schmidt(struct fpa_matrix *A);
 
 
@@ -69,25 +71,25 @@ void fpa_lu_decomp(struct fpa_matrix *U, struct fpa_matrix *L);
 // LUP_SOLVE: using lup decomposition solve for x in Ax = b
 // where A is a square fpa_matrix, and x and b are vectors.
 // The result is stored in the fpa_matrix x.
-void lu_solve(struct fpa_matrix *L, struct fpa_matrix *U, float *b, float *x);
+void fpa_lu_solve(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *b, DATA_TYPE *x);
 
 
 // LUP_DET: given fpa_matrix A, compute its determinant using lup decomposition
 // RETURN: the determinant
-float fpa_lu_det(struct fpa_matrix *U);
+DATA_TYPE fpa_lu_det(struct fpa_matrix *U);
 
 
-// HADAMARD: compute the hadamard ratio of a given fpa_matrix
-// RETURN: the hadamard ratio as a float.
-float hadamard(struct fpa_matrix *A, float det_A);
+// HADAMARD: compute the fpa_hadamard ratio of a given fpa_matrix
+// RETURN: the fpa_hadamard ratio as a DATA_TYPE.
+DATA_TYPE fpa_hadamard(struct fpa_matrix *A, DATA_TYPE det_A);
 
 
 // BABAI: given a target vector w and a lattice defined by the
 // col space of fpa_matrix A, find the closest vector on the lattice to w
-// by solving Ax = w. Quite similar to Ax = b except babai will 
+// by solving Ax = w. Quite similar to Ax = b except fpa_babai will
 // round the resulting vector x.
 // RETURN: the vector on the lattice closest to vector w
-void babai(struct fpa_matrix *L, struct fpa_matrix *U, float *w, float *x);
+void fpa_babai(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *w, DATA_TYPE *x);
 
 
 #endif

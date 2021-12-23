@@ -11,7 +11,7 @@
 ## Overview
 
 The Lattice Cryptography Library provicedes a set of hardware and software tools developers can use to accelerate their Lattice-based projects.
-The library primarily contains resources aimed at Lattice Cryptography, but can be generalized to be used for any Lattice-based project.
+The library primarily contains resources aimed at Lattice Cryptography, but can be generalized to be used for any Lattice-based fpa_project.
 
 
 ## Team
@@ -24,7 +24,7 @@ Demo: <https://youtu.be/JX_zPpCG1AI>
 
 
 ## How To Run
-In the project directory, first run:
+In the fpa_project directory, first run:
 
 ### `cd software/c_float/`
 

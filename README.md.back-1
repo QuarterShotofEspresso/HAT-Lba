@@ -26,7 +26,7 @@ Once the modifications are completed they need to be merged with the main branch
 > Note: Resolve merge conflicts if they appear.
 
 If you have created a project (under the projects tab), move the task to the correct column.
-If the project is now completed, please close it to avoid clutter.
+If the fpa_project is now completed, please close it to avoid clutter.
 
 Whenever the remote main branch is updated, everyone's local main branch must be updated.  
 `git checkout main`  

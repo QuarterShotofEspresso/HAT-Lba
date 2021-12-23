@@ -1,12 +1,12 @@
 // Author: Ratnodeep Bandyopadhyay
 // Copyright Nov 21, 2021. All rights reserved.
 
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"
 //#include "config.h"
-#include "fixed_approximation.h"
+#include "fpa.h"
 
 int main(int argc, char *argv[]) {
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     printf("[%d, %d] in range(%d)\n", col_size, row_size, range);
 
-    struct matrix *tm = new_matrix(col_size, row_size, range);
+    struct fpa_matrix *tm = fpa_new_matrix(col_size, row_size, range);
    
     //printf("tm @ %p. tm->col_size: %d. tm->row_size: %d. tm->entry @ %p\n", tm, tm->col_size, tm->row_size, tm->entry);
     //printf("tm @ %p\n", tm);
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         printf("\n");
     }
 
-    del_matrix(tm);
+    del_fpa_matrix(tm);
 
     return 0;
 }

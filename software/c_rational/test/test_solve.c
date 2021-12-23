@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
@@ -12,18 +12,18 @@ int main(int argc, char *argv[]) {
     int range = atoi(argv[2]);
 
     // allocate memory for matrices and vectors
-    struct matrix *A = new_matrix(size, size, range);    
-    struct matrix *L = new_matrix(size, size, 1);    
+    struct fpa_matrix *A = fpa_new_matrix(size, size, range);
+    struct fpa_matrix *L = fpa_new_matrix(size, size, 1);
 
     float *w = (float *)malloc(size * sizeof(float));
     float *x = (float *)malloc(size * sizeof(float));
    
     // print contents of A
     printf("A before ortho:\n");
-    print_matrix(A);
+    print_fpa_matrix(A);
     gram_schmidt(A);
     printf("A after ortho:\n");
-    print_matrix(A);
+    print_fpa_matrix(A);
 
     char ans;
     printf("Quit? ");
@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
         // decompose and test lu_solve
         lu_decomp(A, L);
         printf("U:\n");
-        print_matrix(A);
+        print_fpa_matrix(A);
         printf("L:\n");
-        print_matrix(L);
+        print_fpa_matrix(L);
         lu_solve(L, A, w, x);
 
         // print results
@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
     }
 
     // deallocate memory
-    del_matrix(A);
-    del_matrix(L);
+    del_fpa_matrix(A);
+    del_fpa_matrix(L);
     free(w);
     free(x);
 

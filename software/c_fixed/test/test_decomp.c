@@ -1,8 +1,8 @@
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
-#include "fixed_approximation.h"
+#include "fpa.h"
 
 int main(int argc, char *argv[]) {
 
@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
     int size = atoi(argv[1]);
     int range = atoi(argv[2]);
 
-    struct matrix *A = new_matrix(size, size, range);    
-    struct matrix *L = new_matrix(size, size, 1);    
+    struct fpa_matrix *A = fpa_new_matrix(size, size, range);
+    struct fpa_matrix *L = fpa_new_matrix(size, size, 1);
 
     printf("A:\n");
     for(int i = 0; i < A->col_size; ++i) {
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    lu_decomp(A, L);
+    fpa_lu_decomp(A, L);
     
     printf("U:\n");
     for(int i = 0; i < A->col_size; ++i) {
@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    del_matrix(A);
-    del_matrix(L);
+    del_fpa_matrix(A);
+    del_fpa_matrix(L);
 
     return 0;
 }

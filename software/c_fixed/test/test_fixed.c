@@ -1,4 +1,4 @@
-#include "fixed_approximation.h"
+#include "fpa.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "config.h"
