@@ -15,9 +15,6 @@ struct matrix {
 
 };
 
-// TODO: print_matrix()
-// TODO: replace new_matrix_as_basis with copy_matrix()
-
 // NEW_MATRIX: allocates and initalizes all entries
 // of a square matrix to a random integer.
 // RETURN: pointer to a matrix of size col_size x row_size

@@ -17,8 +17,6 @@ struct fpa_matrix {
 
 };
 
-// TODO: print_fpa_matrix()
-// TODO: replace new_matrix_as_basis with fpa_copy_matrix()
 
 // NEW_MATRIX: allocates and initalizes all entries
 // of a square fpa_matrix to a random integer.
