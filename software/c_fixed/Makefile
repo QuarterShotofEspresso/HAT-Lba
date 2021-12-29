@@ -10,13 +10,16 @@ SDIR=src
 
 FLAGS = -I$(IDIR)/
 
-IDEPS = $(IDIR)/matrix.h $(IDIR)/fixed_approximation.h
-SDEPS = $(SDIR)/matrix.c $(SDIR)/fixed_approximation.c
+IDEPS = $(IDIR)/fpa_matrix.h $(IDIR)/fpa.h
+SDEPS = $(SDIR)/fpa_matrix.c $(SDIR)/fpa.c
 
 
 # Manual Example
 # gcc -o builds/new_del_matrix test/new_del_matrix.c src/matrix.c src/qsoe_float_helper.c -Iincludes
 # gcc -o builds/new_del_matrix test/new_del_matrix.c src/matrix.c -Iincludes
+
+#all_tests: $(TDIR)/*.c $(SDEPS) $(IDEPS)
+#	$(CC) -o
 
 # build test program
 # Use: make <filename_of_test>

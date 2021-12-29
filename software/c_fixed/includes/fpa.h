@@ -1,7 +1,8 @@
 #ifndef FIXED_APPROXIMATION_H
 #define FIXED_APPROXIMATION_H
 
-#include "config.h"
+// General
+#include "../../includes/config.h"
 
 // print_fpa_meta
 void init_fpa_meta();

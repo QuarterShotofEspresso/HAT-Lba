@@ -36,6 +36,8 @@ int main(int argc, char *argv[]) {
         for(int i = 0; i < size; ++i) {
             printf("w[%d]: ", i);
             scanf("%lf", &w[i]);
+            w[i] = mtfp(w[i]);
+            printf("logged w[%d]: %f\n", i, w[i]);
         }
 
         // decompose and test fpa_lu_solve

@@ -1,88 +1,93 @@
 // Authors: Ratnodeep Bandyopadhyay
 // Copyright 11/20/21. All rights reserved.
 
-#include "fpa_matrix.h"
-#include "stdlib.h"
-#include "stdio.h"
-#include "math.h"
-#include "config.h"
-#include "fpa.h"
+// General
+#include "../../includes/config.h"
+#include "../../includes/mmem.h"
+
+// Specialized
+#include "../includes/fpa.h"
+#include "../includes/fpa_matrix.h"
+
+// External
+#include <stdlib.h>
+#include <math.h>
 
 
-struct fpa_matrix * fpa_new_matrix(int col_size, int row_size, int entry_range) {
-    
-    struct fpa_matrix *A = (struct fpa_matrix *)malloc(sizeof(struct fpa_matrix));
-    A->row_size = row_size;
-    A->col_size = col_size;
-    //A->entry = (int**)malloc(row_size * sizeof(int*));
-    A->entry = (DATA_TYPE**)malloc(row_size * sizeof(DATA_TYPE*));
-
-    if(entry_range == 1) {
-		for(int i = 0; i < A->row_size; ++i) {
-			//A->entry[i] = (int*)calloc(col_size, sizeof(int));
-			A->entry[i] = (DATA_TYPE*)calloc(col_size, sizeof(DATA_TYPE));
-		}
-    }
-
-    else {
-        for(int i = 0; i < A->row_size; ++i) {
-            //A->entry[i] = (int*)malloc(col_size * sizeof(int));
-            A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
-            for(int j = 0; j < col_size; ++j) {
-                A->entry[i][j] = mtfp((DATA_TYPE)(rand() % entry_range));
-            }
-        }
-    }
-
-    return A;
-}
-
-
-struct fpa_matrix * new_matrix_as_basis(int size, int entry_range) {
-
-    struct fpa_matrix *A = fpa_new_matrix(size, size, entry_range);
-    fpa_gram_schmidt(A);
-
-    return A;
-}
+//struct matrix * fpa_new_matrix(int col_size, int row_size, int entry_range) {
+//
+//    struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
+//    A->row_size = row_size;
+//    A->col_size = col_size;
+//    //A->entry = (int**)malloc(row_size * sizeof(int*));
+//    A->entry = (DATA_TYPE**)malloc(row_size * sizeof(DATA_TYPE*));
+//
+//    if(entry_range == 1) {
+//		for(int i = 0; i < A->row_size; ++i) {
+//			//A->entry[i] = (int*)calloc(col_size, sizeof(int));
+//			A->entry[i] = (DATA_TYPE*)calloc(col_size, sizeof(DATA_TYPE));
+//		}
+//    }
+//
+//    else {
+//        for(int i = 0; i < A->row_size; ++i) {
+//            //A->entry[i] = (int*)malloc(col_size * sizeof(int));
+//            A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
+//            for(int j = 0; j < col_size; ++j) {
+//                A->entry[i][j] = mtfp((DATA_TYPE)(rand() % entry_range));
+//            }
+//        }
+//    }
+//
+//    return A;
+//}
 
 
-struct fpa_matrix * fpa_copy_matrix(struct fpa_matrix *A) {
-
-    struct fpa_matrix *C = fpa_new_matrix(A->col_size, A->row_size, 1);
-    for(int i = 0; i < A->row_size; ++i) {
-        for(int j = 0; j < A->col_size; ++j) {
-            C->entry[i][j] = A->entry[i][j];
-        }
-    }
-
-    return C;
-}
-
-
-void del_fpa_matrix(struct fpa_matrix *A) {
-
-    for(int i = 0; i < A->row_size; ++i)
-        free(A->entry[i]);
-    free(A->entry);
-    free(A);
-
-    return;
-}
-
-
-void print_fpa_matrix(struct fpa_matrix *A) {
-
-    for(int i = 0; i < A->col_size; ++i) {
-        for(int j = 0; j < A->row_size; ++j) {
-            printf("%f, ", A->entry[j][i]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-
-    return;
-}
+//struct matrix * new_matrix_as_basis(int size, int entry_range) {
+//
+//    struct matrix *A = fpa_new_matrix(size, size, entry_range);
+//    fpa_gram_schmidt(A);
+//
+//    return A;
+//}
+//
+//
+//struct matrix * fpa_copy_matrix(struct matrix *A) {
+//
+//    struct matrix *C = fpa_new_matrix(A->col_size, A->row_size, 1);
+//    for(int i = 0; i < A->row_size; ++i) {
+//        for(int j = 0; j < A->col_size; ++j) {
+//            C->entry[i][j] = A->entry[i][j];
+//        }
+//    }
+//
+//    return C;
+//}
+//
+//
+//void del_fpa_matrix(struct matrix *A) {
+//
+//    for(int i = 0; i < A->row_size; ++i)
+//        free(A->entry[i]);
+//    free(A->entry);
+//    free(A);
+//
+//    return;
+//}
+//
+//
+//void print_fpa_matrix(struct matrix *A) {
+//
+//    for(int i = 0; i < A->col_size; ++i) {
+//        for(int j = 0; j < A->row_size; ++j) {
+//            printf("%f, ", A->entry[j][i]);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
+//
+//    return;
+//}
 
 
 DATA_TYPE fpa_dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
@@ -107,7 +112,7 @@ void fpa_project(DATA_TYPE *u, DATA_TYPE *v, DATA_TYPE *r, int col_size) {
 }
 
 
-void fpa_gram_schmidt(struct fpa_matrix *A) {
+void fpa_gram_schmidt(struct matrix *A) {
 
     DATA_TYPE *r = (DATA_TYPE*)malloc(A->col_size * sizeof(DATA_TYPE));
 
@@ -132,7 +137,7 @@ void fpa_gram_schmidt(struct fpa_matrix *A) {
 }
 
 
-void fpa_lu_decomp(struct fpa_matrix *U, struct fpa_matrix *L) {
+void fpa_lu_decomp(struct matrix *U, struct matrix *L) {
 
     // convert L into identity fpa_matrix
     for(int i = 0; i < L->col_size; ++i) {
@@ -161,7 +166,7 @@ void fpa_lu_decomp(struct fpa_matrix *U, struct fpa_matrix *L) {
 }
 
 
-void fpa_lu_solve(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *b, DATA_TYPE *x) {
+void fpa_lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE *b, DATA_TYPE *x) {
 
     DATA_TYPE *y = (DATA_TYPE*)malloc(L->col_size * sizeof(DATA_TYPE));
     DATA_TYPE tmp;
@@ -186,7 +191,7 @@ void fpa_lu_solve(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *b, DATA
 }
 
 
-DATA_TYPE fpa_lu_det(struct fpa_matrix *U) {
+DATA_TYPE fpa_lu_det(struct matrix *U) {
 
     DATA_TYPE det = 1.0;
     for(int i = 0; i < U->col_size; ++i) {
@@ -197,11 +202,11 @@ DATA_TYPE fpa_lu_det(struct fpa_matrix *U) {
 }
 
 
-DATA_TYPE fpa_hadamard(struct fpa_matrix *A, DATA_TYPE det_A) {
+DATA_TYPE fpa_hadamard(struct matrix *A, DATA_TYPE det_A) {
    
-    // maybe make another param struct fpa_matrix *L
+    // maybe make another param struct matrix *L
     // if the user decides to pass in NULL then decompose
-    // fpa_matrix A using fpa_lu_det. Otherwise compute fpa_lu_solve
+    // matrix A using fpa_lu_det. Otherwise compute fpa_lu_solve
 
     //DATA_TYPE det = fpa_lu_det(U);
     DATA_TYPE det_sq = det_A * det_A;
@@ -216,7 +221,7 @@ DATA_TYPE fpa_hadamard(struct fpa_matrix *A, DATA_TYPE det_A) {
 }
 
 
-void fpa_babai(struct fpa_matrix *L, struct fpa_matrix *U, DATA_TYPE *w, DATA_TYPE *x) {
+void fpa_babai(struct matrix *L, struct matrix *U, DATA_TYPE *w, DATA_TYPE *x) {
 
     fpa_lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {

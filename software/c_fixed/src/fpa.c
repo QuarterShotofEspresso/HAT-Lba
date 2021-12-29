@@ -1,6 +1,12 @@
-#include "config.h"
-#include "fpa.h"
-#include "math.h"
+
+// General
+#include "../../includes/config.h"
+
+// Specialized
+#include "../includes/fpa.h"
+
+// External
+#include <math.h>
 #include <stdio.h>
 
 

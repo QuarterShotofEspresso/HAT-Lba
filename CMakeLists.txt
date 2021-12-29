@@ -8,7 +8,7 @@ include_directories(software/c_float/includes)
 include_directories(software/c_rational/includes)
 
 add_executable(lattice
-        software/c_fixed/includes/config.h
+        software/includes/config.h
         software/c_fixed/includes/fpa.h
         software/c_fixed/includes/fpa_matrix.h
         software/c_fixed/src/fpa.c
@@ -46,4 +46,4 @@ add_executable(lattice
         software/c_rational/test/test_malloc.c
         software/c_rational/test/test_project.c
         software/c_rational/test/test_rational.c
-        software/c_rational/test/test_solve.c)
+        software/c_rational/test/test_solve.c software/test/bulk_fixed.c software/includes/mmem.h software/src/mmem.c)
