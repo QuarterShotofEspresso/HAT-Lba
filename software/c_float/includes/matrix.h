@@ -9,43 +9,6 @@
 #include "../../includes/config.h"
 #include "../../includes/mmem.h"
 
-//struct matrix {
-//
-//    int row_size;
-//    int col_size;
-//
-//    //int **entry;
-//    DATA_TYPE  **entry;
-//
-//};
-//
-//// NEW_MATRIX: allocates and initalizes all entries
-//// of a square matrix to a random integer.
-//// RETURN: pointer to a matrix of size col_size x row_size
-//struct matrix * new_matrix(int col_size, int row_size, int entry_range);
-//
-//
-//// NEW_MATRIX_AS_BASIS: create a matrix of size dim x dim with entries
-//// randomly assigned between 0 and entry_range. The matrix's columns
-//// will represent the basis vectors of the space Z^dim
-//// RETURN: a matrix of dimension size x size
-//struct matrix * new_matrix_as_basis(int size, int entry_range);
-//
-//
-//// COPY_MATRIX: create a new matrix copying the entries of the
-//// matrix A
-//// RETURN: a pointer to the new the matrix copy
-//struct matrix * copy_matrix(struct matrix *A);
-//
-//
-//// DEL_MATRIX: given a matrix, deallocate all memory
-//// RETURN: a bool indicating if it was sucesffuly deallocated
-//void del_matrix(struct matrix *A);
-//
-//
-//// PRINT_MATRIX: prints the contents of matrix A
-//void print_matrix(struct matrix *A);
-
 
 // DOT: compute the dot product of two vectors
 DATA_TYPE  dot(DATA_TYPE  *u, DATA_TYPE  *v, int col_size);
@@ -78,9 +41,9 @@ void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE  *b, DATA_TYPE  *x);
 DATA_TYPE  lu_det(struct matrix *U);
 
 
-// HADAMARD: compute the hadamard ratio of a given matrix
-// RETURN: the hadamard ratio as a DATA_TYPE .
-DATA_TYPE  hadamard(struct matrix *A, DATA_TYPE  det_A);
+// HADAMARD: compute the hadamard ratio of a given matrix A.
+// RETURN: the hadamard ratio as a DATA_TYPE.
+DATA_TYPE  hadamard(struct matrix *A, DATA_TYPE det_A);
 
 
 // BABAI: given a target vector w and a lattice defined by the
@@ -88,7 +51,30 @@ DATA_TYPE  hadamard(struct matrix *A, DATA_TYPE  det_A);
 // by solving Ax = w. Quite similar to Ax = b except babai will 
 // round the resulting vector x.
 // RETURN: the vector on the lattice closest to vector w
-void babai(struct matrix *L, struct matrix *U, DATA_TYPE  *w, DATA_TYPE  *x);
+void babai(struct matrix *L, struct matrix *U, DATA_TYPE *w, DATA_TYPE *x);
+
+
+// TRANSPOSE: Given a matrix A, transpose it.
+// RETURN: the transposed matrix through AT
+void transpose(struct matrix *AT, struct matrix *A);
+
+
+// MATRIX_MATRIX_MULTIPLY: Given two matrices, A_left and A_right,
+// perform the following operation: A_result = A_left * A_right
+// RETURN: the product matrix A_result
+void mxm(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right);
+
+
+// VECTOR_MATRIX_MULTIPLY: given a matrix A and vector v, perform
+// the following operation: r = A * v.
+// RETURN: the product vector r
+void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v);
+
+
+// CREATE_ELEMENTARY_MATRIX: given a matrix pointer A, update the entries of A
+// with a lower and upper triangular matrix and multiply them to create
+// a resulting matrix of determinant (+/-)1.
+void unimodularize_matrix(struct matrix *A);
 
 
 #endif

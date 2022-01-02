@@ -14,82 +14,6 @@
 #include <math.h>
 
 
-//struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
-//
-//    struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
-//    A->row_size = row_size;
-//    A->col_size = col_size;
-//    //A->entry = (int**)malloc(row_size * sizeof(int*));
-//    A->entry = (DATA_TYPE **)malloc(row_size * sizeof(DATA_TYPE *));
-//
-//    if(entry_range == 1) {
-//		for(int i = 0; i < A->row_size; ++i) {
-//			//A->entry[i] = (int*)calloc(col_size, sizeof(int));
-//			A->entry[i] = (DATA_TYPE *)calloc(col_size, sizeof(DATA_TYPE ));
-//		}
-//    }
-//
-//    else {
-//        for(int i = 0; i < A->row_size; ++i) {
-//            //A->entry[i] = (int*)malloc(col_size * sizeof(int));
-//            A->entry[i] = (DATA_TYPE *)malloc(col_size * sizeof(DATA_TYPE ));
-//            for(int j = 0; j < col_size; ++j) {
-//                A->entry[i][j] = (DATA_TYPE )(rand() % entry_range);
-//            }
-//        }
-//    }
-//
-//    return A;
-//}
-
-
-//struct matrix * new_matrix_as_basis(int size, int entry_range) {
-//
-//    struct matrix *A = new_matrix(size, size, entry_range);
-//    gram_schmidt(A);
-//
-//    return A;
-//}
-//
-//
-//struct matrix * copy_matrix(struct matrix *A) {
-//
-//    struct matrix *C = new_matrix(A->col_size, A->row_size, 1);
-//    for(int i = 0; i < A->row_size; ++i) {
-//        for(int j = 0; j < A->col_size; ++j) {
-//            C->entry[i][j] = A->entry[i][j];
-//        }
-//    }
-//
-//    return C;
-//}
-//
-//
-//void del_matrix(struct matrix *A) {
-//
-//    for(int i = 0; i < A->row_size; ++i)
-//        free(A->entry[i]);
-//    free(A->entry);
-//    free(A);
-//
-//    return;
-//}
-//
-//
-//void print_matrix(struct matrix *A) {
-//
-//    for(int i = 0; i < A->col_size; ++i) {
-//        for(int j = 0; j < A->row_size; ++j) {
-//            printf("%f, ", A->entry[j][i]);
-//        }
-//        printf("\n");
-//    }
-//    printf("\n");
-//
-//    return;
-//}
-
-
 DATA_TYPE dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
     
     DATA_TYPE  dot_prod = 0;
@@ -191,7 +115,7 @@ void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE  *b, DATA_TYPE  *x) 
 }
 
 
-DATA_TYPE  lu_det(struct matrix *U) {
+DATA_TYPE lu_det(struct matrix *U) {
 
     DATA_TYPE  det = 1;
     for(int i = 0; i < U->col_size; ++i) {
@@ -202,7 +126,7 @@ DATA_TYPE  lu_det(struct matrix *U) {
 }
 
 
-DATA_TYPE  hadamard(struct matrix *A, DATA_TYPE  det_A) {
+DATA_TYPE hadamard(struct matrix *A, DATA_TYPE  det_A) {
    
     // maybe make another param struct matrix *L
     // if the user decides to pass in NULL then decompose
@@ -232,4 +156,38 @@ void babai(struct matrix *L, struct matrix *U, DATA_TYPE  *w, DATA_TYPE  *x) {
 }
 
 
+// TRANSPOSE: Given a matrix A, transpose it.
+// RETURN: the transposed matrix through AT
+void transpose(struct matrix *AT, struct matrix *A) {
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < A->col_size; ++i) {
+            AT->entry[j][i] = A->entry[i][j];
+        }
+    }
 
+    return;
+}
+
+
+// MATRIX_MATRIX_MULTIPLY: Given two matrices, A_left and A_right,
+// perform the following operation: A_result = A_left * A_right
+// RETURN: the product matrix A_result
+void mxm(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right) {
+
+}
+
+
+// VECTOR_MATRIX_MULTIPLY: given a matrix A and vector v, perform
+// the following operation: r = A * v.
+// RETURN: the product vector r
+void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v) {
+
+}
+
+
+// CREATE_ELEMENTARY_MATRIX: given a matrix pointer A, update the entries of A
+// with a lower and upper triangular matrix and multiply them to create
+// a resulting matrix of determinant (+/-)1.
+void unimodularize_matrix(struct matrix *A) {
+
+}
