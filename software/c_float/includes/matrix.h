@@ -74,7 +74,7 @@ void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v);
 // CREATE_ELEMENTARY_MATRIX: given a matrix pointer A, update the entries of A
 // with a lower and upper triangular matrix and multiply them to create
 // a resulting matrix of determinant (+/-)1.
-void unimodularize_matrix(struct matrix *A);
+void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range);
 
 
 #endif

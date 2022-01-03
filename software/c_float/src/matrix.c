@@ -210,6 +210,31 @@ void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v) {
 // CREATE_ELEMENTARY_MATRIX: given a matrix pointer A, update the entries of A
 // with a lower and upper triangular matrix and multiply them to create
 // a resulting matrix of determinant (+/-)1.
-void unimodularize_matrix(struct matrix *A) {
+void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
 
+    struct matrix *TU = new_matrix(A->col_size, A->row_size, 1);
+    struct matrix *TL = new_matrix(A->col_size, A->row_size, 1);
+
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < A->col_size; ++j) {
+            if(j < i) {
+                TU->entry[i][j] = rand() % upper_range;
+                TL->entry[i][j] = 0;
+            } else if (j > i) {
+                TU->entry[i][j] = 0;
+                TL->entry[i][j] = rand() % lower_range;
+            } else { // j == i
+                TU->entry[i][i] = 1;
+                TL->entry[i][i] = 1;
+            }
+        }
+    }
+
+    print_matrix(TL);
+    print_matrix(TU);
+
+    mxm(A, TL, TU);
+
+    del_matrix(TU);
+    del_matrix(TL);
 }
