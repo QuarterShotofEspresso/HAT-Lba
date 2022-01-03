@@ -160,7 +160,7 @@ void babai(struct matrix *L, struct matrix *U, DATA_TYPE  *w, DATA_TYPE  *x) {
 // RETURN: the transposed matrix through AT
 void transpose(struct matrix *AT, struct matrix *A) {
     for(int i = 0; i < A->row_size; ++i) {
-        for(int j = 0; j < A->col_size; ++i) {
+        for(int j = 0; j < A->col_size; ++j) {
             AT->entry[j][i] = A->entry[i][j];
         }
     }

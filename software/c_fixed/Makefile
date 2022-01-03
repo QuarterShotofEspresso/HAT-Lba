@@ -24,8 +24,8 @@ SDEPS = $(SDIR)/fpa_matrix.c $(SDIR)/fpa.c
 # build test program
 # Use: make <filename_of_test>
 # Example: make test_malloc
-%: $(TDIR)/%.c $(SDEPS) $(IDEPS)
-	$(CC) -o $(BDIR)/$@ $< $(SDEPS) $(FLAGS)
+%: $(GEN_TDIR)/%.c $(SDEPS) $(IDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(SDEPS) $(FLAGS)
 
 
 .PHONY: clean
