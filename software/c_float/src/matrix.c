@@ -194,6 +194,16 @@ void mxm(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right)
 // RETURN: the product vector r
 void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v) {
 
+    struct matrix *AT = new_matrix(A->col_size, A->row_size, 1);
+    transpose(AT, A);
+
+    for(int i = 0; i < A->row_size; ++i) {
+        r[i] = dot(v, AT->entry[i], A->col_size);
+    }
+
+    del_matrix(AT);
+
+    return;
 }
 
 
