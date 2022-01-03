@@ -174,6 +174,18 @@ void transpose(struct matrix *AT, struct matrix *A) {
 // RETURN: the product matrix A_result
 void mxm(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right) {
 
+    struct matrix *A_leftT = new_matrix(A_left->col_size, A_left->row_size, 1);
+    transpose(A_leftT, A_left);
+
+    for(int i = 0; i < A_result->row_size; ++i) {
+        for(int j = 0; j < A_result->col_size; ++j) {
+            A_result->entry[i][j] = dot(A_leftT->entry[j], A_right->entry[i], A_result->col_size);
+        }
+    }
+
+    del_matrix(A_leftT);
+
+    return;
 }
 
 

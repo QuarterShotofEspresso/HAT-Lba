@@ -46,4 +46,4 @@ add_executable(lattice
         software/c_rational/test/test_malloc.c
         software/c_rational/test/test_project.c
         software/c_rational/test/test_rational.c
-        software/c_rational/test/test_solve.c software/test/bulk_fixed.c software/includes/mmem.h software/src/mmem.c software/c_float/includes/ggh.h software/c_float/src/ggh.c software/c_float/test/test_transpose.c)
+        software/c_rational/test/test_solve.c software/test/bulk_fixed.c software/includes/mmem.h software/src/mmem.c software/c_float/includes/ggh.h software/c_float/src/ggh.c software/c_float/test/test_transpose.c software/c_float/test/test_mxm.c)
