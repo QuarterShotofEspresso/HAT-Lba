@@ -11,15 +11,16 @@
 
 // GEN_PRIVATE_KEY: Given the size of the key and a
 // pointer to the key, generate the private key V.
-void gen_private_key(struct matrix *V, int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound) {
+struct matrix * gen_private_key(int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound) {
 
-    V = new_matrix(chunk_size, chunk_size, entry_range);
-    printf("%p\n", V);
+    struct matrix *V = new_matrix(chunk_size, chunk_size, entry_range);
     struct matrix *VL = new_matrix(chunk_size, chunk_size, 1);
     struct matrix *VU = copy_matrix(V);
 
     gram_schmidt(V);
+
     lu_decomp(VU, VL);
+
     DATA_TYPE V_det = lu_det(VU);
     DATA_TYPE ratio = hadamard(V, V_det);
 
@@ -30,7 +31,7 @@ void gen_private_key(struct matrix *V, int chunk_size, int entry_range, DATA_TYP
     del_matrix(VL);
     del_matrix(VU);
 
-    return;
+    return V;
 }
 
 

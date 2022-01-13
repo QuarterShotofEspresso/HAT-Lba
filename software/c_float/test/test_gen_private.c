@@ -16,15 +16,11 @@ int main(int argc, char *argv[]) {
     int chunk_size = atoi(argv[1]);
     int entry_range = atoi(argv[2]);
 
-    struct matrix *V = NULL;
-
-    printf("Reached here\n");
-    gen_private_key(V, chunk_size, entry_range, 0.7);
-    printf("Reached here: %p\n", V);
+    struct matrix *V = gen_private_key(chunk_size, entry_range, 0.7);
+    printf("Reached here: %p, col_size: %d, row_size: %d\n", &V, V->col_size, V->row_size);
 
     print_matrix(V);
-    printf("Reached here\n");
-
+    printf("Reached here: %p\n", V);
 
     del_matrix(V);
 

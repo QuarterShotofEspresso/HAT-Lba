@@ -11,7 +11,7 @@
 
 // GEN_PRIVATE_KEY: Given the size of the key and a
 // pointer to the key, generate the private key V.
-void gen_private_key(struct matrix *V, int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound);
+struct matrix * gen_private_key(int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound);
 
 
 // GEN_PUBLIC_KEY: Given a private key V, generate
