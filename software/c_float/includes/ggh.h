@@ -17,7 +17,7 @@ struct matrix * gen_private_key(int chunk_size, int entry_range, DATA_TYPE lower
 // GEN_PUBLIC_KEY: Given a private key V, generate
 // the public key W by multiplying V by a unimodular matrix U.
 // Mathematically, return W = UV.
-void gen_public_key(struct matrix *W, struct matrix *V);
+struct matrix * gen_public_key(struct matrix *V);
 
 
 // ENCODE_MSG: Encode a message of some arbitrary size

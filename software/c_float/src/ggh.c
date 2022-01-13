@@ -38,16 +38,17 @@ struct matrix * gen_private_key(int chunk_size, int entry_range, DATA_TYPE lower
 // GEN_PUBLIC_KEY: Given a private key V, generate
 // the public key W by multiplying V by a unimodular matrix U.
 // Mathematically, return W = UV.
-void gen_public_key(struct matrix *W, struct matrix *V) {
+struct matrix * gen_public_key(struct matrix *V) {
 
+    struct matrix *W = new_matrix(V->col_size, V->row_size, 1);
     struct matrix *U = new_matrix(V->col_size, V->row_size, 1);
-    unimodularize_matrix(U, 100, 5);
 
+    unimodularize_matrix(U, 100, 5);
     mxm(W, U, V);
 
     del_matrix(U);
 
-    return;
+    return W;
 }
 
 

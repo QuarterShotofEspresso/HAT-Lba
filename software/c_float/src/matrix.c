@@ -230,8 +230,8 @@ void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
         }
     }
 
-    print_matrix(TL);
-    print_matrix(TU);
+//    print_matrix(TL);
+//    print_matrix(TU);
 
     mxm(A, TL, TU);
 
