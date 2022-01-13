@@ -33,8 +33,8 @@ GEN_IDEPS = $(GEN_IDIR)/*.h
 GEN_SDEPS = $(GEN_SDIR)/*.c
 
 # Floating-point Dependencies
-FLT_IDEPS = $(FLT_IDIR)/matrix.h
-FLT_SDEPS = $(FLT_SDIR)/matrix.c
+FLT_IDEPS = $(FLT_IDIR)/*.h
+FLT_SDEPS = $(FLT_SDIR)/*.c
 
 IDEPS = $(FIX_IDIR)/fpa_matrix.h $(FIX_IDIR)/fpa.h $(FLT_IDIR)/matrix.h $(GEN_IDIR)/*.h
 SDEPS = $(FIX_SDIR)/fpa_matrix.c $(FIX_SDIR)/fpa.c $(FLT_SDIR)/matrix.c $(GEN_SDIR)/*.c

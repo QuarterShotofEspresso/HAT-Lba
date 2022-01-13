@@ -14,6 +14,7 @@
 void gen_private_key(struct matrix *V, int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound) {
 
     V = new_matrix(chunk_size, chunk_size, entry_range);
+    printf("%p\n", V);
     struct matrix *VL = new_matrix(chunk_size, chunk_size, 1);
     struct matrix *VU = copy_matrix(V);
 
@@ -113,7 +114,7 @@ void decrypt_msg(struct matrix *m, struct matrix *W, struct matrix *V, struct ma
     lu_decomp(VU, VL);
 
     struct matrix *WU = copy_matrix(W);
-    struct matrix *WL = new_matrix(W->col_size; W->row_size; 1);
+    struct matrix *WL = new_matrix(W->col_size, W->row_size, 1);
     lu_decomp(WU, WL);
 
     struct matrix *Wm = new_matrix(m->col_size, 1, 1);
