@@ -2,9 +2,11 @@
 // Created by Ratnodeep Bandyopadhyay on 1/2/22.
 //
 
-#include "../includes/ggh.h"
-#include "../includes/matrix.h"
+// Internal
+#include "../../ggh.h"
+#include "../../matrix.h"
 
+// External
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -59,7 +61,7 @@ struct matrix * gen_public_key(struct matrix *V) {
 // note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
 struct matrix * encode_msg(char *message, int msg_length, int chunk_size) {
 
-    struct matrix *m = new_matrix();
+    struct matrix *m = new_matrix(chunk_size, (msg_length / chunk_size) + 1, 1);
     int total_chunks = (msg_length / chunk_size) + 1; // row_size (total columns)
 
     if(m == NULL) {
@@ -69,6 +71,8 @@ struct matrix * encode_msg(char *message, int msg_length, int chunk_size) {
     for(int i = 0; i < msg_length; ++i) {
         m->entry[i / chunk_size][i % chunk_size] = (int)message[i];
     }
+
+    return m;
 }
 
 

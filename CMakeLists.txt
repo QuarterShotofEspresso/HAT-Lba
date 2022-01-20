@@ -8,11 +8,10 @@ include_directories(software/c_float/includes)
 include_directories(software/c_rational/includes)
 
 add_executable(lattice
-        software/includes/config.h
+        software/config.h
         software/c_fixed/includes/fpa.h
-        software/c_fixed/includes/fpa_matrix.h
         software/c_fixed/src/fpa.c
-        software/c_fixed/src/fpa_matrix.c
+        software/c_fixed/src/matrix.c
         software/c_fixed/test/test_babai.c
         software/c_fixed/test/test_basis.c
         software/c_fixed/test/test_decomp.c
@@ -23,7 +22,7 @@ add_executable(lattice
         software/c_fixed/test/test_malloc.c
         software/c_fixed/test/test_project.c
         software/c_fixed/test/test_solve.c
-        software/c_float/includes/matrix.h
+        software/matrix.h
         software/c_float/src/matrix.c
         software/c_float/test/test_babai.c
         software/c_float/test/test_basis.c
@@ -46,4 +45,4 @@ add_executable(lattice
         software/c_rational/test/test_malloc.c
         software/c_rational/test/test_project.c
         software/c_rational/test/test_rational.c
-        software/c_rational/test/test_solve.c software/test/bulk_fixed.c software/includes/mmem.h software/src/mmem.c software/c_float/includes/ggh.h software/c_float/src/ggh.c software/c_float/test/test_transpose.c software/c_float/test/test_mxm.c software/c_float/test/test_mxv.c software/c_float/test/test_unimod.c software/c_float/test/test_gen_private.c software/c_float/test/test_gen_public.c)
+        software/c_rational/test/test_solve.c software/test/bulk_fixed.c software/src/matrix.c software/ggh.h software/c_float/src/ggh.c software/c_float/test/test_transpose.c software/c_float/test/test_mxm.c software/c_float/test/test_mxv.c software/c_float/test/test_unimod.c software/c_float/test/test_gen_private.c software/c_float/test/test_gen_public.c)

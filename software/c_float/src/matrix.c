@@ -2,12 +2,9 @@
 // Copyright 11/20/21. All rights reserved.
 
 
-// General
-#include "../../includes/config.h"
-#include "../../includes/mmem.h"
-
-// Specialized
-#include "../includes/matrix.h"
+// Internal
+#include "../../config.h"
+#include "../../matrix.h"
 
 // External
 #include <stdlib.h>

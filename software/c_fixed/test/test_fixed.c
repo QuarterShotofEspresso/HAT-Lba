@@ -1,7 +1,7 @@
 #include "fpa.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include "../../includes/config.h"
+#include "../../config.h"
 
 int main(int argc, char *argv[]) {
 

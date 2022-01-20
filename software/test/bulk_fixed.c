@@ -3,13 +3,13 @@
 //
 
 // General
-#include "../includes/config.h"
-#include "../includes/mmem.h"
+#include "../config.h"
+#include "../meta_matrix.h"
 
 // Specialized
 #include "../c_fixed/includes/fpa.h"
 #include "../c_fixed/includes/fpa_matrix.h"
-#include "../c_float/includes/matrix.h"
+#include "../matrix.h"
 
 // External
 #include <stdlib.h>

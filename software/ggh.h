@@ -6,7 +6,7 @@
 #define LATTICE_GGH_H
 
 #include "matrix.h"
-#include "../../includes/config.h"
+#include "config.h"
 
 
 // GEN_PRIVATE_KEY: Given the size of the key and a

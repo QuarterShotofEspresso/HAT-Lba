@@ -2,7 +2,7 @@
 // Created by Ratnodeep Bandyopadhyay on 1/2/22.
 //
 
-#include "../includes/matrix.h"
+#include "../../matrix.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"

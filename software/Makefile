@@ -15,7 +15,7 @@ FIX_SDIR=$(FIX_DIR)/src
 FIX_TDIR=$(FIX_DIR)/test
 
 # Floating-point Directories
-FLT_IDIR=$(FLT_DIR)/includes
+#FLT_IDIR=$(FLT_DIR)/includes
 FLT_BDIR=$(FLT_DIR)/builds
 FLT_SDIR=$(FLT_DIR)/src
 FLT_TDIR=$(FLT_DIR)/test
@@ -26,10 +26,10 @@ GEN_SDIR=src
 GEN_BDIR=builds
 GEN_TDIR=test
 
-#FLAGS = -I$(FIX_IDIR)/ -I$(FLT_IDIR)/
+FLAGS = -I$(FIX_IDIR)/ -I$(FLT_IDIR)/
 
 # General Dependencies
-GEN_IDEPS = $(GEN_IDIR)/*.h
+GEN_IDEPS = ./*.h
 GEN_SDEPS = $(GEN_SDIR)/*.c
 
 # Floating-point Dependencies
@@ -50,13 +50,12 @@ SDEPS = $(FIX_SDIR)/fpa_matrix.c $(FIX_SDIR)/fpa.c $(FLT_SDIR)/matrix.c $(GEN_SD
 # gcc -o c_float/builds/test_transpose c_float/test/test_transpose.c $(SDEPS)
 # build test program
 # Use: make <filename_of_test>
-# Example: make test_malloc
-float_%: $(FLT_TDIR)/%.c $(FLT_SDEPS) $(FLT_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
+# Example: make flt_test_malloc
+flt_%: $(FLT_TDIR)/%.c $(FLT_SDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
 	$(CC) -o $(GEN_BDIR)/$@ $< $(FLT_SDEPS) $(GEN_SDEPS)
 
-fixed_%: $(FLT_TDIR)/%.c $(FLT_SDEPS) $(FLT_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
-	$(CC) -o $(GEN_BDIR)/$@ $< $(FLT_SDEPS) $(GEN_SDEPS)
-
+fix_%: $(FIX_TDIR)/%.c $(FIX_SDEPS) $(FIX_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(FIX_SDEPS) $(GEN_SDEPS)
 
 bulk_fixed: $(GEN_TDIR)/bulk_fixed.c $(IDEPS) $(SDEPS)
 	$(CC) -o $(GEN_BDIR)/$@ $< $(SDEPS)

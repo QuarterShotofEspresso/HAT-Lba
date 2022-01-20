@@ -2,8 +2,8 @@
 // Created by Ratnodeep Bandyopadhyay on 1/13/22.
 //
 
-#include "../includes/matrix.h"
-#include "../includes/ggh.h"
+#include "../../matrix.h"
+#include "../../ggh.h"
 
 #include "stdio.h"
 #include "stdlib.h"

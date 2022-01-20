@@ -6,10 +6,49 @@
 #define MATRIX_H
 
 // General
-#include "../../includes/config.h"
-#include "../../includes/mmem.h"
+#include "config.h"
+
+struct matrix {
+
+    int row_size;
+    int col_size;
+
+    DATA_TYPE **entry;
+
+};
 
 
+//// GENERAL METHODS ////
+// NEW_MATRIX: allocates and initializes all entries
+// of a square matrix to a random integer.
+// RETURN: pointer to a matrix of size col_size x row_size
+struct matrix * new_matrix(int col_size, int row_size, int entry_range);
+
+
+// NEW_MATRIX_AS_BASIS: create a matrix of size dim x dim with entries
+// randomly assigned between 0 and entry_range. The matrix's columns
+// will represent the basis vectors of the space Z^dim
+// RETURN: a matrix of dimension size x size
+struct matrix * new_matrix_as_basis(int size, int entry_range);
+
+
+// COPY_MATRIX: create a new matrix copying the entries of the
+// matrix A
+// RETURN: a pointer to the new the matrix copy
+struct matrix * copy_matrix(struct matrix *A);
+
+
+// DEL_MATRIX: given a matrix, deallocate all memory
+// RETURN: a bool indicating if it was successfully deallocated
+void del_matrix(struct matrix *A);
+
+
+// PRINT_MATRIX: prints the contents of matrix A
+void print_matrix(struct matrix *A);
+//// GENERAL METHODS ////
+
+
+//// MATRIX-MATH RELATED METHODS ////
 // DOT: compute the dot product of two vectors
 DATA_TYPE  dot(DATA_TYPE  *u, DATA_TYPE  *v, int col_size);
 
@@ -75,6 +114,7 @@ void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v);
 // with a lower and upper triangular matrix and multiply them to create
 // a resulting matrix of determinant (+/-)1.
 void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range);
+//// MATRIX-MATH RELATED METHODS ////
 
 
 #endif

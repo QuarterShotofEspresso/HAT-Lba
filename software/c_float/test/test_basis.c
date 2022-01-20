@@ -1,7 +1,7 @@
 // Author: Ratnodeep Bandyopadhyay
 // Copyright Nov 21, 2021. All rights reserved.
 
-#include "matrix.h"
+#include "../../matrix.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"

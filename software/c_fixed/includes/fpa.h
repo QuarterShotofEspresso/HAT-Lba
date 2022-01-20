@@ -1,20 +1,19 @@
 #ifndef FIXED_APPROXIMATION_H
 #define FIXED_APPROXIMATION_H
 
-// General
-#include "../../includes/config.h"
 
-// print_fpa_meta
+
+#include "../../config.h"
+
+// INIT_FPA_META: initialize the fixed-point approximation with the
+// provided bit widths.
 void init_fpa_meta();
 
 
-// map_to_fixed_precision
-//DATA_TYPE map_to_fixed_precision(struct fixed_format *ff, DATA_TYPE input);
+// MTFP: short for "map to fixed point" and maps the input to the
+// closest representable number by the provided bit widths.
 DATA_TYPE mtfp(DATA_TYPE input);
 
-
-// log_overflow
-void log_overflow(DATA_TYPE trigger, int lower_bound);
 
 
 #endif // FIXED_APPROXIMATION_H
