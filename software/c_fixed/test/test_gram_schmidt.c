@@ -2,18 +2,22 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
+#include "fpa.h"
 
 int main(int argc, char *argv[]) {
 
     srand(time(NULL));
 
-    int size = atoi(argv[1]);
-    int range = atoi(argv[2]);
+    init_fpa_meta();
 
-    struct fpa_matrix *A = fpa_new_matrix(size, size, range);
-    struct fpa_matrix *L = fpa_new_matrix(size, size, 1);
+    int col_size = atoi(argv[1]);
+    int row_size = atoi(argv[2]);
+    int range = atoi(argv[3]);
 
-    printf("A:\n");
+    struct fpa_matrix *A = fpa_new_matrix(col_size, row_size, range);
+
+
+    printf("A before orthogonalization\n");
     for(int i = 0; i < A->col_size; ++i) {
         for(int j = 0; j < A->row_size; ++j) {
             printf("%f, ", A->entry[j][i]);
@@ -22,28 +26,18 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    lu_decomp(A, L);
+    fpa_gram_schmidt(A);
     
-    printf("U:\n");
+    printf("A after orthogonalization\n");
     for(int i = 0; i < A->col_size; ++i) {
         for(int j = 0; j < A->row_size; ++j) {
             printf("%f, ", A->entry[j][i]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-    
-    printf("L:\n");
-    for(int i = 0; i < L->col_size; ++i) {
-        for(int j = 0; j < L->row_size; ++j) {
-            printf("%f, ", L->entry[j][i]);
         }
         printf("\n");
     }
     printf("\n");
 
     del_fpa_matrix(A);
-    del_fpa_matrix(L);
 
     return 0;
 }

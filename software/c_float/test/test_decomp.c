@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "../../matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
@@ -10,8 +10,8 @@ int main(int argc, char *argv[]) {
     int size = atoi(argv[1]);
     int range = atoi(argv[2]);
 
-    struct matrix *A = new_matrix(size, size, range);    
-    struct matrix *L = new_matrix(size, size, 1);    
+    struct matrix *A = new_matrix(size, size, range);
+    struct matrix *L = new_matrix(size, size, 1);
 
     printf("A:\n");
     for(int i = 0; i < A->col_size; ++i) {

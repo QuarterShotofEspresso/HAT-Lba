@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     int row_size = atoi(argv[2]);
     int range = atoi(argv[3]);
 
-    struct matrix *A = new_matrix(col_size, row_size, range);    
+    struct fpa_matrix *A = fpa_new_matrix(col_size, row_size, range);
 
 
     printf("A before orthogonalization\n");
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    del_matrix(A);
+    del_fpa_matrix(A);
 
     return 0;
 }

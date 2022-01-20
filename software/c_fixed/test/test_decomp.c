@@ -2,10 +2,13 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
+#include "fpa.h"
 
 int main(int argc, char *argv[]) {
 
     srand(time(NULL));
+
+    init_fpa_meta();
 
     int size = atoi(argv[1]);
     int range = atoi(argv[2]);
@@ -22,7 +25,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    lu_decomp(A, L);
+    fpa_lu_decomp(A, L);
     
     printf("U:\n");
     for(int i = 0; i < A->col_size; ++i) {

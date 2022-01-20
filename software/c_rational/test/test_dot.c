@@ -1,4 +1,4 @@
-#include "matrix.h"
+#include "fpa_matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     }
 
     // write and print result
-    float prod = dot(u, v, col_size);
+    float prod = fpa_dot(u, v, col_size);
     printf("u.v = %f\n", prod);
 
     // deallocate memory

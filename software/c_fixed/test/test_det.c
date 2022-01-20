@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     float *x = (float *)malloc(size * sizeof(float));
   
     // orthogonalize A
-    gram_schmidt(A);
+    fpa_gram_schmidt(A);
     // print contents of A
     printf("A:\n");
     print_fpa_matrix(A);
@@ -34,9 +34,9 @@ int main(int argc, char *argv[]) {
             scanf("%f", &w[i]);
         }
 
-        // decompose and test lu_solve
-        lu_decomp(A, L);
-        babai(L, A, w, x);
+        // decompose and test fpa_lu_solve
+        fpa_lu_decomp(A, L);
+        fpa_babai(L, A, w, x);
 
         // print results
         printf("x:\n");
