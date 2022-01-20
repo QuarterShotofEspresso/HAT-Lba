@@ -24,26 +24,31 @@ struct matrix * gen_public_key(struct matrix *V);
 // into a matrix m. Divide the entire message of size msg_length
 // into chunks of size chunk_size. Each chunk will be converted
 // to an integer vector represented as the columns of matrix m.
-void encode_msg(struct matrix *m, char *message, int msg_length, int chunk_size);
+// note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
+struct matrix * encode_msg(char *message, int msg_length, int chunk_size);
 
 
 // DECODE_MSG: Decode a matrix containing a message m
 // into a character message of size msg_length. The columns of
 // matrix m should have column vectors of size chunk_size.
-void decode_msg(char *message, struct matrix *m, int msg_length, int chunk_size);
+// note: return character string of length: m->col_size * m->row_size
+char * decode_msg(struct matrix *m, int msg_length, int chunk_size);
 
 
 // ENCRYPT_MSG: Encrypt the matrix-encoded message m using the public key
-// W using the following formula. e = Wm + r. The vector r will be constructed
+// W using the following formula e = Wm + r. The vector r will be constructed
 // with randomly selected numbers. Vector r should offset the message mapped by
-// W by some small vector r.
-void encrypt_msg(struct matrix *e, struct matrix *W, struct matrix *m, int r_bound);
+// W by some small fraction of the average distance of neighboring lattice
+// points.
+// note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
+struct matrix * encrypt_msg(struct matrix *W, struct matrix *m, int r_bound);
 
 
 // DECRYPT_MSG: Given the private key V and public key W, perform babai's algorithm
 // on the encrypted message e, to find the closest lattice point to e, Wm. Then, solve
 // for m by using an LU decomposition and LU linear solver.
-void decrypt_msg(struct matrix *m, struct matrix *W, struct matrix *V, struct matrix *e);
+// note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
+struct matrix * decrypt_msg(struct matrix *W, struct matrix *V, struct matrix *e);
 
 
 #endif //LATTICE_GGH_H

@@ -52,7 +52,10 @@ SDEPS = $(FIX_SDIR)/fpa_matrix.c $(FIX_SDIR)/fpa.c $(FLT_SDIR)/matrix.c $(GEN_SD
 # Use: make <filename_of_test>
 # Example: make test_malloc
 float_%: $(FLT_TDIR)/%.c $(FLT_SDEPS) $(FLT_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
-	$(CC) -o $(FLT_BDIR)/$@ $< $(FLT_SDEPS) $(GEN_SDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(FLT_SDEPS) $(GEN_SDEPS)
+
+fixed_%: $(FLT_TDIR)/%.c $(FLT_SDEPS) $(FLT_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(FLT_SDEPS) $(GEN_SDEPS)
 
 
 bulk_fixed: $(GEN_TDIR)/bulk_fixed.c $(IDEPS) $(SDEPS)

@@ -56,8 +56,10 @@ struct matrix * gen_public_key(struct matrix *V) {
 // into a matrix m. Divide the entire message of size msg_length
 // into chunks of size chunk_size. Each chunk will be converted
 // to an integer vector represented as the columns of matrix m.
-void encode_msg(struct matrix *m, char *message, int msg_length, int chunk_size) {
+// note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
+struct matrix * encode_msg(char *message, int msg_length, int chunk_size) {
 
+    struct matrix *m = new_matrix();
     int total_chunks = (msg_length / chunk_size) + 1; // row_size (total columns)
 
     if(m == NULL) {
@@ -73,19 +75,28 @@ void encode_msg(struct matrix *m, char *message, int msg_length, int chunk_size)
 // DECODE_MSG: Decode a matrix containing a message m
 // into a character message of size msg_length. The columns of
 // matrix m should have column vectors of size chunk_size.
-void decode_msg(char *message, struct matrix *m, int msg_length, int chunk_size) {
+// note: return character string of length: m->col_size * m->row_size
+char * decode_msg(struct matrix *m, int msg_length, int chunk_size) {
+
+    char *message = (char *)malloc(m->col_size * m->row_size * sizeof(char));
 
     for(int i = 0; i < msg_length; ++i) {
         message[i] = (char)(m->entry[i / chunk_size][i % chunk_size]);
     }
+
+    return message;
 }
 
 
 // ENCRYPT_MSG: Encrypt the matrix-encoded message m using the public key
-// W using the following formula. e = Wm + r. The vector r will be constructed
+// W using the following formula e = Wm + r. The vector r will be constructed
 // with randomly selected numbers. Vector r should offset the message mapped by
-// W by some small vector r.
-void encrypt_msg(struct matrix *e, struct matrix *W, struct matrix *m, int r_bound) {
+// W by some small fraction of the average distance of neighboring lattice
+// points.
+// note: matrix e is of size: [chunk_size, ceil(msg_length / chunk_size)]
+struct matrix * encrypt_msg(struct matrix *W, struct matrix *m, int r_bound) {
+
+    struct matrix *e = new_matrix(m->col_size, m->row_size, 1);
 
     // encrypt each encoded message vector via the linear map W
     for(int i = 0; i < m->row_size; ++i) {
@@ -102,13 +113,18 @@ void encrypt_msg(struct matrix *e, struct matrix *W, struct matrix *m, int r_bou
             e->entry += (rand() % double_r_bound) - r_bound;
         }
     }
+
+    return e;
 }
 
 
 // DECRYPT_MSG: Given the private key V and public key W, perform babai's algorithm
 // on the encrypted message e, to find the closest lattice point to e, Wm. Then, solve
 // for m by using an LU decomposition and LU linear solver.
-void decrypt_msg(struct matrix *m, struct matrix *W, struct matrix *V, struct matrix *e) {
+// note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
+struct matrix * decrypt_msg(struct matrix *W, struct matrix *V, struct matrix *e) {
+
+    struct matrix *m = new_matrix(e->col_size, e->row_size, 1);
 
     // lu-decompose the private key
     struct matrix *VU = copy_matrix(V);
@@ -133,6 +149,6 @@ void decrypt_msg(struct matrix *m, struct matrix *W, struct matrix *V, struct ma
     del_matrix(WL);
     del_matrix(Wm);
 
-    return;
+    return m;
 }
 

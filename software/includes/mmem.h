@@ -16,7 +16,7 @@ struct matrix {
 
 };
 
-// NEW_MATRIX: allocates and initalizes all entries
+// NEW_MATRIX: allocates and initializes all entries
 // of a square matrix to a random integer.
 // RETURN: pointer to a matrix of size col_size x row_size
 struct matrix * new_matrix(int col_size, int row_size, int entry_range);
@@ -36,7 +36,7 @@ struct matrix * copy_matrix(struct matrix *A);
 
 
 // DEL_MATRIX: given a matrix, deallocate all memory
-// RETURN: a bool indicating if it was sucesffuly deallocated
+// RETURN: a bool indicating if it was successfully deallocated
 void del_matrix(struct matrix *A);
 
 
