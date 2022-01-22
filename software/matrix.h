@@ -101,7 +101,7 @@ void transpose(struct matrix *AT, struct matrix *A);
 // MATRIX_MATRIX_MULTIPLY: Given two matrices, A_left and A_right,
 // perform the following operation: A_result = A_left * A_right
 // RETURN: the product matrix A_result
-void mxm(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right);
+void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right, int r_bound);
 
 
 // VECTOR_MATRIX_MULTIPLY: given a matrix A and vector v, perform

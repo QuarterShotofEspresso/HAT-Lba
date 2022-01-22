@@ -33,6 +33,7 @@ add_executable(lattice
         software/c_float/test/test_malloc.c
         software/c_float/test/test_project.c
         software/c_float/test/test_solve.c
+        software/c_float/test/test_encrypt.c
         software/c_rational/includes/matrix.h
         software/c_rational/includes/rational.h
         software/c_rational/src/matrix.c

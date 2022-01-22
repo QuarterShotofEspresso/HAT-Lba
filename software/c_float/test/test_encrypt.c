@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     struct matrix *e = encrypt_msg(W, m, r_bound);
     printf("Encrypted matrix of encoded matrix: \n");
     //printf("%f\n", e->entry[0][0]);
-    //print_matrix(e);
+    print_matrix(e);
 /*
     // decrypt message
     struct matrix *m2 = decrypt_msg(W, V, e);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     del_matrix(V);
     del_matrix(W);
     del_matrix(m);
-//    del_matrix(e);
+    del_matrix(e);
 //    del_matrix(m2);
 
     return 0;

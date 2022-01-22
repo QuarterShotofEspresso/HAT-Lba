@@ -169,20 +169,33 @@ void transpose(struct matrix *AT, struct matrix *A) {
 // MATRIX_MATRIX_MULTIPLY: Given two matrices, A_left and A_right,
 // perform the following operation: A_result = A_left * A_right
 // RETURN: the product matrix A_result
-void mxm(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right) {
+void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right, int r_bound) {
 
-    struct matrix *A_leftT = new_matrix(A_left->col_size, A_left->row_size, 1);
-    transpose(A_leftT, A_left);
+    int double_r_bound = r_bound * 2;
+    double prod_t = 0;
+
+//    struct matrix *A_rightT = new_matrix(A_right->row_size, A_right->col_size, 1);
+//    transpose(A_rightT, A_right);
 
     for(int i = 0; i < A_result->row_size; ++i) {
         for(int j = 0; j < A_result->col_size; ++j) {
-            A_result->entry[i][j] = dot(A_leftT->entry[j], A_right->entry[i], A_result->col_size);
+            prod_t = (r_bound > 1)*((rand() % double_r_bound) - r_bound);
+            for(int k = 0; k < A_result->col_size; ++k) {
+                prod_t += A_left->entry[k][j] * A_right->entry[i][k];
+            }
+            A_result->entry[i][j] += prod_t;
         }
     }
 
-    del_matrix(A_leftT);
+//    for(int i = 0; i < A_result->row_size; ++i) {
+//        for(int j = 0; j < A_result->col_size; ++j) {
+//            random_pert = (r_bound > 1)*((rand() % double_r_bound) - r_bound);
+//            dot_r = dot(A_left->entry[j], A_rightT->entry[i], A_result->col_size);
+//            A_result->entry[i][j] = dot_r + random_pert;
+//        }
+//    }
+//    del_matrix(A_right);
 
-    return;
 }
 
 
@@ -200,7 +213,6 @@ void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v) {
 
     del_matrix(AT);
 
-    return;
 }
 
 
@@ -230,7 +242,7 @@ void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
 //    print_matrix(TL);
 //    print_matrix(TU);
 
-    mxm(A, TL, TU);
+    mxmar(A, TL, TU, 1);
 
     del_matrix(TU);
     del_matrix(TL);

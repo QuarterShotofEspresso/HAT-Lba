@@ -46,7 +46,7 @@ struct matrix * gen_public_key(struct matrix *V) {
     struct matrix *U = new_matrix(V->col_size, V->row_size, 1);
 
     unimodularize_matrix(U, 100, 5);
-    mxm(W, U, V);
+    mxmar(W, U, V, 1);
 
     del_matrix(U);
 
@@ -104,18 +104,7 @@ struct matrix * encrypt_msg(struct matrix *W, struct matrix *m, int r_bound) {
 
     // encrypt each encoded message vector via the linear map W
     for(int i = 0; i < m->row_size; ++i) {
-//        mxv(e->entry[i], W, m->entry[i]);
-        mxm(e, W, m);
-    }
-
-    // double the bound
-    int double_r_bound = 2 * r_bound;
-
-    // slightly randomize the encoded message e
-    for(int i = 0; i < m->row_size; ++i) {
-        for(int j = 0; j < m->col_size; ++j) {
-            e->entry += (rand() % double_r_bound) - r_bound;
-        }
+        mxmar(e, W, m, r_bound);
     }
 
     return e;
