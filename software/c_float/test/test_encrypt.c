@@ -39,23 +39,27 @@ int main(int argc, char *argv[]) {
     printf("\n");
 
     // encrypt message
-    struct matrix *e = encrypt_msg(W, m, r_bound);
+    struct matrix *e = encrypt_msg(W, m, 1);
+    struct matrix *e2 = encrypt_msg(W, m, 1);
     printf("Encrypted matrix of encoded matrix: \n");
-    //printf("%f\n", e->entry[0][0]);
     print_matrix(e);
-/*
+    printf("Test Encrypted: \n");
+    print_matrix(e);
+
+
     // decrypt message
     struct matrix *m2 = decrypt_msg(W, V, e);
     printf("Decrypted matrix of encrypted matrix: \n");
+    print_matrix(m2);
 
     char* msg_dc = decode_msg(m2, msg_size, chunk_size);
     printf("Message from decoded matrix: \n%s\n", msg_dc);
-*/
+
     del_matrix(V);
     del_matrix(W);
     del_matrix(m);
     del_matrix(e);
-//    del_matrix(m2);
+    del_matrix(m2);
 
     return 0;
 }

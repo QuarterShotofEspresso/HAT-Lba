@@ -123,16 +123,28 @@ struct matrix * decrypt_msg(struct matrix *W, struct matrix *V, struct matrix *e
     struct matrix *VU = copy_matrix(V);
     struct matrix *VL = new_matrix(V->col_size, V->row_size, 1);
     lu_decomp(VU, VL);
+    DATA_TYPE V_det = lu_det(VU);
+    printf("Private Ratio:%f\n", hadamard(V, V_det));
 
     struct matrix *WU = copy_matrix(W);
     struct matrix *WL = new_matrix(W->col_size, W->row_size, 1);
     lu_decomp(WU, WL);
+    DATA_TYPE W_det = lu_det(WU);
+    printf("Public Ratio:%f\n", hadamard(W, W_det));
 
-    struct matrix *Wm = new_matrix(m->col_size, 1, 1);
+    struct matrix *Wm = new_matrix(e->col_size, e->row_size, 1);
+
+    printf("Reached here\n");
 
     // run babai's algorithm with encoded message e
     for(int i = 0; i < m->row_size; ++i) {
         babai(VL, VU, e->entry[i], Wm->entry[i]);
+    }
+
+    printf("Closest Lattice point(s):\n");
+    print_matrix(Wm);
+
+    for(int i = 0; i < m->row_size; ++i) {
         lu_solve(WL, WU, Wm->entry[i], m->entry[i]);
     }
 

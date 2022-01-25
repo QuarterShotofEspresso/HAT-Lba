@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
     struct matrix *A = new_matrix(size, size, range);
     struct matrix *L = new_matrix(size, size, 1);
 
-    float *w = (float *)malloc(size * sizeof(float));
-    float *x = (float *)malloc(size * sizeof(float));
+    DATA_TYPE *w = (DATA_TYPE *)malloc(size * sizeof(DATA_TYPE));
+    DATA_TYPE *x = (DATA_TYPE *)malloc(size * sizeof(DATA_TYPE));
    
     // print contents of A
     printf("A before ortho:\n");
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         // enter contents of w
         for(int i = 0; i < size; ++i) {
             printf("w[%d]: ", i);
-            scanf("%f", &w[i]);
+            scanf("%lf", &w[i]);
         }
 
         for(int i = 0; i < size; ++i)
