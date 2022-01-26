@@ -9,6 +9,7 @@
 // External
 #include <stdio.h>
 #include <stdlib.h>
+//#include <string.h>
 
 
 // GEN_PRIVATE_KEY: Given the size of the key and a
@@ -16,22 +17,7 @@
 struct matrix * gen_private_key(int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound) {
 
     struct matrix *V = new_matrix(chunk_size, chunk_size, entry_range);
-    struct matrix *VL = new_matrix(chunk_size, chunk_size, 1);
-    struct matrix *VU = copy_matrix(V);
-
     gram_schmidt(V);
-
-    lu_decomp(VU, VL);
-
-    DATA_TYPE V_det = lu_det(VU);
-    DATA_TYPE ratio = hadamard(V, V_det);
-
-    if(ratio < lower_hadamard_bound) {
-        fprintf(stderr, "error: geometry of private key is insufficient.\n");
-    }
-
-    del_matrix(VL);
-    del_matrix(VU);
 
     return V;
 }
@@ -46,7 +32,7 @@ struct matrix * gen_public_key(struct matrix *V) {
     struct matrix *U = new_matrix(V->col_size, V->row_size, 1);
 
     unimodularize_matrix(U, 100, 5);
-    mxmar(W, U, V, 1);
+    mxmar(W, V, U, 1);
 
     del_matrix(U);
 
@@ -62,11 +48,7 @@ struct matrix * gen_public_key(struct matrix *V) {
 struct matrix * encode_msg(char *message, int msg_length, int chunk_size) {
 
     struct matrix *m = new_matrix(chunk_size, (msg_length / chunk_size) + 1, 1);
-    int total_chunks = (msg_length / chunk_size) + 1; // row_size (total columns)
-
-    if(m == NULL) {
-        m = new_matrix(chunk_size, total_chunks, 1);
-    }
+//    int total_chunks = (msg_length / chunk_size) + 1; // row_size (total columns)
 
     for(int i = 0; i < msg_length; ++i) {
         m->entry[i / chunk_size][i % chunk_size] = (int)message[i];
@@ -103,9 +85,7 @@ struct matrix * encrypt_msg(struct matrix *W, struct matrix *m, int r_bound) {
     struct matrix *e = new_matrix(m->col_size, m->row_size, 1);
 
     // encrypt each encoded message vector via the linear map W
-    for(int i = 0; i < m->row_size; ++i) {
-        mxmar(e, W, m, r_bound);
-    }
+    mxmar(e, W, m, r_bound);
 
     return e;
 }
@@ -117,42 +97,34 @@ struct matrix * encrypt_msg(struct matrix *W, struct matrix *m, int r_bound) {
 // note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
 struct matrix * decrypt_msg(struct matrix *W, struct matrix *V, struct matrix *e) {
 
+    // instantiate intermediate/result message matrix variables
     struct matrix *m = new_matrix(e->col_size, e->row_size, 1);
-
-    // lu-decompose the private key
-    struct matrix *VU = copy_matrix(V);
-    struct matrix *VL = new_matrix(V->col_size, V->row_size, 1);
-    lu_decomp(VU, VL);
-    DATA_TYPE V_det = lu_det(VU);
-    printf("Private Ratio:%f\n", hadamard(V, V_det));
-
-    struct matrix *WU = copy_matrix(W);
-    struct matrix *WL = new_matrix(W->col_size, W->row_size, 1);
-    lu_decomp(WU, WL);
-    DATA_TYPE W_det = lu_det(WU);
-    printf("Public Ratio:%f\n", hadamard(W, W_det));
-
+    struct matrix *ViWm = new_matrix(e->col_size, e->row_size, 1);
     struct matrix *Wm = new_matrix(e->col_size, e->row_size, 1);
 
-    printf("Reached here\n");
+    // instantiate temporary matrix variables
+    struct matrix *VU = copy_matrix(V);
+    struct matrix *VL = new_matrix(V->col_size, V->row_size, 1);
+    struct matrix *WU = copy_matrix(W);
+    struct matrix *WL = new_matrix(W->col_size, W->row_size, 1);
 
-    // run babai's algorithm with encoded message e
-    for(int i = 0; i < m->row_size; ++i) {
-        babai(VL, VU, e->entry[i], Wm->entry[i]);
-    }
+    // decompose keys
+    lu_decomp(VU, VL);
+    lu_decomp(WU, WL);
 
-    printf("Closest Lattice point(s):\n");
-    print_matrix(Wm);
+    // Decrypt e
+    for(int i = 0; i < m->row_size; ++i) babai(VL, VU, e->entry[i], ViWm->entry[i]);
+    mxmar(Wm, V, ViWm, 1);
+    for(int i = 0; i < m->row_size; ++i) babai(WL, WU, Wm->entry[i], m->entry[i]);
 
-    for(int i = 0; i < m->row_size; ++i) {
-        lu_solve(WL, WU, Wm->entry[i], m->entry[i]);
-    }
-
+    // deallocate all matrix variables
     del_matrix(VU);
     del_matrix(VL);
     del_matrix(WU);
     del_matrix(WL);
+
     del_matrix(Wm);
+    del_matrix(ViWm);
 
     return m;
 }
