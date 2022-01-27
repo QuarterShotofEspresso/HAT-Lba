@@ -67,7 +67,10 @@ char * decode_msg(struct matrix *m, int msg_length, int chunk_size) {
     char *message = (char *)malloc(m->col_size * m->row_size * sizeof(char));
 
     for(int i = 0; i < msg_length; ++i) {
-        message[i] = (char)(m->entry[i / chunk_size][i % chunk_size]);
+        int int_char = (int)(m->entry[i / chunk_size][i % chunk_size]);
+        if (int_char != 0) {
+            message[i] = (char)int_char;
+        }
     }
 
     return message;
@@ -83,7 +86,6 @@ char * decode_msg(struct matrix *m, int msg_length, int chunk_size) {
 struct matrix * encrypt_msg(struct matrix *W, struct matrix *m, int r_bound) {
 
     struct matrix *e = new_matrix(m->col_size, m->row_size, 1);
-
     // encrypt each encoded message vector via the linear map W
     mxmar(e, W, m, r_bound);
 

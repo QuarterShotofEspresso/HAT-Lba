@@ -2,13 +2,78 @@
 // Copyright 11/20/21. All rights reserved.
 
 
-// Internal
+// Config
 #include "../../config.h"
+
+// Internal
+#ifdef USE_FLOATING_POINT
 #include "../../matrix.h"
 
 // External
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
+
+struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
+
+    struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
+    A->row_size = row_size;
+    A->col_size = col_size;
+    A->entry = (DATA_TYPE**)malloc(row_size * sizeof(DATA_TYPE*));
+
+    if(entry_range == 1) {
+        for(int i = 0; i < A->row_size; ++i) {
+            A->entry[i] = (DATA_TYPE*)calloc(col_size, sizeof(DATA_TYPE));
+        }
+    }
+
+    else {
+        for(int i = 0; i < A->row_size; ++i) {
+            A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
+            for(int j = 0; j < col_size; ++j) {
+                A->entry[i][j] = (DATA_TYPE)(rand() % entry_range) + 1;
+            }
+        }
+    }
+
+    return A;
+}
+
+
+struct matrix * copy_matrix(struct matrix *A) {
+
+    struct matrix *C = new_matrix(A->col_size, A->row_size, 1);
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < A->col_size; ++j) {
+            C->entry[i][j] = A->entry[i][j];
+        }
+    }
+
+    return C;
+}
+
+
+void del_matrix(struct matrix *A) {
+
+    for(int i = 0; i < A->row_size; ++i)
+        free(A->entry[i]);
+    free(A->entry);
+    free(A);
+
+}
+
+
+void print_matrix(struct matrix *A) {
+
+    for(int i = 0; i < A->col_size; ++i) {
+        for(int j = 0; j < A->row_size; ++j) {
+            printf("%f, ", A->entry[j][i]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
+}
 
 
 DATA_TYPE dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
@@ -155,15 +220,15 @@ void babai(struct matrix *L, struct matrix *U, DATA_TYPE  *w, DATA_TYPE  *x) {
 
 // TRANSPOSE: Given a matrix A, transpose it.
 // RETURN: the transposed matrix through AT
-void transpose(struct matrix *AT, struct matrix *A) {
-    for(int i = 0; i < A->row_size; ++i) {
-        for(int j = 0; j < A->col_size; ++j) {
-            AT->entry[j][i] = A->entry[i][j];
-        }
-    }
-
-    return;
-}
+//void transpose(struct matrix *AT, struct matrix *A) {
+//    for(int i = 0; i < A->row_size; ++i) {
+//        for(int j = 0; j < A->col_size; ++j) {
+//            AT->entry[j][i] = A->entry[i][j];
+//        }
+//    }
+//
+//    return;
+//}
 
 
 // MATRIX_MATRIX_MULTIPLY: Given two matrices, A_left and A_right,
@@ -174,9 +239,6 @@ void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_righ
     int double_r_bound = r_bound * 2;
     double prod_t = 0;
 
-//    struct matrix *A_rightT = new_matrix(A_right->row_size, A_right->col_size, 1);
-//    transpose(A_rightT, A_right);
-
     for(int i = 0; i < A_result->row_size; ++i) {
         for(int j = 0; j < A_result->col_size; ++j) {
             prod_t = (r_bound > 1)*((rand() % double_r_bound) - r_bound);
@@ -186,34 +248,24 @@ void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_righ
             A_result->entry[i][j] += prod_t;
         }
     }
-
-//    for(int i = 0; i < A_result->row_size; ++i) {
-//        for(int j = 0; j < A_result->col_size; ++j) {
-//            random_pert = (r_bound > 1)*((rand() % double_r_bound) - r_bound);
-//            dot_r = dot(A_left->entry[j], A_rightT->entry[i], A_result->col_size);
-//            A_result->entry[i][j] = dot_r + random_pert;
-//        }
-//    }
-//    del_matrix(A_right);
-
 }
 
 
 // VECTOR_MATRIX_MULTIPLY: given a matrix A and vector v, perform
 // the following operation: r = A * v.
 // RETURN: the product vector r
-void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v) {
-
-    struct matrix *AT = new_matrix(A->col_size, A->row_size, 1);
-    transpose(AT, A);
-
-    for(int i = 0; i < A->row_size; ++i) {
-        r[i] = dot(v, AT->entry[i], A->col_size);
-    }
-
-    del_matrix(AT);
-
-}
+//void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v) {
+//
+//    struct matrix *AT = new_matrix(A->col_size, A->row_size, 1);
+//    transpose(AT, A);
+//
+//    for(int i = 0; i < A->row_size; ++i) {
+//        r[i] = dot(v, AT->entry[i], A->col_size);
+//    }
+//
+//    del_matrix(AT);
+//
+//}
 
 
 // CREATE_ELEMENTARY_MATRIX: given a matrix pointer A, update the entries of A
@@ -239,11 +291,10 @@ void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
         }
     }
 
-//    print_matrix(TL);
-//    print_matrix(TU);
-
     mxmar(A, TL, TU, 1);
 
     del_matrix(TU);
     del_matrix(TL);
 }
+
+#endif //USE_FLOATING_POINT

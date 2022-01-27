@@ -12,20 +12,25 @@ struct rational {
 };
 
 // mod_div: produces closest integer by dividing two integers
-int mod_div(struct rational*);
+int mod_div(struct rational* x);
 
 // rat_add_rat: add two rational numbers together
 // interface: (rational left of the op, rational right of the op, rational store)
-void rat_add_rat(struct rational* l, struct rational* r, struct rational* s);
+void rat_add_rat(struct rational* s, struct rational* l, struct rational* r);
 
 // rat_sub_rat: subtract two rational numbers
 //interface: (rational left of the op, rational right of the op, rational store
-void rat_sub_rat(struct rational* l, struct rational *r, struct rational* s);
+void rat_sub_rat(struct rational* s, struct rational *l, struct rational* r);
 
 // rat_div_rat: multiplies two rational structures
 // interface: (rational left of the op, rational right of the op, rational store)
-void rat_mul_rat(struct rational* l, struct rational* r, struct rational* s);
+void rat_mul_rat(struct rational* s, struct rational* l, struct rational* r);
 
 // rat_div_rat: divides two rational structureis
 // interface: (rational left of the op, rational right of the op, rational store)
-void rat_div_rat(struct rational* l, struct rational* r, struct rational* s);
+void rat_div_rat(struct rational* s, struct rational* l, struct rational* r);
+
+// simplify: <description>
+void simplify(struct rational *s, struct rational *x);
+
+

@@ -14,7 +14,6 @@ struct matrix {
     int col_size;
 
     DATA_TYPE **entry;
-
 };
 
 
@@ -72,7 +71,7 @@ void lu_decomp(struct matrix *U, struct matrix *L);
 // LUP_SOLVE: using lup decomposition solve for x in Ax = b
 // where A is a square matrix, and x and b are vectors.
 // The result is stored in the matrix x.
-void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE  *b, DATA_TYPE  *x);
+void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE *b, DATA_TYPE *x);
 
 
 // LUP_DET: given matrix A, compute its determinant using lup decomposition
@@ -95,7 +94,7 @@ void babai(struct matrix *L, struct matrix *U, DATA_TYPE *w, DATA_TYPE *x);
 
 // TRANSPOSE: Given a matrix A, transpose it.
 // RETURN: the transposed matrix through AT
-void transpose(struct matrix *AT, struct matrix *A);
+//void transpose(struct matrix *AT, struct matrix *A);
 
 
 // MATRIX_MATRIX_MULTIPLY: Given two matrices, A_left and A_right,
@@ -107,7 +106,7 @@ void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_righ
 // VECTOR_MATRIX_MULTIPLY: given a matrix A and vector v, perform
 // the following operation: r = A * v.
 // RETURN: the product vector r
-void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v);
+//void mxv(DATA_TYPE *r, struct matrix *A, DATA_TYPE *v);
 
 
 // CREATE_ELEMENTARY_MATRIX: given a matrix pointer A, update the entries of A

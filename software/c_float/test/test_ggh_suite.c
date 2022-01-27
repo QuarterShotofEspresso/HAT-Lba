@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     int entry_range = atoi(argv[3]);
 
     // other parameters and variables
-    int r_bound = entry_range * 0.1;
+    int r_bound = 3;
     int msg_length = strlen(msg);
 
     // Initialize private and public key
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     printf("Done encoding msgs\n");
 
     // encrypt original messages
-    struct matrix *e = encrypt_msg(W, m, 1);
+    struct matrix *e = encrypt_msg(W, m, r_bound);
     printf("Done encrypting msgs\n");
 
     // decrypt encrypted messages
@@ -45,28 +45,27 @@ int main(int argc, char *argv[]) {
     printf("Done decoding msgs\n");
 
 
-//    printf("Generated private key \n");
-//    print_matrix(V);
-//    printf("Generated public key \n");
-//    print_matrix(W);
-//    printf("\n");
-//
-//
-//    printf("========================\n");
-//    printf("m:\n");
-//    print_matrix(m);
-//
-//    printf("========================\n");
-//    printf("e:\n");
-//    print_matrix(e);
-//
-//    printf("========================\n");
-//    printf("d:\n");
-//    print_matrix(d);
+    printf("Generated private key \n");
+    print_matrix(V);
+    printf("Generated public key \n");
+    print_matrix(W);
+    printf("\n");
+
+    printf("========================\n");
+    printf("Message encoded as matrix:\n");
+    print_matrix(m);
+
+    printf("========================\n");
+    printf("Message encrypted:\n");
+    print_matrix(e);
+
+    printf("========================\n");
+    printf("Message decrypted:\n");
+    print_matrix(d);
 
     printf("========================\n");
     printf("Message to encrypt:\n%s\n\n", msg);
-    printf("Message from encryption:\n%s\n", msg_res);
+    printf("Decryption result:\n%s\n", msg_res);
 
     del_matrix(V);
     del_matrix(W);
