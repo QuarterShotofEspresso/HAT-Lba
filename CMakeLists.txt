@@ -36,6 +36,7 @@ add_executable(lattice
         software/c_float/test/test_ggh_suite.c
         software/c_float/test/test_mxm_solve.c
         software/c_float/test/test_decrypt.c
+        software/c_float/test/test_dbg_decrypt.c
         software/c_rational/includes/matrix.h
         software/c_rational/includes/rational.h
         software/c_rational/src/matrix.c
