@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
     print_matrix(dW2);
 
 //    char *decr_msg = (char *)malloc(sizeof(char) * strlen(msg));
-    char *decr_msg = decode_msg(m, strlen(msg), size);
+    char *decr_msg = decode_msg(dW2, strlen(msg), size);
 
     printf("Message to encrypt:\n");
     printf("%s\n", msg);
