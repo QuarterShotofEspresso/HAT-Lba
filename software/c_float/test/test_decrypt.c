@@ -29,9 +29,7 @@ int main(int argc, char *argv[]) {
     struct matrix *VU = copy_matrix(V);
     struct matrix *VL = new_matrix(size, size, 1);
     lu_decomp(VU, VL);
-    DATA_TYPE V_det = lu_det(VU);
-    printf("V: Ratio:%f\n", hadamard(V, V_det));
-    print_matrix(V);
+    DATA_TYPE v_det = lu_det(VU);
 
     // Prepare matrix U
     struct matrix *U = new_matrix(size, size, 1);
@@ -43,10 +41,36 @@ int main(int argc, char *argv[]) {
     struct matrix *WU = copy_matrix(W);
     struct matrix *WL = new_matrix(size, size, 1);
     lu_decomp(WU, WL);
-    DATA_TYPE W_det = lu_det(WU);
-    printf("W: Ratio:%f\n", hadamard(W, W_det));
-    print_matrix(W);
+    DATA_TYPE w_det = lu_det(WU);
 
+    while(!v_det || (v_det != v_det) || !w_det || (w_det != w_det)) {
+        // delete old key
+        del_matrix(V);
+        del_matrix(VL);
+        del_matrix(VU);
+        // construct new key
+        V = gen_private_key(size, range, 0.7);
+        VL = new_matrix(size, size, 1);
+        VU = copy_matrix(V);
+        lu_decomp(VU, VL);
+        v_det = lu_det(VU);
+
+        // delete old key
+        del_matrix(W);
+        del_matrix(WL);
+        del_matrix(WU);
+        // construct new key
+        W = gen_public_key(V);
+        WL = new_matrix(size, size, 1);
+        WU = copy_matrix(W);
+        lu_decomp(WU, WL);
+        w_det = lu_det(WU);
+    }
+
+    printf("V: ratio -- %f || det -- %f\n", hadamard(V, v_det), v_det);
+    print_matrix(V);
+    printf("W: ratio -- %f || det -- %f\n", hadamard(W, w_det), w_det);
+    print_matrix(W);
 
 
     struct matrix *m = encode_msg(msg, strlen(msg), size);
@@ -97,6 +121,14 @@ int main(int argc, char *argv[]) {
     printf("Reuslt from decrypt:\n");
     print_matrix(dW2);
 
+//    char *decr_msg = (char *)malloc(sizeof(char) * strlen(msg));
+    char *decr_msg = decode_msg(m, strlen(msg), size);
+
+    printf("Message to encrypt:\n");
+    printf("%s\n", msg);
+    printf("Message decrypted:\n");
+    printf("%s\n", decr_msg);
+
 
     // Deallocate key memory
     del_matrix(V);
@@ -108,6 +140,7 @@ int main(int argc, char *argv[]) {
     del_matrix(WL);
     // Deallocate vector memory
     del_matrix(m);
+    free(decr_msg);
 //    del_matrix(eV);
 //    del_matrix(eW);
 //    del_matrix(dV);

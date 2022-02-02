@@ -138,7 +138,7 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
     for(int i = 0; i < sq_dim - 1; ++i) {
         // select all rows below the target row
         for(int j = i + 1; j < U->col_size; ++j) {
-            // calculate factor 
+            // calculate factor
             factor = U->entry[i][j]/U->entry[i][i];
             L->entry[i][j] = factor;
             // update all elements in a row
