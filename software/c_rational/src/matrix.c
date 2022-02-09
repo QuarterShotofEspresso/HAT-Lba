@@ -7,13 +7,15 @@
 // Internal
 #ifdef USE_RATIONAL
 #include "../../matrix.h"
+#include "../includes/rational.h"
 
 // External
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
 
-struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
+
+struct matrix * new_matrix(int col_size, int row_size, int entry_range) {		// ask if i need to change this too
 
     struct matrix *A = (struct matrix *)malloc(sizeof(struct matrix));
     A->row_size = row_size;
@@ -22,15 +24,15 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
 
     if(entry_range == 1) {
         for(int i = 0; i < A->row_size; ++i) {
-            A->entry[i] = (DATA_TYPE*)calloc(col_size, sizeof(DATA_TYPE));
+	    A->entry[i] = (DATA_TYPE*)calloc(col_size, sizeof(DATA_TYPE));
         }
     }
 
     else {
         for(int i = 0; i < A->row_size; ++i) {
-            A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
+	    A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
             for(int j = 0; j < col_size; ++j) {
-                A->entry[i][j] = (DATA_TYPE)(rand() % entry_range) + 1;
+		A->entry[i][j] = (DATA_TYPE){(rand() % entry_range) + 1, (rand() % entry_range) + 1};
             }
         }
     }
@@ -66,7 +68,7 @@ void print_matrix(struct matrix *A) {
 
     for(int i = 0; i < A->col_size; ++i) {
         for(int j = 0; j < A->row_size; ++j) {
-            printf("%f, ", A->entry[j][i]);
+            printf("%f/%f, ", A->entry[j][i].num, A->entry[j][i].den);
         }
         printf("\n");
     }
@@ -77,10 +79,21 @@ void print_matrix(struct matrix *A) {
 
 DATA_TYPE dot(DATA_TYPE *u, DATA_TYPE *v, int col_size) {
 
-    DATA_TYPE  dot_prod = 0;
-    for(int i = 0; i < col_size; ++i)
-        dot_prod = dot_prod + (u[i] * v[i]);
-
+    DATA_TYPE  dot_prod = {0, 0};
+    DATA_TYPE  mult = {0, 0};
+    for(int i = 0; i < col_size; ++i) {
+        //dot_prod = dot_prod + (u[i] * v[i]);
+//	printf("mult: %d/%d * %d/%d = ", u[i].num, u[i].den, v[i].num, v[i].den);
+	rat_mul_rat(&u[i], &v[i], &mult);
+//	printf("%d/%d\n", mult.num, mult.den);
+	if (i == 0) {
+	    dot_prod = mult;
+	}
+	else {
+	    rat_add_rat(&dot_prod, &mult, &dot_prod);
+	}
+//	printf("dot: %d/%d dot %d/%d = %d/%d\n", dot_prod.num, dot_prod.den, mult.num, mult.den, dot_prod.num, dot_prod.den);
+    }
     return dot_prod;
 }
 
@@ -90,15 +103,22 @@ void project(DATA_TYPE  *u, DATA_TYPE  *v, DATA_TYPE  *r, int col_size) {
     DATA_TYPE  dot_uv = dot(u, v, col_size);
     DATA_TYPE  dot_uu = dot(u, u, col_size);
 
-    for(int i = 0; i < col_size; ++i)
-        r[i] = (dot_uv / dot_uu) * u[i];
+    DATA_TYPE div = {0, 0};
 
+    for(int i = 0; i < col_size; ++i) {
+        //r[i] = (dot_uv / dot_uu) * u[i];
+	printf("dot %d/%d / %d/%d = ", dot_uv.num, dot_uv.den, dot_uu.num, dot_uu.den);
+	rat_div_rat(&dot_uv, &dot_uu, &div);
+	printf("%d/%d\nmult %d/%d * %d/%d = ", div.num, div.den, div.num, div.den, u[i].num, u[i].den);
+	rat_mul_rat(&div, &u[i], &r[i]);
+	printf("%d/%d\n", r[i].num, r[i].den);
+    }
     return;
 }
 
 
 void gram_schmidt(struct matrix *A) {
-
+/*
     DATA_TYPE  *r = (DATA_TYPE *)malloc(A->col_size * sizeof(DATA_TYPE ));
 
     for(int i = 0; i < A->row_size; ++i) {
@@ -117,13 +137,13 @@ void gram_schmidt(struct matrix *A) {
     }
 
     free(r);
-
+*/
     return;
 }
 
 
 void lu_decomp(struct matrix *U, struct matrix *L) {
-
+/*
     // convert L into identity matrix
     for(int i = 0; i < L->col_size; ++i) {
         L->entry[i][i] = 1;
@@ -142,17 +162,17 @@ void lu_decomp(struct matrix *U, struct matrix *L) {
             L->entry[i][j] = factor;
             // update all elements in a row
             for(int k = 0; k < U->row_size; ++k) {
-                U->entry[k][j] = U->entry[k][j] - (factor * U->entry[k][i]);
+               U->entry[k][j] = U->entry[k][j] - (factor * U->entry[k][i]);
             }
         }
     }
-
+*/
     return;
 }
 
 
 void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE  *b, DATA_TYPE  *x) {
-
+/*
     DATA_TYPE  *y = (DATA_TYPE *)malloc(L->col_size * sizeof(DATA_TYPE ));
     DATA_TYPE  tmp = 0;
 
@@ -171,24 +191,25 @@ void lu_solve(struct matrix *L, struct matrix *U, DATA_TYPE  *b, DATA_TYPE  *x) 
     }
 
     free(y);
-
+*/
     return;
 }
 
 
 DATA_TYPE lu_det(struct matrix *U) {
 
-    DATA_TYPE  det = 1;
+/*    DATA_TYPE  det = 1;
     for(int i = 0; i < U->col_size; ++i) {
         det = det * U->entry[i][i];
     }
-
+*/
+DATA_TYPE det = {1, 1};
     return det;
 }
 
 
 DATA_TYPE hadamard(struct matrix *A, DATA_TYPE  det_A) {
-
+/*
     // maybe make another param struct matrix *L
     // if the user decides to pass in NULL then decompose
     // matrix A using lu_det. Otherwise compute lu_solve
@@ -201,18 +222,19 @@ DATA_TYPE hadamard(struct matrix *A, DATA_TYPE  det_A) {
         vol_sq = vol_sq * dot(A->entry[i], A->entry[i], A->col_size);
 
     DATA_TYPE  ratio = pow(det_sq/vol_sq, 1/(2.0 * A->col_size));
-
+*/
+DATA_TYPE ratio = {1, 1};
     return ratio;
 }
 
 
 void babai(struct matrix *L, struct matrix *U, DATA_TYPE  *w, DATA_TYPE  *x) {
-
+/*
     lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {
         x[i] = round(x[i]);
     }
-
+*/
     return;
 }
 
@@ -221,7 +243,7 @@ void babai(struct matrix *L, struct matrix *U, DATA_TYPE  *w, DATA_TYPE  *x) {
 // perform the following operation: A_result = A_left * A_right
 // RETURN: the product matrix A_result
 void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right, int r_bound) {
-
+/*
     int double_r_bound = r_bound * 2;
     double prod_t = 0;
 
@@ -233,7 +255,7 @@ void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_righ
             }
             A_result->entry[i][j] += prod_t;
         }
-    }
+    }*/
 }
 
 
@@ -241,7 +263,7 @@ void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_righ
 // with a lower and upper triangular matrix and multiply them to create
 // a resulting matrix of determinant (+/-)1.
 void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
-
+/*
     struct matrix *TU = new_matrix(A->col_size, A->row_size, 1);
     struct matrix *TL = new_matrix(A->col_size, A->row_size, 1);
 
@@ -263,7 +285,7 @@ void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
     mxmar(A, TL, TU, 1);
 
     del_matrix(TU);
-    del_matrix(TL);
+    del_matrix(TL);*/
 }
 
 

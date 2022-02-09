@@ -30,7 +30,8 @@ void rat_mul_rat(struct rational* s, struct rational* l, struct rational* r);
 // interface: (rational left of the op, rational right of the op, rational store)
 void rat_div_rat(struct rational* s, struct rational* l, struct rational* r);
 
-// simplify: <description>
-void simplify(struct rational *s, struct rational *x);
+// Added by: Serena Lew
+// simplify: right-shift a fraction's numerator and denominator until they are both below 2^16
+void simplify(struct rational *s);
 
 
