@@ -8,7 +8,7 @@ BDIR=builds
 TDIR=test
 SDIR=src
 
-FLAGS = -I$(IDIR)/
+FLAGS = -I$(IDIR)/ -lm
 
 IDEPS = $(IDIR)/matrix.h
 SDEPS = $(SDIR)/matrix.c

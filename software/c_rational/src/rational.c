@@ -1,7 +1,9 @@
 // Author: Ratnodeep Bandyopadhyay Copyright. 2021
+// Simplify function added by Serena Lew
 #include "../includes/rational.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 int mod_div(struct rational* x) {
 
@@ -55,8 +57,6 @@ void rat_mul_rat(struct rational* l, struct rational* r, struct rational* s) {
     s->num = l->num * r->num;
     s->den = l->den * r->den;
 
-//printf("%d/%d\n", s->num, s->den);
-
     simplify(s);
  
     return;
@@ -71,17 +71,37 @@ void rat_div_rat(struct rational* l, struct rational* r, struct rational* s) {
     return;
 }
 
-// Added by: Serena Lew
 void simplify(struct rational *s) {
-   int max = pow(2, 16);
+    int max = pow(2, 16);
+    bool neg_num = false;
+    bool neg_den = false;
+
+    if (s->num < 0) {
+	neg_num = true;
+	s->num = abs(s->num);
+    }
+    if (s->den < 0) {
+	neg_den = true;
+	s->den = abs(s->den);
+    }
+
     while (s->num > max || s->den > max) {
 	printf("simplifying %d/%d\n", s->num, s->den);
 	s->num = s->num / 10;
 	s->den = s->den / 10;
-	printf("after       %d/%d\n\n", s->num, s->den);
-	if (s->den <= 0) {
-	    printf("Error: denominator has reached zero!\n");
+	printf("after       %d/%d\n", s->num, s->den);
+	if (s->den == 0) {
+	    printf("Error: denominator has reached zero!\n\n");
 	}
+    }
+
+    if (neg_num) {
+	s->num = -1 * s->num;
+	neg_num = false;
+    }
+    if (neg_den) {
+	s->den = -1 * s->den;
+	neg_den = false;
     }
 
     return;

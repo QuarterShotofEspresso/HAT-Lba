@@ -13,9 +13,9 @@ int main(int argc, char *argv[]) {
     int range = atoi(argv[2]);
 
     // declare and malloc vectors
-    struct rational *u = (struct rational*)malloc(col_size * sizeof(float));
-    struct rational *v = (struct rational*)malloc(col_size * sizeof(float));
-    struct rational *r = (struct rational*)malloc(col_size * sizeof(float));
+    struct rational *u = (struct rational*)malloc(col_size * sizeof(struct rational));
+    struct rational *v = (struct rational*)malloc(col_size * sizeof(struct rational));
+    struct rational *r = (struct rational*)malloc(col_size * sizeof(struct rational));
 
 
     // print and assign vectors
@@ -39,9 +39,9 @@ int main(int argc, char *argv[]) {
     }
 
     // deallocate memory
-//    free(u);
-//    free(v);
-//    free(r);
+    free(u);
+    free(v);
+    free(r);
 
     return 0;
 }

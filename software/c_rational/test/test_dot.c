@@ -13,10 +13,8 @@ int main(int argc, char *argv[]) {
     int range = atoi(argv[2]);
 
     // declare and malloc vectors
-    //float *u = (float*)malloc(col_size * sizeof(float));
-    //float *v = (float*)malloc(col_size * sizeof(float));
-    struct rational *u = (struct rational*)malloc(col_size * sizeof(float));
-    struct rational *v = (struct rational*)malloc(col_size * sizeof(float));
+    struct rational *u = (struct rational*)malloc(col_size * sizeof(struct rational));
+    struct rational *v = (struct rational*)malloc(col_size * sizeof(struct rational));
 
     // print and assign vectors
     for(int i = 0; i < col_size; ++i) {
@@ -33,8 +31,8 @@ int main(int argc, char *argv[]) {
     printf("u.v = %d/%d\n", prod.num, prod.den);
 
     // deallocate memory
-//    free(u);
-//    free(v);
+    free(u);
+    free(v);
 
     return 0;
 }
