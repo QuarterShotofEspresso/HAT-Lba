@@ -86,10 +86,10 @@ void simplify(struct rational *s) {
     }
 
     while (s->num > max || s->den > max) {
-	printf("simplifying %d/%d\n", s->num, s->den);
+//	printf("simplifying %d/%d\n", s->num, s->den);
 	s->num = s->num / 10;
 	s->den = s->den / 10;
-	printf("after       %d/%d\n", s->num, s->den);
+//	printf("after       %d/%d\n", s->num, s->den);
 	if (s->den == 0) {
 	    printf("Error: denominator has reached zero!\n\n");
 	}

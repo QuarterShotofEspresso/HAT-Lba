@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
 
     // write and print result
     struct rational prod = dot(u, v, col_size);
-    printf("u.v = %d/%d\n", prod.num, prod.den);
+double result = (double) prod.num / (double) prod.den;
+    printf("u.v = %d/%d (%f)\n", prod.num, prod.den, result);
 
     // deallocate memory
     free(u);
