@@ -1,7 +1,7 @@
 // Author: Ratnodeep Bandyopadhyay
 // Copyright Nov 21, 2021. All rights reserved.
 
-#include "fpa_matrix.h"
+#include "../../matrix.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"
@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
     printf("[%d, %d] in range(%d)\n", col_size, col_size, range);
 
-    struct fpa_matrix *tm = new_matrix_as_basis(col_size, range);
+    struct matrix *tm = new_matrix_as_basis(col_size, range);
    
     //printf("tm @ %p. tm->col_size: %d. tm->row_size: %d. tm->entry @ %p\n", tm, tm->col_size, tm->row_size, tm->entry);
     //printf("tm @ %p\n", tm);
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         printf("\n");
     }
 
-    del_fpa_matrix(tm);
+    del_matrix(tm);
 
     return 0;
 }

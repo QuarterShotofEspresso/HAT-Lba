@@ -43,6 +43,9 @@ GEN_SDEPS = $(GEN_SDIR)/*.c
 FLT_IDEPS = $(FLT_IDIR)/*.h
 FLT_SDEPS = $(FLT_SDIR)/*.c
 
+FIX_IDEPS = $(FIX_IDIR)/*.h
+FIX_SDEPS = $(FIX_SDIR)/*.c
+
 RAT_IDEPS = $(RAT_IDIR)/*.h
 RAT_SDEPS = $(RAT_SDIR)/*.c
 
@@ -65,7 +68,7 @@ flt_%: $(FLT_TDIR)/%.c $(FLT_SDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
 	$(CC) -o $(GEN_BDIR)/$@ $< $(FLT_SDEPS) $(GEN_SDEPS) -lm
 
 fix_%: $(FIX_TDIR)/%.c $(FIX_SDEPS) $(FIX_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
-	$(CC) -o $(GEN_BDIR)/$@ $< $(FIX_SDEPS) $(GEN_SDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(FIX_SDEPS) $(GEN_SDEPS) -lm
 
 rat_%: $(RAT_TDIR)/%.c $(RAT_SDEPS) $(RAT_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
 	$(CC) -o $(GEN_BDIR)/$@ $< $(RAT_SDEPS) $(GEN_SDEPS) -lm

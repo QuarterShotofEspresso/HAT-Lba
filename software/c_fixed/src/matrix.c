@@ -13,7 +13,6 @@
 #include "../../matrix.h"
 // Specialized
 #include "../includes/fpa.h"
-#include "../includes/matrix.h"
 // External
 #include <stdlib.h>
 #include <math.h>
@@ -205,9 +204,9 @@ DATA_TYPE hadamard(struct matrix *A, DATA_TYPE det_A) {
     
     DATA_TYPE vol_sq = 1;
     for (int i = 0; i < A->col_size; i++)
-        vol_sq = vol_sq * dot(A->entry[i], A->entry[i], A->col_size);
+        vol_sq = mtfp(vol_sq * dot(A->entry[i], A->entry[i], A->col_size));
 
-    DATA_TYPE ratio = pow(det_sq/vol_sq, 1/(2.0 * A->col_size));
+    DATA_TYPE ratio = mtfp(pow(mtfp(det_sq/vol_sq), mtfp(1/(2.0 * A->col_size))));
 
     return ratio;
 }
@@ -217,10 +216,52 @@ void babai(struct matrix *L, struct matrix *U, DATA_TYPE *w, DATA_TYPE *x) {
 
     lu_solve(L, U, w, x);
     for(int i = 0; i < U->row_size; ++i) {
-        x[i] = round(x[i]);
+        x[i] = mtfp(round(x[i]));
     }
 
     return; 
+}
+
+void mxmar(struct matrix *A_result, struct matrix *A_left, struct matrix *A_right, int r_bound) {
+
+    int double_r_bound = r_bound * 2;
+    double prod_t = 0;
+
+    for(int i = 0; i < A_result->row_size; ++i) {
+        for(int j = 0; j < A_result->col_size; ++j) {
+            prod_t = mtfp((r_bound > 1)*mtfp(mtfp(rand() % double_r_bound) - r_bound));
+            for(int k = 0; k < A_result->col_size; ++k) {
+                prod_t = mtfp(prod_t + mtfp(A_left->entry[k][j] * A_right->entry[i][k]));
+            }
+            A_result->entry[i][j] = mtfp(A_result->entry[i][j] + prod_t);
+        }
+    }
+}
+
+void unimodularize_matrix(struct matrix *A, int upper_range, int lower_range) {
+
+    struct matrix *TU = new_matrix(A->col_size, A->row_size, 1);
+    struct matrix *TL = new_matrix(A->col_size, A->row_size, 1);
+
+    for(int i = 0; i < A->row_size; ++i) {
+        for(int j = 0; j < A->col_size; ++j) {
+            if(j < i) {
+                TU->entry[i][j] = mtfp(rand() % upper_range);
+                TL->entry[i][j] = 0;
+            } else if (j > i) {
+                TU->entry[i][j] = 0;
+                TL->entry[i][j] = mtfp(rand() % lower_range);
+            } else { // j == i
+                TU->entry[i][i] = 1;
+                TL->entry[i][i] = 1;
+            }
+        }
+    }
+
+    mxmar(A, TL, TU, 1);
+
+    del_matrix(TU);
+    del_matrix(TL);
 }
 
 #endif   /* USE_FIXED_POINT */

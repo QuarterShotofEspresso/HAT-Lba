@@ -1,8 +1,8 @@
-#include "fpa_matrix.h"
+#include "../../matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
-#include "fpa.h"
+#include "../includes/fpa.h"
 
 int main(int argc, char *argv[]) {
 
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     }
 
     // write and print result
-    fpa_project(u, v, r, col_size);
+    project(u, v, r, col_size);
 
     // print result vector
     printf("\nproj_u(v) -> r:\n");
