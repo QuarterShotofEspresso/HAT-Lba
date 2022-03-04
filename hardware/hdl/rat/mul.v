@@ -6,7 +6,9 @@
 //}
 
 
-module rat_mul #(parameter WIDTH=32) (
+module mul #(parameter WIDTH=32) (
+        // CLK
+        input clk,
         // DATA IN
         input [WIDTH-1:0] l_num,
         input [WIDTH-1:0] l_den,
