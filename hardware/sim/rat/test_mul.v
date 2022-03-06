@@ -8,6 +8,7 @@ module mul_tb;
     parameter BOUND=1000;
     parameter TOTAL_TESTS = 20;
 
+
     reg [WIDTH-1:0] l_num;
     reg [WIDTH-1:0] l_den;
     reg [WIDTH-1:0] r_num;
@@ -23,7 +24,10 @@ module mul_tb;
     integer test_passed = TOTAL_TESTS;
 
     initial begin
-        
+
+
+        // Add plusargs here if necessary
+
         for(i = 0; i < TOTAL_TESTS; ++i) begin
             l_num = $urandom % BOUND;
             l_den = $urandom % BOUND;

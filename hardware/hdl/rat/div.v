@@ -5,7 +5,8 @@
 //    return;
 //}
 
-module rat_div #(parameter WIDTH=32) (
+module div #(parameter WIDTH=32) (
+        input clk,
         // DATA IN
         input [WIDTH-1:0] l_num,
         input [WIDTH-1:0] l_den,
