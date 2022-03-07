@@ -38,8 +38,8 @@ DATA_TYPE mtfp(DATA_TYPE input) {
 
     // note: at most, print overflow message 20 times. (avoid flooding console/log files)
     if((overflow_msg_counter < 20) && (approximation < lower_bound || approximation > upper_bound)) {
-        fprintf(stderr, "Overflow Warning: %.10f cannot be represented with %d integer bits\n",
-                input, INTEGER_WIDTH);
+        fprintf(stderr, "Overflow Warning: input %.10f with approximation %f cannot be represented with %d integer bits.\n",
+                input, approximation, INTEGER_WIDTH);
         ++overflow_msg_counter;
     }
 

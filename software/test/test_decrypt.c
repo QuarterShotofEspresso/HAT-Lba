@@ -2,12 +2,13 @@
 // Created by Ratnodeep Bandyopadhyay on 1/3/22.
 //
 
-#include "../../matrix.h"
+#include "../matrix.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "time.h"
-#include "../../ggh.h"
+#include "../ggh.h"
 #include <string.h>
+#include "../c_fixed/includes/fpa.h"
 
 #define ROW_SIZE m->row_size
 
@@ -16,6 +17,9 @@
 int main(int argc, char *argv[]) {
 
     srand(time(NULL));
+
+    init_fpa_meta();
+
     int size = atoi(argv[1]);
     int range = atoi(argv[2]);
     char *msg = argv[3];
@@ -94,7 +98,7 @@ int main(int argc, char *argv[]) {
 //    print_matrix(m_V);
 //    printf("Result from W enc msg:\n");
 //    print_matrix(m_W);
-    printf("Reuslt from decrypt:\n");
+    printf("Result from decrypt:\n");
     print_matrix(dW2);
 
 

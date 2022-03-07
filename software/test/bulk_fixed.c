@@ -4,12 +4,10 @@
 
 // General
 #include "../config.h"
-#include "../meta_matrix.h"
+#include "../matrix.h"
 
 // Specialized
 #include "../c_fixed/includes/fpa.h"
-#include "../c_fixed/includes/fpa_matrix.h"
-#include "../matrix.h"
 
 // External
 #include <stdlib.h>

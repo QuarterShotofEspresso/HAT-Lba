@@ -49,8 +49,8 @@ FIX_SDEPS = $(FIX_SDIR)/*.c
 RAT_IDEPS = $(RAT_IDIR)/*.h
 RAT_SDEPS = $(RAT_SDIR)/*.c
 
-IDEPS = $(RAT_IDIR)/rational.h $(FIX_IDIR)/fpa_matrix.h $(FIX_IDIR)/fpa.h $(FLT_IDIR)/matrix.h $(GEN_IDIR)/*.h
-SDEPS = $(RAT_IDIR)/rational.c $(FIX_SDIR)/fpa_matrix.c $(FIX_SDIR)/fpa.c $(FLT_SDIR)/matrix.c $(GEN_SDIR)/*.c
+IDEPS = $(RAT_IDIR)/rational.h matrix.h $(FIX_IDIR)/fpa.h
+SDEPS = $(RAT_SDIR)/rational.c $(FIX_SDIR)/matrix.c $(FIX_SDIR)/fpa.c $(FLT_SDIR)/matrix.c $(GEN_SDIR)/*.c
 
 
 # Manual Example
@@ -74,8 +74,10 @@ rat_%: $(RAT_TDIR)/%.c $(RAT_SDEPS) $(RAT_IDEPS) $(GEN_IDEPS) $(GEN_SDEPS)
 	$(CC) -o $(GEN_BDIR)/$@ $< $(RAT_SDEPS) $(GEN_SDEPS) -lm
 
 bulk_fixed: $(GEN_TDIR)/bulk_fixed.c $(IDEPS) $(SDEPS)
-	$(CC) -o $(GEN_BDIR)/$@ $< $(SDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(SDEPS)  -lm
 
+test_decrypt: $(GEN_TDIR)/test_decrypt.c $(IDEPS) $(SDEPS)
+	$(CC) -o $(GEN_BDIR)/$@ $< $(SDEPS) -lm
 
 .PHONY: clean
 

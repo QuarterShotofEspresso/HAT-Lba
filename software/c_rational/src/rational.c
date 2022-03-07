@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 int mod_div(struct rational* x) {
 
