@@ -13,7 +13,7 @@
 //    return;
 //}
 
-module rat_add #(parameter WIDTH=32) (
+module add #(parameter WIDTH=32) (
         // META IN
         input rst,
         // DATA IN
