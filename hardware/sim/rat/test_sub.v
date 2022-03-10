@@ -19,7 +19,7 @@ module add_tb;
     
     reg clk;
 
-    add #(WIDTH) dut (clk, rst, l_num, l_den, r_num, r_den, s_num, s_den, rdy);
+    sub #(WIDTH) dut (clk, rst, l_num, l_den, r_num, r_den, s_num, s_den, rdy);
 
     integer i;
     integer test_passed = 0;
@@ -45,7 +45,7 @@ module add_tb;
             r_num = $urandom % BOUND;
             r_den = $urandom % BOUND;
             #DELAY;
-            if((l_num * r_den + l_den * r_num) !== s_num || l_den * r_den !== s_den) begin
+            if((l_num * r_den - l_den * r_num) !== s_num || l_den * r_den !== s_den) begin
                 $display("TEST FAILED:\t(%0d / %0d) / (%0d / %0d) = (%0d / %0d) != (%0d / %0d)", l_num, l_den, r_num, r_den, l_num * r_den, l_den * r_num, s_num, s_den);
                 test_passed--;
             end

@@ -12,7 +12,7 @@
 //    return;
 //}
 
-module add #(parameter WIDTH=32) (
+module sub #(parameter WIDTH=32) (
         input clk,
         // META IN
         input rst,
@@ -58,7 +58,7 @@ module add #(parameter WIDTH=32) (
         reg_rdy_1a <= 1'b1;
 
         // CLK 2
-        s_num <= temp_1 + temp_2;
+        s_num <= temp_1 - temp_2;
         s_den <= temp_3;
         reg_rdy_2a <= reg_rdy_1a;
     end
