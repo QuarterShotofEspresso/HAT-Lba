@@ -1,19 +1,17 @@
 // Author: Ratnodeep Bandyopadhyay. Copyright 2021.
 
-module fixed_round #(parameter INT_WID=10, parameter RAT_WID=10) (
+module round #(parameter INTW=10, parameter RATW=10) (
         
-        input clk,
-        input [(INT_WID+RAT_WID-1):0] x,
-        output reg [(INT_WID+RAT_WID-1):0] xr
-
+        input [(INTW+(2*RATW))-1:0] in,
+        output wire [INTW+RATW-1:0] out
     );
 
-    wire [INT_WIDTH-1:0] round_up_const;
+    wire [INTW-1:1] round_int0;
+    wire [RATW:0] round_rat0;
+    wire [INTW+RATW-1:0] round_const = {round_int0, x[RATW], round_rat0};
 
-    assign round_up_const = {(INT_WIDTH-1){0}, {x[RAT_WIDTH+1]}};
-    
-    always @(posedge clk) begin
-        xr <= {{x[INT_WID+RAT_WID-1:RAT_WID] + round_up_const}, (RAT_WID){0});
-    end
+    assign round_int0 = 0;
+    assign round_rat0 = 0;
+    assign out = in[INTW+RATW-1:0] + round_const;
 
 endmodule
