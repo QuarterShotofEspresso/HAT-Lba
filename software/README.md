@@ -2,8 +2,8 @@
 
 ## Table of Contents
 - [Directories](#directories)
-- [Config.h](#config-h)
-- [Matrix.h](#matrix-h)
+- [Config.h](#configh)
+- [Matrix.h](#matrixh)
 - [How to Run](#how-to-run)
 
 ## Directories
@@ -51,11 +51,11 @@ Each implementation includes matrix.h and may contain additional header files sp
 
 To compile and run general tests in the software directory, first do:
 
-#### `make test_name arg1 arg2 ..`
+#### `make test_name`
 
 This will result in an executable file in the builds directory.  Then run with the appropriate arguments:
 
-#### `./builds/test_name`
+#### `./builds/test_name arg1 arg2 ..`
 
 For example, `make test_decrypt` will build the application `test/test_decrypt.c`, and
 
