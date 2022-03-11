@@ -11,14 +11,9 @@
 
 ## Overview
 
-Lattice Cryptography algorithms are new and highly complex, and hardware that efficiently supports these algorithms has not been developed yet.  
-The goal of this project is to use hardware to accelerate algorithms related to lattice cryptography. 
-We aim to create an instruction set for a vector processor that will aid in this hardware acceleration.
+Lattice Cryptography algorithms are new and highly complex, and hardware that efficiently supports these algorithms has not been developed yet.  The goal of this project is to use hardware to accelerate algorithms related to lattice cryptography.  We aim to create an instruction set for a vector processor that will aid in this hardware acceleration.
 
-Most sensitive information is secured via cryptography, and most cryptography methods are based on algebraic problems that are hard to solve. 
-With the development of Quantum Computers, encryption schemes based on arithmetic patterns such as GCD and factoring are no longer safe.  
-Novel encryption schemes have been/are being devised to provide equal difficulty in cracking and ease in encryption/decryption, one of which is Lattice Cryptography.  
-Lattice Cryptography lies in the geometric realm rather than the algebraic realm, and is immune to the weaknesses found in algebraic encryption schemes, providing a new, harder problem to solve.
+Most sensitive information is secured via cryptography, and most cryptography methods are based on algebraic problems that are hard to solve.  However, with the development of Quantum Computers, encryption schemes based on arithmetic patterns such as GCD and factoring are no longer safe.  To combat this, novel encryption schemes are being devised to provide equal difficulty in cracking and ease in encryption/decryption, one of which is Lattice Cryptography.  Lattice Cryptography lies in the geometric realm rather than the algebraic realm, and is immune to the weaknesses found in algebraic encryption schemes, providing a new, harder problem to solve.
 
 The Lattice Cryptography Library provicedes a set of hardware and software tools developers can use to accelerate their Lattice-based projects.
 The library primarily contains resources aimed at Lattice Cryptography, but can be generalized to be used for any Lattice-based fpa_project.
@@ -32,7 +27,7 @@ The library primarily contains resources aimed at Lattice Cryptography, but can 
 ## Team
 <a href="https://github.com/quartershotofespresso" target="_blank">Ratnodeep Bandyopadhyay (QuarterShotofEspresso) </a>
 <a>Aaron Chen</a>
-<a>Serena Lew</a>
+<a href="https://github.com/minibaguettes" target="_blank">Serena Lew (MiniBaguettes) </a>
 
 ## Usage
 Demo: <https://youtu.be/JX_zPpCG1AI>
