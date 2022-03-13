@@ -1,5 +1,4 @@
 // Author: Ratnodeep Bandyopadhyay. Copyright 2022.
-
 //int mod_div(struct rational* x) {
 //
 //    // move negative to the numerator
@@ -18,16 +17,18 @@
 //    }
 //}
 
-module mod_div #(parameter WIDTH=32) (
+module round #(parameter WIDTH=32) (
+        input clk,
         // META IN
         input rst,
         // DATA IN
-        input [WIDTH-1:0] num,
-        input [WIDTH-1:0] den,
+        input [WIDTH-1:0] in_num,
+        input [WIDTH-1:0] in_den,
         // DATA OUT
-        output reg [WIDTH-1:0] out,
+        output reg [WIDTH-1:0] out_num,
+        output wire [WIDTH-1:0] out_den,
         // META OUT
-        output wire rdy_out
+        output wire rdy
     );
 
     reg [WIDTH-1:0] tmp_num;
@@ -43,12 +44,13 @@ module mod_div #(parameter WIDTH=32) (
     wire den_is_neg;
     wire [WIDTH-1:0] round_up;
 
-    assign den_is_neg = den[WIDTH-1];
-    assign [WIDTH-1:0] round_up = {{(WIDTH-2)'b0},{rem >= (tmp_den >> 1)}};
-    assign rdy_out = reg_rdy_c;
+    assign den_is_neg = in_den[WIDTH-1];
+    assign round_up = rem >= (tmp_den >> 1);
+    assign rdy = reg_rdy_c;
+    assign out_den = 1;
 
     always @(posedge rst) begin
-        out <= 0;
+        out_num <= 0;
         tmp_num <= 0;
         tmp_den <= 0;
         quo <= 0;
@@ -60,8 +62,8 @@ module mod_div #(parameter WIDTH=32) (
 
     always @(posedge clk) begin
         // CLK 1
-        tmp_num <= (den_is_neg) -num : num;
-        tmp_den <= (den_is_neg) -den : den;
+        tmp_num <= (den_is_neg) ? -in_num : in_num;
+        tmp_den <= (den_is_neg) ? -in_den : in_den;
         reg_rdy_a <= 1;
 
         // CLK 2
@@ -70,7 +72,7 @@ module mod_div #(parameter WIDTH=32) (
         reg_rdy_b <= reg_rdy_a;
 
         // CLK 3
-        out <= quo + round_up;
+        out_num <= quo + round_up;
         reg_rdy_c <= reg_rdy_b;
     end
 
