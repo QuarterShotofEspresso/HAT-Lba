@@ -22,8 +22,7 @@ int main(int argc, char *argv[]) {
 
     //NOTE:: A->entry[<->][v^]
 
-    // allocate all matrix memory
-    // Prepare Public Key V
+    // generate public key V
     struct matrix *V = new_matrix(size, size, range);
     gram_schmidt(V);
     struct matrix *VU = copy_matrix(V);
@@ -31,11 +30,11 @@ int main(int argc, char *argv[]) {
     lu_decomp(VU, VL);
     DATA_TYPE v_det = lu_det(VU);
 
-    // Prepare matrix U
+    // generate unimodular/skew matrix U
     struct matrix *U = new_matrix(size, size, 1);
     unimodularize_matrix(U, 100, 5);
 
-    // Prepare Public Key W
+    // generate public key W
     struct matrix *W = new_matrix(size, size, 1);
     mxmar(W, V, U, 1);
     struct matrix *WU = copy_matrix(W);
@@ -43,7 +42,8 @@ int main(int argc, char *argv[]) {
     lu_decomp(WU, WL);
     DATA_TYPE w_det = lu_det(WU);
 
-    while(!v_det || (v_det != v_det) || !w_det || (w_det != w_det)) {
+    // ensure both keys are non-singular
+    while(!v_det || (v_det != v_det)) {
         // delete old key
         del_matrix(V);
         del_matrix(VL);
@@ -54,15 +54,21 @@ int main(int argc, char *argv[]) {
         VU = copy_matrix(V);
         lu_decomp(VU, VL);
         v_det = lu_det(VU);
+    }
 
+    while(!w_det || (w_det != w_det)) {
         // delete old key
         del_matrix(W);
         del_matrix(WL);
         del_matrix(WU);
+        del_matrix(U);
         // construct new key
-        W = gen_public_key(V);
-        WL = new_matrix(size, size, 1);
+//        W = gen_public_key(V);
+        U = new_matrix(size, size, 1);
+        unimodularize_matrix(U, 100, 5);
+        mxmar(W, V, U, 1);
         WU = copy_matrix(W);
+        WL = new_matrix(size, size, 1);
         lu_decomp(WU, WL);
         w_det = lu_det(WU);
     }
@@ -74,61 +80,22 @@ int main(int argc, char *argv[]) {
 
 
     struct matrix *m = encode_msg(msg, strlen(msg), size);
-//    struct matrix *m  = new_matrix(size, ROW_SIZE, range);
-//    struct matrix *eV = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *eW = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *dV = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *dW = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *Vm = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *Wm = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *m_V = new_matrix(size, ROW_SIZE, 1);
-//    struct matrix *m_W = new_matrix(size, ROW_SIZE, 1);
-
-    struct matrix *eW2 = new_matrix(size, ROW_SIZE, 1);
-    struct matrix *dW2 = new_matrix(size, ROW_SIZE, 1);
-
-
-
-    // Encryption of m with map W
-//    mxmar(eW, W, m, 1);
-//    mxmar(eV, V, m, 1);
-    eW2 = encrypt_msg(W, m, 1);
-
-    // Decryption starts
-//    for(int i = 0; i < ROW_SIZE; ++i) {
-//        babai(VL, VU, eW->entry[i], dW->entry[i]);
-//        babai(VL, VU, eV->entry[i], dV->entry[i]);
-//    }
-//
-//    mxmar(Wm, V, dW, 1);
-//    mxmar(Vm, V, dV, 1);
-//
-//    for(int i = 0; i < ROW_SIZE; ++i) {
-//        babai(WL, WU, Wm->entry[i], m_W->entry[i]);
-//        babai(VL, VU, Vm->entry[i], m_V->entry[i]);
-//    }
-
-    dW2 = decrypt_msg(W, V, eW2);
-
-
-
-    printf("True msg:\n");
+    printf("Matrix-encoded message:\n");
     print_matrix(m);
-//    printf("Result from V enc msg:\n");
-//    print_matrix(m_V);
-//    printf("Result from W enc msg:\n");
-//    print_matrix(m_W);
-    printf("Reuslt from decrypt:\n");
-    print_matrix(dW2);
 
-//    char *decr_msg = (char *)malloc(sizeof(char) * strlen(msg));
-    char *decr_msg = decode_msg(dW2, strlen(msg), size);
+    struct matrix *e = encrypt_msg(W, m, 1);
+    printf("Encrypted matrix:\n");
+    print_matrix(e);
 
-    printf("Message to encrypt:\n");
-    printf("%s\n", msg);
-    printf("Message decrypted:\n");
+    struct matrix *d = decrypt_msg(W, V, e);
+    printf("Decrypted matrix: (should match matrix-encoded message)\n");
+    print_matrix(d);
+
+    char *decr_msg = decode_msg(d, strlen(msg), size);
+    printf("Decoded message:\n");
     printf("%s\n", decr_msg);
-
+    printf("Target message:\n");
+    printf("%s\n", msg);
 
     // Deallocate key memory
     del_matrix(V);
@@ -140,13 +107,9 @@ int main(int argc, char *argv[]) {
     del_matrix(WL);
     // Deallocate vector memory
     del_matrix(m);
+    del_matrix(e);
+    del_matrix(d);
     free(decr_msg);
-//    del_matrix(eV);
-//    del_matrix(eW);
-//    del_matrix(dV);
-//    del_matrix(dW);
-//    del_matrix(Vm);
-//    del_matrix(Wm);
 
 
     return 0;
