@@ -9,6 +9,6 @@ test_%: $(HDL_RAT_DIR)/%.v $(SIM_RAT_DIR)/test_%.v
 	iverilog -o test/$@.vvp $(SIM_RAT_DIR)/$@.v $<
 	vvp test/$@.vvp $(PARGS)
 
-round: hdl/fixed/round.v sim/fixed/test_round.v
+fix_test_round: hdl/fixed/round.v sim/fixed/test_round.v
 	iverilog -o test/test_round.vvp sim/fixed/test_round.v $<
 	vvp test/test_round.vvp $(PARGS)
