@@ -1,4 +1,5 @@
-#include "fpa_matrix.h"
+#include "../../matrix.h"
+#include "../includes/rational.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
@@ -12,25 +13,28 @@ int main(int argc, char *argv[]) {
     int range = atoi(argv[2]);
 
     // declare and malloc vectors
-    float *u = (float*)malloc(col_size * sizeof(float));
-    float *v = (float*)malloc(col_size * sizeof(float));
-    float *r = (float*)malloc(col_size * sizeof(float));
+    struct rational *u = (struct rational*)malloc(col_size * sizeof(struct rational));
+    struct rational *v = (struct rational*)malloc(col_size * sizeof(struct rational));
+    struct rational *r = (struct rational*)malloc(col_size * sizeof(struct rational));
+
 
     // print and assign vectors
     for(int i = 0; i < col_size; ++i) {
-        u[i] = rand() % range;
-        v[i] = rand() % range;
-        printf("u(%f)  v(%f), ", u[i], v[i]);
+        u[i].num = 1 + rand() % range;
+	u[i].den = 1 + rand() % range;
+        v[i].num = 1 + rand() % range;
+	v[i].den = 1 + rand() % range;
+        printf("u(%d/%d)  v(%d/%d), ", u[i].num, u[i].den, v[i].num, v[i].den);
         printf("\n");
     }
 
     // write and print result
-    fpa_project(u, v, r, col_size);
+    project(u, v, r, col_size);
 
     // print result vector
     printf("\nproj_u(v) -> r:\n");
     for(int i = 0; i < col_size; ++i) {
-        printf("r(%f) ", r[i]);
+        printf("r(%d/%d) ", r[i].num, r[i].den);
         printf("\n");
     }
 

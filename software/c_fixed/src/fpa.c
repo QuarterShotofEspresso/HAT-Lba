@@ -37,9 +37,9 @@ DATA_TYPE mtfp(DATA_TYPE input) {
     DATA_TYPE approximation = floor(input * pow(2, RATIONAL_WIDTH))/pow(2, RATIONAL_WIDTH);
 
     // note: at most, print overflow message 20 times. (avoid flooding console/log files)
-    if((overflow_msg_counter < 20) && (approximation < lower_bound || approximation > upper_bound)) {
-        fprintf(stderr, "Overflow Warning: %.10f cannot be represented with %d integer bits\n",
-                input, INTEGER_WIDTH);
+    if((overflow_msg_counter < 20) && ((approximation < lower_bound) || (approximation > upper_bound))) {
+        fprintf(stderr, "Overflow Warning: input %.10f with approximation %f cannot be represented with %d integer bits.\n",
+                input, approximation, INTEGER_WIDTH);
         ++overflow_msg_counter;
     }
 

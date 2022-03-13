@@ -3,8 +3,8 @@
 //
 
 // Internal
-#include "../../ggh.h"
-#include "../../matrix.h"
+#include "../ggh.h"
+#include "../matrix.h"
 
 // External
 #include <stdio.h>

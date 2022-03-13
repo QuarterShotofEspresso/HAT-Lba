@@ -1,4 +1,4 @@
-#include "rational.h"
+#include "../includes/rational.h"
 #include <stdio.h>
 
 void TEST_mod_div(int num, int den) {

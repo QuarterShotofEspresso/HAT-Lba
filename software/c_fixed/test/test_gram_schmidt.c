@@ -1,8 +1,8 @@
-#include "fpa_matrix.h"
+#include "../../matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
-#include "fpa.h"
+#include "../includes/fpa.h"
 
 int main(int argc, char *argv[]) {
 
@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     int row_size = atoi(argv[2]);
     int range = atoi(argv[3]);
 
-    struct fpa_matrix *A = fpa_new_matrix(col_size, row_size, range);
+    struct matrix *A = new_matrix(col_size, row_size, range);
 
 
     printf("A before orthogonalization\n");
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    fpa_gram_schmidt(A);
+    gram_schmidt(A);
     
     printf("A after orthogonalization\n");
     for(int i = 0; i < A->col_size; ++i) {
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    del_fpa_matrix(A);
+    del_matrix(A);
 
     return 0;
 }

@@ -1,8 +1,8 @@
-#include "fpa_matrix.h"
+#include "../../matrix.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "time.h"
-#include "fpa.h"
+#include "../includes/fpa.h"
 
 int main(int argc, char *argv[]) {
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     }
 
     // write and print result
-    DATA_TYPE prod = fpa_dot(u, v, col_size);
+    DATA_TYPE prod = dot(u, v, col_size);
     printf("u.v = %f\n", prod);
 
     // deallocate memory
