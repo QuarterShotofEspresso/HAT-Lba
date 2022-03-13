@@ -1,5 +1,8 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=462966&assignment_repo_type=GroupAssignmentRepo)
-# Lettuce Cryptography
+# HAT-Lba
+#### Hardware Acceleration Toolset for Lattice-based Applications
+
+> __Authors:__
+> Ratnodeep Bandyopadhyay ([QuarterShotofEspresso](https://github.com/quartershotofespresso)); Serena Lew ([MiniBaguettes](https://github.com/minibaguettes))
 
 ## Table of Contents
 - [Overview](#overview)
@@ -18,19 +21,18 @@ Most sensitive information is secured via cryptography, and most cryptography me
 The Lattice Cryptography Library provicedes a set of hardware and software tools developers can use to accelerate their Lattice-based projects.
 The library primarily contains resources aimed at Lattice Cryptography, but can be generalized to be used for any Lattice-based fpa_project.
 
-## Directories
+## Getting Started
+This repository contains a set of hardware, software and mathematical tools that have been built and analyzed for
+the purpose of hardware accelerating applications that heavily utilize lattice-based mathematics. While the target
+application for these tools were set on the GGH crypto-system, the tools and results found in this repo can be
+generalized for most lattice-based applications.
+To get started, here are the primary directories to explore and a description of their content.
+- `docs` - contains documentation on the math used in the development and analysis of numerical representations.
+- `hardware` - contains the hardware modules, more specifically the rational operations utilized in the helper functions in the `software/c_rational` directory.
+- `software` - contains two seperate software emulations of lattice-based math in three different numerical representations.
 
-- `docs` - contains documentation on the math used in the lattice based functions
-- `hardware` - contains the hardware implementations of our tools, more specifically the rational operations utilized in the helper functions in the `software/c_rational` directory.
-- `software` - 
-
-## Team
-<a href="https://github.com/quartershotofespresso" target="_blank">Ratnodeep Bandyopadhyay (QuarterShotofEspresso) </a>
-<a>Aaron Chen</a>
-<a href="https://github.com/minibaguettes" target="_blank">Serena Lew (MiniBaguettes) </a>
-
-## Usage
-Demo: <https://youtu.be/JX_zPpCG1AI>
+## Video
+Exploring various formats and the mathematics behind Babai's Algorithm: <https://youtu.be/JX_zPpCG1AI>
 
 
 ## How To Run
@@ -59,5 +61,8 @@ exist. The second param defines the entry range between `(0, entry_range)` of th
 
 
 ## Dependencies
-Install GNU Compiler Collection (gcc) [Helpful Documentation](https://gcc.gnu.org/install/)
+[Install GNU Compiler Collection (gcc)](https://gcc.gnu.org/install/)  
+[Icarus Verilog (iverilog)](http://iverilog.icarus.com)  
+[Yosys (yosys)](http://bygone.clairexen.net/yosys/) or
+[Vivado](https://www.xilinx.com/products/design-tools/vivado.html)
 
