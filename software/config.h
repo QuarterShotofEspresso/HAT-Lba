@@ -11,8 +11,8 @@
 //#define DATA_TYPE struct rational
 
 // Use for Fixed-point implementations
-#define RATIONAL_WIDTH 10
-#define INTEGER_WIDTH 100
+#define RATIONAL_WIDTH 20
+#define INTEGER_WIDTH 20
 
 // Representation Selector
 //#define USE_FLOATING_POINT
