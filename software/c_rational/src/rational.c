@@ -73,7 +73,10 @@ void rat_div_rat(struct rational* l, struct rational* r, struct rational* s) {
 }
 
 void simplify(struct rational *s) {
-    int max = pow(2, 16);
+    s->num = mod_div(s);
+    s->den = 1;
+
+/*    int max = pow(2, 16);
     bool neg_num = false;
     bool neg_den = false;
 
@@ -103,7 +106,7 @@ void simplify(struct rational *s) {
     if (neg_den) {
 	s->den = -1 * s->den;
 	neg_den = false;
-    }
+    }*/
 
     return;
 }

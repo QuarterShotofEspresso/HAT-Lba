@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
 
-    srand(time(NULL));
+    srand(0);
 
     init_fpa_meta();
 

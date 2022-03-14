@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) {
 
-    srand(time(NULL));
+    srand(0);
 
     // parse command line args
     int col_size = atoi(argv[1]);

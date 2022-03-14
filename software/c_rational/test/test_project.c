@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
 
-    srand(time(NULL));
+    srand(0);
 
     // parse command line args
     int col_size = atoi(argv[1]);
@@ -21,10 +21,10 @@ int main(int argc, char *argv[]) {
     // print and assign vectors
     for(int i = 0; i < col_size; ++i) {
         u[i].num = 1 + rand() % range;
-	u[i].den = 1 + rand() % range;
+	u[i].den = 1;
         v[i].num = 1 + rand() % range;
-	v[i].den = 1 + rand() % range;
-        printf("u(%d/%d)  v(%d/%d), ", u[i].num, u[i].den, v[i].num, v[i].den);
+	v[i].den = 1;
+        printf("u(%d/%d)[%f]  v(%d/%d)[%f], ", u[i].num, u[i].den, (u[i].num / u[i].den), v[i].num, v[i].den, (v[i].num / v[i].den));
         printf("\n");
     }
 

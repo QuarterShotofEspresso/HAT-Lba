@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) {
 
-    srand(time(NULL));
+    srand(0);
 
     int col_size = atoi(argv[1]);
     int row_size = atoi(argv[2]);

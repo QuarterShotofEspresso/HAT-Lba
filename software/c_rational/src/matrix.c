@@ -32,7 +32,7 @@ struct matrix * new_matrix(int col_size, int row_size, int entry_range) {
         for(int i = 0; i < A->row_size; ++i) {
 	    A->entry[i] = (DATA_TYPE*)malloc(col_size * sizeof(DATA_TYPE));
             for(int j = 0; j < col_size; ++j) {
-		A->entry[i][j] = (DATA_TYPE){(1 + rand() % entry_range), (1 + rand() % entry_range)};
+		A->entry[i][j] = (DATA_TYPE){(1 + rand() % entry_range), 1};
             }
         }
     }

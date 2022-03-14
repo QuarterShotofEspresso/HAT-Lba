@@ -14,7 +14,8 @@
 
 // GEN_PRIVATE_KEY: Given the size of the key and a
 // pointer to the key, generate the private key V.
-struct matrix * gen_private_key(int chunk_size, int entry_range, DATA_TYPE lower_hadamard_bound) {
+//struct matrix * gen_private_key(int chunk_size, int entry_range,  lower_hadamard_bound) {
+struct matrix * gen_private_key(int chunk_size, int entry_range) {
 
     struct matrix *V = new_matrix(chunk_size, chunk_size, entry_range);
     gram_schmidt(V);
@@ -45,7 +46,7 @@ struct matrix * gen_public_key(struct matrix *V) {
 // into chunks of size chunk_size. Each chunk will be converted
 // to an integer vector represented as the columns of matrix m.
 // note: matrix m is of size: [chunk_size, ceil(msg_length / chunk_size)]
-struct matrix * encode_msg(char *message, int msg_length, int chunk_size) {
+/*struct matrix * encode_msg(char *message, int msg_length, int chunk_size) {
 
     struct matrix *m = new_matrix(chunk_size, (msg_length / chunk_size) + 1, 1);
 //    int total_chunks = (msg_length / chunk_size) + 1; // row_size (total columns)
@@ -75,7 +76,7 @@ char * decode_msg(struct matrix *m, int msg_length, int chunk_size) {
 
     return message;
 }
-
+*/
 
 // ENCRYPT_MSG: Encrypt the matrix-encoded message m using the public key
 // W using the following formula e = Wm + r. The vector r will be constructed
