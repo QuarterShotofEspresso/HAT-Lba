@@ -36,7 +36,7 @@ module round_tb;
             $display("Config param found. \'DELAY\' = %0d", DELAY);
         end
 
-        test_passed = TOTAL_TESTS;
+        test_passed = 0;
 
         for(i = 0; i < TOTAL_TESTS; ++i) begin
             in_num = $urandom % BOUND;
@@ -44,9 +44,9 @@ module round_tb;
             #DELAY;
             expect = ((in_num / in_den) + ((in_num % in_den) >= (in_den / 2)));
             #DELAY
-            if(expect !== out_num) begin
-                $display("TEST FAILED:\t(%0d / %0d)[%0.3f] == %0d != %0d", in_num, in_den, ((in_num + 0.0)/in_den), expect, out_num);
-                test_passed--;
+            if(expect === out_num) begin
+                $display("TEST PASSED:\t(%0d / %0d)[%0.3f] == %0d === %0d", in_num, in_den, ((in_num + 0.0)/in_den), expect, out_num);
+                test_passed++;
             end
         end
 
