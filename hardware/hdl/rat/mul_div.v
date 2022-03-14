@@ -6,7 +6,7 @@
 //}
 
 
-module mul #(parameter WIDTH=32) (
+module mul_div #(parameter WIDTH=32) (
         // CLK
         input clk,
         // META IN

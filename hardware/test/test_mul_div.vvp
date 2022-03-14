@@ -1,0 +1,218 @@
+#! /usr/local/Cellar/icarus-verilog/11.0/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 11;
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/system.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/local/Cellar/icarus-verilog/11.0/lib/ivl/va_math.vpi";
+S_0x7fd64c7045c0 .scope module, "mul_div_tb" "mul_div_tb" 2 3;
+ .timescale -9 -11;
+P_0x600003608c00 .param/l "WIDTH" 0 2 6, +C4<00000000000000000000000000100000>;
+v0x6000011085a0_0 .var/i "BOUND", 31 0;
+v0x600001108630_0 .var/i "DELAY", 31 0;
+v0x6000011086c0_0 .var/i "TOTAL_TESTS", 31 0;
+v0x600001108750_0 .var "clk", 0 0;
+v0x6000011087e0_0 .var "enable_div", 0 0;
+v0x600001108870_0 .var "expect_den", 31 0;
+v0x600001108900_0 .var "expect_num", 31 0;
+v0x600001108990_0 .var/i "i", 31 0;
+v0x600001108a20_0 .var "l_den", 31 0;
+v0x600001108ab0_0 .var "l_num", 31 0;
+v0x600001108b40_0 .var "r_den", 31 0;
+v0x600001108bd0_0 .var "r_num", 31 0;
+v0x600001108c60_0 .net "s_den", 31 0, v0x600001108480_0;  1 drivers
+v0x600001108cf0_0 .net "s_num", 31 0, v0x600001108510_0;  1 drivers
+v0x600001108d80_0 .var/i "test_passed", 31 0;
+S_0x7fd64c704730 .scope module, "dut" "mul_div" 2 26, 3 9 0, S_0x7fd64c7045c0;
+ .timescale -9 -11;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "enable_div";
+    .port_info 2 /INPUT 32 "l_num";
+    .port_info 3 /INPUT 32 "l_den";
+    .port_info 4 /INPUT 32 "r_num";
+    .port_info 5 /INPUT 32 "r_den";
+    .port_info 6 /OUTPUT 32 "s_num";
+    .port_info 7 /OUTPUT 32 "s_den";
+P_0x60000360b600 .param/l "WIDTH" 0 3 9, +C4<00000000000000000000000000100000>;
+v0x600001108120_0 .net "clk", 0 0, v0x600001108750_0;  1 drivers
+v0x6000011081b0_0 .net "enable_div", 0 0, v0x6000011087e0_0;  1 drivers
+v0x600001108240_0 .net "l_den", 31 0, v0x600001108a20_0;  1 drivers
+v0x6000011082d0_0 .net "l_num", 31 0, v0x600001108ab0_0;  1 drivers
+v0x600001108360_0 .net "r_den", 31 0, v0x600001108b40_0;  1 drivers
+v0x6000011083f0_0 .net "r_num", 31 0, v0x600001108bd0_0;  1 drivers
+v0x600001108480_0 .var "s_den", 31 0;
+v0x600001108510_0 .var "s_num", 31 0;
+E_0x600002d0b4b0 .event posedge, v0x600001108120_0;
+    .scope S_0x7fd64c704730;
+T_0 ;
+    %wait E_0x600002d0b4b0;
+    %load/vec4 v0x6000011082d0_0;
+    %load/vec4 v0x6000011081b0_0;
+    %flag_set/vec4 8;
+    %jmp/0 T_0.0, 8;
+    %load/vec4 v0x600001108360_0;
+    %jmp/1 T_0.1, 8;
+T_0.0 ; End of true expr.
+    %load/vec4 v0x6000011083f0_0;
+    %jmp/0 T_0.1, 8;
+ ; End of false expr.
+    %blend;
+T_0.1;
+    %mul;
+    %assign/vec4 v0x600001108510_0, 0;
+    %load/vec4 v0x600001108240_0;
+    %load/vec4 v0x6000011081b0_0;
+    %flag_set/vec4 8;
+    %jmp/0 T_0.2, 8;
+    %load/vec4 v0x6000011083f0_0;
+    %jmp/1 T_0.3, 8;
+T_0.2 ; End of true expr.
+    %load/vec4 v0x600001108360_0;
+    %jmp/0 T_0.3, 8;
+ ; End of false expr.
+    %blend;
+T_0.3;
+    %mul;
+    %assign/vec4 v0x600001108480_0, 0;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x7fd64c7045c0;
+T_1 ;
+    %pushi/vec4 1000, 0, 32;
+    %store/vec4 v0x6000011085a0_0, 0, 32;
+    %pushi/vec4 20, 0, 32;
+    %store/vec4 v0x6000011086c0_0, 0, 32;
+    %pushi/vec4 4, 0, 32;
+    %store/vec4 v0x600001108630_0, 0, 32;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x600001108d80_0, 0, 32;
+    %end;
+    .thread T_1;
+    .scope S_0x7fd64c7045c0;
+T_2 ;
+    %vpi_func 2 34 "$value$plusargs" 32, "BOUND=%0d", v0x6000011085a0_0 {0 0 0};
+    %cmpi/ne 0, 0, 32;
+    %jmp/0xz  T_2.0, 4;
+    %vpi_call 2 35 "$display", "Config param found. 'BOUND' = %0d", v0x6000011085a0_0 {0 0 0};
+T_2.0 ;
+    %vpi_func 2 37 "$value$plusargs" 32, "TOTAL_TESTS=%0d", v0x6000011086c0_0 {0 0 0};
+    %cmpi/ne 0, 0, 32;
+    %jmp/0xz  T_2.2, 4;
+    %vpi_call 2 38 "$display", "Config param found. 'TOTAL_TESTS' = %0d", v0x6000011086c0_0 {0 0 0};
+T_2.2 ;
+    %vpi_func 2 40 "$value$plusargs" 32, "DELAY=%0d", v0x600001108630_0 {0 0 0};
+    %cmpi/ne 0, 0, 32;
+    %jmp/0xz  T_2.4, 4;
+    %vpi_call 2 41 "$display", "Config param found. 'DELAY' = %0d", v0x600001108630_0 {0 0 0};
+T_2.4 ;
+    %load/vec4 v0x6000011086c0_0;
+    %store/vec4 v0x600001108d80_0, 0, 32;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x600001108990_0, 0, 32;
+T_2.6 ;
+    %load/vec4 v0x600001108990_0;
+    %load/vec4 v0x6000011086c0_0;
+    %cmp/s;
+    %jmp/0xz T_2.7, 5;
+    %vpi_func 2 47 "$urandom" 32 {0 0 0};
+    %load/vec4 v0x6000011085a0_0;
+    %mod;
+    %store/vec4 v0x600001108ab0_0, 0, 32;
+    %vpi_func 2 48 "$urandom" 32 {0 0 0};
+    %load/vec4 v0x6000011085a0_0;
+    %mod;
+    %store/vec4 v0x600001108a20_0, 0, 32;
+    %vpi_func 2 49 "$urandom" 32 {0 0 0};
+    %load/vec4 v0x6000011085a0_0;
+    %mod;
+    %store/vec4 v0x600001108bd0_0, 0, 32;
+    %vpi_func 2 50 "$urandom" 32 {0 0 0};
+    %load/vec4 v0x6000011085a0_0;
+    %mod;
+    %store/vec4 v0x600001108b40_0, 0, 32;
+    %vpi_func 2 51 "$urandom" 32 {0 0 0};
+    %pad/u 1;
+    %store/vec4 v0x6000011087e0_0, 0, 1;
+    %delay 500, 0;
+    %load/vec4 v0x600001108ab0_0;
+    %load/vec4 v0x6000011087e0_0;
+    %flag_set/vec4 8;
+    %jmp/0 T_2.8, 8;
+    %load/vec4 v0x600001108b40_0;
+    %jmp/1 T_2.9, 8;
+T_2.8 ; End of true expr.
+    %load/vec4 v0x600001108bd0_0;
+    %jmp/0 T_2.9, 8;
+ ; End of false expr.
+    %blend;
+T_2.9;
+    %mul;
+    %store/vec4 v0x600001108900_0, 0, 32;
+    %load/vec4 v0x600001108a20_0;
+    %load/vec4 v0x6000011087e0_0;
+    %flag_set/vec4 8;
+    %jmp/0 T_2.10, 8;
+    %load/vec4 v0x600001108bd0_0;
+    %jmp/1 T_2.11, 8;
+T_2.10 ; End of true expr.
+    %load/vec4 v0x600001108b40_0;
+    %jmp/0 T_2.11, 8;
+ ; End of false expr.
+    %blend;
+T_2.11;
+    %mul;
+    %store/vec4 v0x600001108870_0, 0, 32;
+    %load/vec4 v0x600001108630_0;
+    %pad/s 64;
+    %muli 100, 0, 64;
+    %ix/vec4 4;
+    %delayx 4;
+    %load/vec4 v0x600001108900_0;
+    %load/vec4 v0x600001108cf0_0;
+    %cmp/ne;
+    %flag_mov 8, 6;
+    %load/vec4 v0x600001108870_0;
+    %load/vec4 v0x600001108c60_0;
+    %cmp/ne;
+    %flag_or 6, 8;
+    %jmp/0xz  T_2.12, 6;
+    %vpi_call 2 58 "$display", "TEST FAILED:\011(%0d / %0d) / (%0d / %0d) = (%0d / %0d) != (%0d / %0d)", v0x600001108ab0_0, v0x600001108a20_0, v0x600001108bd0_0, v0x600001108b40_0, v0x600001108900_0, v0x600001108870_0, v0x600001108cf0_0, v0x600001108c60_0 {0 0 0};
+    ; show_stmt_assign_vector: Get l-value for compressed -= operand
+    %load/vec4 v0x600001108d80_0;
+    %pushi/vec4 1, 0, 32;
+    %sub;
+    %store/vec4 v0x600001108d80_0, 0, 32;
+T_2.12 ;
+    ; show_stmt_assign_vector: Get l-value for compressed += operand
+    %load/vec4 v0x600001108990_0;
+    %pushi/vec4 1, 0, 32;
+    %add;
+    %store/vec4 v0x600001108990_0, 0, 32;
+    %jmp T_2.6;
+T_2.7 ;
+    %vpi_call 2 63 "$display", "%0d / %0d tests passed.\012", v0x600001108d80_0, v0x6000011086c0_0 {0 0 0};
+    %vpi_call 2 64 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+    .scope S_0x7fd64c7045c0;
+T_3 ;
+    %delay 100, 0;
+    %load/vec4 v0x600001108750_0;
+    %inv;
+    %store/vec4 v0x600001108750_0, 0, 1;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0x7fd64c7045c0;
+T_4 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x600001108750_0, 0, 1;
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "sim/rat/test_mul_div.v";
+    "hdl/rat/mul_div.v";
