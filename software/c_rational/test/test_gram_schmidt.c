@@ -37,17 +37,17 @@ int main(int argc, char *argv[]) {
     print_matrix(A);
     printf("\n");
 
-    struct rational *u = (struct rational*)malloc(col_size * sizeof(struct rational));
-    struct rational *v = (struct rational*)malloc(col_size * sizeof(struct rational));
-
-    for (int i = 0; i < col_size; i++) {
-	u[i] = A->entry[0][i];
-	v[i] = A->entry[1][i];
-	printf("u[i] = %d/%d	v[i] = %d/%d\n", u[i].num, u[i].den, v[i].num, v[i].den);
-    }
-
-    struct rational prod = dot(u, v, col_size);
-    printf("%d/%d\n", prod.num, prod.den);
+//    struct rational *u = (struct rational*)malloc(col_size * sizeof(struct rational));
+//    struct rational *v = (struct rational*)malloc(col_size * sizeof(struct rational));
+//
+//    for (int i = 0; i < col_size; i++) {
+//	u[i] = A->entry[0][i];
+//	v[i] = A->entry[1][i];
+//	printf("u[i] = %d/%d	v[i] = %d/%d\n", u[i].num, u[i].den, v[i].num, v[i].den);
+//    }
+//
+//    struct rational prod = dot(u, v, col_size);
+//    printf("%d/%d\n", prod.num, prod.den);
 
     del_matrix(A);
 

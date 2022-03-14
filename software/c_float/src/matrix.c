@@ -113,7 +113,7 @@ void gram_schmidt(struct matrix *A) {
 
     for(int i = 0; i < A->row_size; ++i) {
         for(int j = 0; j < A->col_size; ++j) {
-            A->entry[i][j] = round(A->entry[i][j]);
+//            A->entry[i][j] = round(A->entry[i][j]);
         }
     }
 
