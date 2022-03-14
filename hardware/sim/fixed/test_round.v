@@ -50,10 +50,9 @@ module round_tb;
             in = $urandom % BOUND;
             #DELAY;
             if (soft_round(in>>RATW) === out) begin
-                $display("FAILED: ROUND(%.5f) = %.5f. Got: %.5f", in/pre_conv_fac, soft_round(in>>RATW)/post_conv_fac, out/post_conv_fac);
+                $display("PASSED: ROUND(%.5f) = %.5f. Got: %.5f", in/pre_conv_fac, soft_round(in>>RATW)/post_conv_fac, out/post_conv_fac);
                 $display("VALUE: %20b", in);
                 $display("ROUND: %19b0", out);
-                test_passed--;
             end
         end
 

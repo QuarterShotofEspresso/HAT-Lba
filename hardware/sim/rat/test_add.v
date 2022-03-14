@@ -16,6 +16,9 @@ module add_tb;
     wire [WIDTH-1:0] s_den;
     wire rst;
     wire rdy;
+
+    reg [WIDTH-1:0] expect_num;
+    reg [WIDTH-1:0] expect_den;
     
     reg clk;
 
@@ -37,17 +40,20 @@ module add_tb;
             $display("Config param found. \'DELAY\' = %0d", DELAY);
         end
 
-        test_passed = TOTAL_TESTS;
+        test_passed = 0;
 
         for(i = 0; i < TOTAL_TESTS; ++i) begin
             l_num = $urandom % BOUND;
             l_den = $urandom % BOUND;
             r_num = $urandom % BOUND;
             r_den = $urandom % BOUND;
+            #5 expect_num = l_num * r_den + l_den * r_num;
+            #5 expect_den = l_den * r_den;
             #DELAY;
-            if((l_num * r_den + l_den * r_num) !== s_num || l_den * r_den !== s_den) begin
-                $display("TEST FAILED:\t(%0d / %0d) / (%0d / %0d) = (%0d / %0d) != (%0d / %0d)", l_num, l_den, r_num, r_den, l_num * r_den, l_den * r_num, s_num, s_den);
-                test_passed--;
+
+            if((expect_num === s_num) && (expect_den === s_den)) begin
+                $display("TEST PASSED:\t(%0d / %0d) / (%0d / %0d) = (%0d / %0d) === (%0d / %0d)", l_num, l_den, r_num, r_den, expect_num, expect_den, s_num, s_den);
+                test_passed++;
             end
         end
 

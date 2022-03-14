@@ -41,7 +41,7 @@ module add_sub_tb;
             $display("Config param found. \'DELAY\' = %0d", DELAY);
         end
 
-        test_passed = TOTAL_TESTS;
+        test_passed = 0;
 
         for(i = 0; i < TOTAL_TESTS; ++i) begin
             l_num = $urandom % BOUND;
@@ -49,14 +49,14 @@ module add_sub_tb;
             r_num = $urandom % BOUND;
             r_den = $urandom % BOUND;
             enable_sub = $urandom;
-            #5 expect_num = l_num * r_den + ((enable_sub) ? (l_den * -r_num) : (l_den * r_num));
+            #5 expect_num = l_num * r_den + ((enable_sub) ? -(l_den * r_num) : (l_den * r_num));
             expect_den = r_den * l_den;
 
             #DELAY;
 
-            if(expect_num !== s_num || expect_den !== s_den) begin
-                $display("TEST FAILED:\t(%0d / %0d) / (%0d / %0d) = (%0d / %0d) != (%0d / %0d)", l_num, l_den, r_num, r_den, expect_num, expect_den, s_num, s_den);
-                test_passed--;
+            if(expect_num === s_num && expect_den === s_den) begin
+                $display("TEST PASSED:\t(%0d / %0d) / (%0d / %0d) = (%0d / %0d) != (%0d / %0d)", l_num, l_den, r_num, r_den, expect_num, expect_den, s_num, s_den);
+                test_passed++;
             end
         end
 
